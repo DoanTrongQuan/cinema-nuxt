@@ -1,14 +1,10 @@
 <template>
-<div>
-    <Navbar/>
+    <h1>đây là layout custom</h1>
     <div>
-        <slot />
+      <slot/>
     </div>
-    <Footer/>
-</div>
 </template>
 
 <scrip setup>
-    
-</scrip>
 
+</scrip>

@@ -1,12 +1,13 @@
-<script setup lang="ts">
 
+<script setup>
 
-const layout  = "custom"
 
 </script>
 
+
+
 <template>
-    <NuxtLayout :name = "layout">
-      <home/>
-    </NuxtLayout>
+
+  <Loginsignup/>
+
 </template>
