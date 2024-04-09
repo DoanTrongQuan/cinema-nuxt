@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   // ssr: true,
   devtools: { enabled: true },
@@ -8,7 +9,6 @@ export default defineNuxtConfig({
     '@mdi/font/css/materialdesignicons.min.css', 
     '~/assets/css/main.css',
     "bootstrap/scss/bootstrap.scss",
-
   ],
 
   build: {
@@ -29,5 +29,12 @@ export default defineNuxtConfig({
 
   extends: ['@nuxt/ui-pro'],
 
-  modules: ['@nuxt/ui', '@ant-design-vue/nuxt']
+  modules: [
+   '@nuxt/ui',
+   '@ant-design-vue/nuxt', 
+   "@vuesax-alpha/nuxt",
+  ],
+  vuesaxAlpha: {
+    /** Options */
+  },
 })
