@@ -1,14 +1,14 @@
 import Cinema from '.'
 const prefix = ''
-// export const signIn = data => {
-//   const url = prefix + '/login'
-//   return Wealify.axiosClient.post(url, data)
-// }
-
-export const signUp = data => {
-  const url = prefix + 'auth/register'
+export const login = data => {
+  const url = prefix + 'auth/login'
   return Cinema.axiosClient.post(url, data)
-  }
+}
+
+// export const signUp = data => {
+//   const url = prefix + 'auth/register'
+//   return Cinema.axiosClient.post(url, data)
+//   }
 
 // export const logOut = () => {
 //   const url = prefix + '/logout'

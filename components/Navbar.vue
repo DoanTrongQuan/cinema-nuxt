@@ -3,8 +3,8 @@
     <div  style="background: black;">
         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-8" style="margin-left: auto !important; margin-right: auto !important; text-align: right;padding: 0;">
             <div> 
-                <NuxtLink to="/loginsignup"><a href="" style="color: white;font-size: 15px;">Đăng nhập</a></NuxtLink>
-                <NuxtLink to="/loginsignup"><a href="" style="color: white;margin-left: 10px;" >Đăng ký</a></NuxtLink>
+                <NuxtLink to="/login"><a href="" style="color: white;font-size: 15px;">Đăng nhập</a></NuxtLink>
+                <NuxtLink to="/login"><a href="" style="color: white;margin-left: 10px;" >Đăng ký</a></NuxtLink>
             </div>
         </div>  
     </div>

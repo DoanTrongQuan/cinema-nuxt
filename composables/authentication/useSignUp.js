@@ -59,64 +59,6 @@ export const useSignup = () => {
     }); 
 
 
-    const submit = handleSubmit(async(userRegister) => {
-      isShowProgressConfifmRegister.value = true
-      try {
-        const res = await store.dispatch("auth/register", userRegister);
-        isShowProgressConfifmRegister.value = false
-        isShowVerifyAcc.value = true;
-      } catch (error) {
-       if(error.response.status === 400){
-        isShowProgressConfifmRegister.value = false
-        alert("Email này đã tồn tại")
-       } else{
-        isShowProgressConfifmRegister.value = false
-        alert("Error serve")
-       }
-      }
-  });
-  
-  const confirmRegister = async() => {
-      try {
-        // console.log(userRegister.fullName.value)
-        // console.log(confirmCode)
-        const res = await AuthService.confirmRegister(userRegister, confirmCode.value)
-        isShowVerifyAcc.value = false;
-        alert("Đăng kí thành công")
-      } catch (error) {
-        if(error.response.status === 404){
-          alert("Mã không tồn tại")
-        }
-        else if(error.response.status === 406){
-          alert("Mã hết hạn")
-        }else{
-          alert("error serve")
-        }
-      }   
-  }
-  
-  const resendConfirmCode = async() => {
-    console.log(userRegister)
-    isShowProgressConfifmRegister.value = true
-      try {
-        const userInfo = {
-        fullName: userRegister.fullName.value,
-        email: userRegister.email.value,
-        phoneNumber: userRegister.phoneNumber.value,
-        password: userRegister.password.value,
-        confirmPassword: userRegister.confirmPassword.value
-      };
-        const res = await AuthService.sendConfifmCodeRegister(userInfo);
-        isShowProgressConfifmRegister.value = false
-        isShowVerifyAcc.value = true;
-      } catch (error) {
-       if(error.response.status === 400){
-        isShowProgressConfifmRegister.value = false
-        alert("Email này đã tồn tại")
-       } else{
-        isShowProgressConfifmRegister.value = false
-        alert("Error serve")
-       }
-      }
-  }
+
+
 }

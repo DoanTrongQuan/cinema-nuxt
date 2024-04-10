@@ -1,7 +1,7 @@
 <template>
     <div>
 
-          <div class="center"  >
+          <!-- <div class="center"  >
             <vs-dialog v-model="isShowVerifyAcc" not-close>
             <div style="width: 100%; height: 100%; display: flex; justify-content: center;flex-direction: column">
               <h3 class="text-h6 mb-4" style="text-align: center;">Xác minh tài khoản</h3>
@@ -39,7 +39,7 @@
             </div>
     
             </vs-dialog>
-          </div>
+          </div> -->
     
           <div class="container-fluid col-12 col-md-8 col-lg-6 col-xl-5 text-center form-signup">
             <v-card>
@@ -56,22 +56,16 @@
                   <v-container fluid>
                     
                     <UCard class="w-full mt-7">
-                      <UForm :schema = "validation" :state="userRegister" class="space-y-4" @submit="onSubmit">
-                      <UFormGroup size="xl" class="" label="Name" name="fullName">
-                        <UInput v-model="userRegister.fullName" />
-                      </UFormGroup>
+                      <UForm :schema = "validation" :state="state" class="space-y-4" @submit="onSubmit">
 
                       <UFormGroup size="xl" class="" label="Email" name="email">
-                        <UInput v-model="userRegister.email"  />
+                        <UInput v-model="useLogin.email"  />
                       </UFormGroup>
 
                       <UFormGroup size="xl" class="" label="Password" name="password">
-                        <UInput v-model="userRegister.password" type="password" />
+                        <UInput v-model="useLogin.password" type="password" />
                       </UFormGroup>
 
-                      <UFormGroup size="xl" label="ConfirmPassword" name="confirmPassword">
-                        <UInput v-model="userRegister.confirmPassword" />
-                      </UFormGroup>
                       <div class="row" style="margin:5px 5%; margin-top: 15px;">
                         <a href="https://hocmai.vn/loginv2/forgot_password.php" style="text-decoration: none;font-size:12px">Quên mật khẩu?</a>
                       </div>
@@ -89,7 +83,8 @@
                 </v-window-item>
                 <v-window-item :value = "2">
                   <v-container fluid>
-                    <form @submit.prevent="submit">
+                    <h1>Đoàn trọng quân</h1>
+                    <!-- <form @submit.prevent="submit">
                     <div class="row" style="margin-top: 13px;">
                       <div class="col-md-6 col-12 input-info-register">
                         <v-text-field class="input" dense
@@ -173,7 +168,7 @@
                   <div class="row" style="background-image: linear-gradient(to right, #fc3606 0%, #fda085 51%, #fc7704 100%) !important; width:100%;height:45px; border-radius:20px; margin-left:0.2px; margin-top: 10px;">
                     <button type = "submit" style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG KÝ VỚI FACEBOOK</button>
                   </div>
-                  </form>
+                  </form> -->
                   </v-container>
                 </v-window-item>
               </v-window>
@@ -184,103 +179,80 @@
     
 <script setup>
 import { useField, useForm } from 'vee-validate';
-
+import {useLogin } from '~/composables/authentication/useLogin'
+// import {useSignup } from '~/composables/authentication/useSignUp'
 
     const loginData = useLogin();
-    const signupData = useSignup();
+    // const signupData = useSignup();
 
     const {
-      useLogin,
+      state,
       validation,
       onSubmit
     } = loginData;
     
-    const isShowPrivatePoli = ref(false)
-    const isShowVerifyAcc = ref(false);
-    
-    const confirmCode = ref('');
-    const isShowProgressConfifmRegister = ref(false)
+    // const isShowProgressConfifmRegister = ref(false)
     const tab = ref(null);
 
-    
-
-
   
+    // const userRegister = reactive({
+    //   fullName: useField('fullName', (value) => {
+    //     if (!value) {
+    //       return 'Họ và tên không được để trống.';
+    //     } else if (value?.length < 3) {
+    //       return 'Họ và tên phải lớn hơn 3 ký tự.';
+    //     }
+    //     return true;
+    //   }),
+    //   name:useField('name', (value) => {
+    //     if (!value) {
+    //       return 'Tên không được để trống.';
+    //     } else if (value?.length < 3) {
+    //       return 'Tên phải lớn hơn 3 ký tự.';
+    //     }
+    //     return true;
+    //   }),
+    //   email: useField('email', (value) => {
+    //     if (!value) {
+    //       return 'Email không được để trống.';
+    //     } else if (/^[a-z.-.0-9]+@[a-z.-]+\.[a-z]+$/i.test(value)) {
+    //       return true;
+    //     }
+    //     return 'Định dạng email không hợp lệ.';
+    //   }),
     
-    const userRegister = reactive({
-      fullName: useField('fullName', (value) => {
-        if (!value) {
-          return 'Họ và tên không được để trống.';
-        } else if (value?.length < 3) {
-          return 'Họ và tên phải lớn hơn 3 ký tự.';
-        }
-        return true;
-      }),
-      name:useField('name', (value) => {
-        if (!value) {
-          return 'Tên không được để trống.';
-        } else if (value?.length < 3) {
-          return 'Tên phải lớn hơn 3 ký tự.';
-        }
-        return true;
-      }),
-      email: useField('email', (value) => {
-        if (!value) {
-          return 'Email không được để trống.';
-        } else if (/^[a-z.-.0-9]+@[a-z.-]+\.[a-z]+$/i.test(value)) {
-          return true;
-        }
-        return 'Định dạng email không hợp lệ.';
-      }),
+    //   phoneNumber: useField('phoneNumber', (value) => {
+    //   if (!value) {
+    //     return 'Số điện thoại không được để trống';
+    //   } else if (/^[0-9]+$/.test(value)) {
+    //     return true;
+    //   }
+    //   return 'Số điện thoại không hợp lệ.';
+    //   }),
+    //   password: useField('password', (value) => {
+    //     if (!value) {
+    //       return 'Mật khẩu không được để trống.';
+    //     } else if (value?.length >= 3) {
+    //       return true;
+    //     }
+    //     return 'Mật khẩu phải chứa ít nhất 3 ký tự.';
+    //   }),
+    //   confirmPassword: useField('confirmPassword', (value) => {
+    //     if (!value) {
+    //       return 'Xác nhận mật khẩu không được để trống.';
+    //       } else if (value !== userRegister.password.value) {
+    //       return 'Xác nhận mật khẩu không khớp';
+    //       }
+    //     return true;
+    //     }),
+    //   }); 
     
-      phoneNumber: useField('phoneNumber', (value) => {
-      if (!value) {
-        return 'Số điện thoại không được để trống';
-      } else if (/^[0-9]+$/.test(value)) {
-        return true;
-      }
-      return 'Số điện thoại không hợp lệ.';
-      }),
-      password: useField('password', (value) => {
-        if (!value) {
-          return 'Mật khẩu không được để trống.';
-        } else if (value?.length >= 3) {
-          return true;
-        }
-        return 'Mật khẩu phải chứa ít nhất 3 ký tự.';
-      }),
-      confirmPassword: useField('confirmPassword', (value) => {
-        if (!value) {
-          return 'Xác nhận mật khẩu không được để trống.';
-          } else if (value !== userRegister.password.value) {
-          return 'Xác nhận mật khẩu không khớp';
-          }
-        return true;
-        }),
-      }); 
-    
-    
-
-  const nameOfCinema = ref('CX Hà Nội')
   
-  const cinemas = reactive([
-          { address: 'Hà Nội',children: []},
-          { address: 'TP.Hồ Chí Minh',children: []},
-          { address: 'Bắc Giang',children: []},
-          { address: 'Đồng Nai',children: []},
-          { address: 'Khánh Hòa',children: []},
-          { address: 'Thái Nguyên',children: []},
-          { address: 'Thanh Hóa',children: []},
-          { address: 'Bà Rịa-Vũng Tàu',children: []},
-          { address: 'Bình Dương',children: []},
-          { address: 'Kiên Giang',children: []},
-          { address: 'Lào Cai',children: []},
-  ])
     //nhận giá trị biến nameOfCinema mới nhất sau khi thay đổi nameOfCinema ở Navbar
-    </script>
+</script>
     
     
-    <style scoped >
+<style scoped >
     .form-signup{
       height: auto;
       margin-left: auto;

@@ -1,4 +1,4 @@
-import { signUp,login } from "~/repositories/cinema/authRepo"
+import { login } from "~/repositories/cinema/authRepo"
 
 export const useAuth = () => {
 

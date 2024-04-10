@@ -1,11 +1,13 @@
-
+import { useAuth } from '~/composables/authentication/useAuth';
 import * as Yup from 'yup';
+
 export const useLogin = () => {
   const router = useRouter()
+  
   const authAsync = useAuth();
 
 
-  const userLogin = reactive({
+  const state = reactive({
     email:'',
     password:''
   })
@@ -19,9 +21,9 @@ export const useLogin = () => {
   });
 
 
-  async function onSubmit(useLogin){
+  async function onSubmit(state){
     try {
-      const response = await authAsync.login(useLogin);
+      const response = await authAsync.login(state);
       router.replace('/home')
     } catch (error) {
       
@@ -29,7 +31,7 @@ export const useLogin = () => {
   }
 
   return {
-    userLogin,
+    state,
     validation,
     onSubmit,
   }
