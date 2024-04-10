@@ -54,37 +54,37 @@
               <v-window v-model="tab" style="">
                 <v-window-item :value = "1"> 
                   <v-container fluid>
-                    <form @submit.prevent="submit">
-                      <v-text-field class="input" dense
-                        variant="outlined"
-                        clearable
-                        required
-                        density="compact" 
-                        v-model="userLogin.email"
-                        label="Email"
-                        type="email"
-                        :rules="emailRules"
-                      ></v-text-field>
-                      <v-text-field class="input" dense 
-                        type = "password"
-                        clearable
-                        required
-                        density="compact"
-                        variant="outlined"
-                        v-model="userLogin.password" 
-                        label="Mật khẩu"
-                        :rules="passwordRules"
-                    ></v-text-field>
-                    <div class="row" style="margin:5px 5%; margin-top: 15px;">
-                      <a href="https://hocmai.vn/loginv2/forgot_password.php" style="text-decoration: none;font-size:12px">Quên mật khẩu?</a>
-                    </div>
-                    <div class="row" style="background:#03a9f4; width:100%;height:45px; border-radius:20px; margin-left:0.2px;">
-                        <button  @click ="Login"  style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG NHẬP</button>
-                    </div>
-                    <div class="row" style="background-image: linear-gradient(to right, #fc3606 0%, #fda085 51%, #fc7704 100%) !important; width:100%;height:45px; border-radius:20px; margin-left:0.2px; margin-top: 10px;">
-                      <button type = "submit" style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG NHẬP VỚI FACEBOOK</button>
-                    </div>
-                    </form>
+                    
+                    <UCard class="w-full mt-7">
+                      <UForm :schema = "validation" :state="userRegister" class="space-y-4" @submit="onSubmit">
+                      <UFormGroup size="xl" class="" label="Name" name="fullName">
+                        <UInput v-model="userRegister.fullName" />
+                      </UFormGroup>
+
+                      <UFormGroup size="xl" class="" label="Email" name="email">
+                        <UInput v-model="userRegister.email"  />
+                      </UFormGroup>
+
+                      <UFormGroup size="xl" class="" label="Password" name="password">
+                        <UInput v-model="userRegister.password" type="password" />
+                      </UFormGroup>
+
+                      <UFormGroup size="xl" label="ConfirmPassword" name="confirmPassword">
+                        <UInput v-model="userRegister.confirmPassword" />
+                      </UFormGroup>
+                      <div class="row" style="margin:5px 5%; margin-top: 15px;">
+                        <a href="https://hocmai.vn/loginv2/forgot_password.php" style="text-decoration: none;font-size:12px">Quên mật khẩu?</a>
+                      </div>
+                      <div class="row" style="background:#03a9f4; width:100%;height:45px; border-radius:20px; margin-left:0.2px;">
+                          <UButton  @click ="login" type = "submit"  style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG NHẬP</UButton>
+                      </div>
+                      <div class="row" style="background-image: linear-gradient(to right, #fc3606 0%, #fda085 51%, #fc7704 100%) !important; width:100%;height:45px; border-radius:20px; margin-left:0.2px; margin-top: 10px;">
+                        <button type = "submit" style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG NHẬP VỚI FACEBOOK</button>
+                      </div>
+                      </UForm>
+                    </UCard>
+
+          
                   </v-container>
                 </v-window-item>
                 <v-window-item :value = "2">
@@ -182,15 +182,18 @@
       </div>
     </template>
     
-    <script setup>
+<script setup>
+import { useField, useForm } from 'vee-validate';
 
 
-    // import PrivatePolicy from '@/components/PrivatePolicy.vue';
+    const loginData = useLogin();
+    const signupData = useSignup();
 
-    import { useField, useForm } from 'vee-validate';
-
-    
-
+    const {
+      useLogin,
+      validation,
+      onSubmit
+    } = loginData;
     
     const isShowPrivatePoli = ref(false)
     const isShowVerifyAcc = ref(false);
@@ -198,30 +201,11 @@
     const confirmCode = ref('');
     const isShowProgressConfifmRegister = ref(false)
     const tab = ref(null);
-    const { handleSubmit, handleReset } = useForm();
-    
-    const userLogin = reactive({
-      email:'',
-      password:''
-    })
-    
-    const emailRules = [
-      value => {
-        if (!value) return 'Email không được để trống.'
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) return 'Email không đúng định dạng.'
-        return true
-      }
-    ];
-    
-    const passwordRules = [
-      value => {
-        if (!value) return 'Mật khẩu không được để trống.'
-        if (value.length < 3) return 'Mật khẩu phải chứa ít nhất 3 ký tự.'
-        return true
-      }
-    ];
+
     
 
+
+  
     
     const userRegister = reactive({
       fullName: useField('fullName', (value) => {

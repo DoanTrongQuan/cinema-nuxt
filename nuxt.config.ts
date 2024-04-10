@@ -13,10 +13,17 @@ export default defineNuxtConfig({
     '@mdi/font/css/materialdesignicons.min.css', 
     '~/assets/css/main.css',
     "bootstrap/scss/bootstrap.scss",
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
   build: {
-    transpile: ['vuetify','@heroicons/vue'],
+    transpile: ['vuetify','@heroicons/vue',
+    '@fortawesome/fontawesome-svg-core',
+    '@fortawesome/free-brands-svg-icons',
+    '@fortawesome/free-regular-svg-icons',
+    '@fortawesome/free-solid-svg-icons',
+    '@fortawesome/vue-fontawesome'
+    ],
   },
   vite: {
     define: {

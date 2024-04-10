@@ -1,5 +1,6 @@
-import { defineStore } from "pinia";
 
+import { defineStore } from "pinia";
+import { getAllCinema } from '~/repositories/cinema/dataCinemasRepo';
 let nameOfCinemaSessionStorage = '';
 
 
@@ -17,6 +18,7 @@ export const useCinemaStore = defineStore({
 
   state: () => ({
     nameOfCinema: nameOfCinemaSessionStorage,
+
     cinemas: [
       { address: 'Hà Nội', children: [] },
       { address: 'TP.Hồ Chí Minh', children: [] },
@@ -32,5 +34,18 @@ export const useCinemaStore = defineStore({
     ]
   }),
   getters: {},
-  actions: {}
+  actions: {
+    async getAllCinemas  ()  {
+      for (const cinema of this.state.cinemas) {
+        try {
+            const address = cinema.address;
+            const res = await getAllCinema(address);
+            cinema.children = res.data;
+        } catch (error) {
+            // console.error('Error:', error);
+        }
+    }
+    }
+    
+  }
 });
