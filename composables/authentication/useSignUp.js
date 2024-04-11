@@ -1,64 +1,73 @@
-import { useField, useForm } from 'vee-validate';
-
+import { useAuth } from '~/composables/authentication/useAuth';
+import * as Yup from 'yup';
 export const useSignup = () => {
-  const emailRegistered = reactive({})
+  // const toast = useToast();
+  // const router = useRouter();
 
+  const authAsync = useAuth()
   const confirmCode = ref('')
-  const { handleSubmit, handleReset } = useForm();
-  
+
   const userRegister = reactive({
-    fullName: useField('fullName', (value) => {
-      if (!value) {
-        return 'Họ và tên không được để trống.';
-      } else if (value?.length < 3) {
-        return 'Họ và tên phải lớn hơn 3 ký tự.';
-      }
-      return true;
-    }),
-    name:useField('name', (value) => {
-      if (!value) {
-        return 'Tên không được để trống.';
-      } else if (value?.length < 3) {
-        return 'Tên phải lớn hơn 3 ký tự.';
-      }
-      return true;
-    }),
-    email: useField('email', (value) => {
-      if (!value) {
-        return 'Email không được để trống.';
-      } else if (/^[a-z.-.0-9]+@[a-z.-]+\.[a-z]+$/i.test(value)) {
-        return true;
-      }
-      return 'Định dạng email không hợp lệ.';
-    }),
+    fullName: '',
+    name: '',
+    email: '',
+    password: '',
+    retypePassword: '',
+    phoneNumber: '',
+  });
+
+  const emailRegistered = reactive(false)
   
-    phoneNumber: useField('phoneNumber', (value) => {
-    if (!value) {
-      return 'Số điện thoại không được để trống';
-    } else if (/^[0-9]+$/.test(value)) {
-      return true;
+  const schema = Yup.object().shape({
+    fullName: Yup.string().required('Họ và tên là bắt buộc'),
+
+    name: Yup.string().required('Tên là bắt buộc'),
+
+    email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
+
+    password: Yup.string()
+      .min(3, 'Mật khẩu phải dài ít nhất 3 ký tự')
+      .required('Mật khẩu là bắt buộc'),
+      
+    retypePassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Mật khẩu không khớp')
+      .required('Xác nhận mật khẩu là bắt buộc'),
+    phoneNumber: Yup.string()
+      .matches(/^[0-9]+$/, 'Số điện thoại chỉ bao gồm chữ số')
+      .required('Số điện thoại là bắt buộc'),
+  });
+  
+  const isDisableGetCode = ref(true);
+  const isDisableEmailCode = ref(true);
+  
+  // Sử dụng computed property để kiểm tra hợp lệ và phản ứng
+  const isValidForm = computed(() => {
+    try {
+      // Xác thực userRegister dựa trên schema
+      schema.validateSync(userRegister);
+      return true; // Không có lỗi
+    } catch (error) {
+      return false; // Lỗi xác thực
     }
-    return 'Số điện thoại không hợp lệ.';
-    }),
-    password: useField('password', (value) => {
-      if (!value) {
-        return 'Mật khẩu không được để trống.';
-      } else if (value?.length >= 3) {
-        return true;
-      }
-      return 'Mật khẩu phải chứa ít nhất 3 ký tự.';
-    }),
-    confirmPassword: useField('confirmPassword', (value) => {
-      if (!value) {
-        return 'Xác nhận mật khẩu không được để trống.';
-        } else if (value !== userRegister.password.value) {
-        return 'Xác nhận mật khẩu không khớp';
-        }
-      return true;
-      }),
-    }); 
+  });
+  
+  watch(isValidForm, (newVal) => {
+    // Cập nhật trạng thái disabled dựa trên kết quả xác thực
+    isDisableGetCode.value = !newVal;
+    isDisableEmailCode.value = !newVal;
+  });
 
+  async function onSubmit(event) {
 
-
+  }
+  
+  return {
+    confirmCode,
+    userRegister,
+    schema,
+    isDisableGetCode,
+    isDisableEmailCode,
+    onSubmit
+  }
 
 }

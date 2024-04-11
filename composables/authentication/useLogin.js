@@ -7,7 +7,7 @@ export const useLogin = () => {
   const authAsync = useAuth();
 
 
-  const state = reactive({
+  const userLogin = reactive({
     email:'',
     password:''
   })
@@ -21,7 +21,7 @@ export const useLogin = () => {
   });
 
 
-  async function onSubmit(state){
+  async function onSubmit(userLogin){
     try {
       const response = await authAsync.login(state);
       router.replace('/home')
@@ -31,7 +31,7 @@ export const useLogin = () => {
   }
 
   return {
-    state,
+    userLogin,
     validation,
     onSubmit,
   }

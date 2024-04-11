@@ -5,10 +5,16 @@ export const login = data => {
   return Cinema.axiosClient.post(url, data)
 }
 
-// export const signUp = data => {
-//   const url = prefix + 'auth/register'
-//   return Cinema.axiosClient.post(url, data)
-//   }
+export const signUp = data => {
+  const url = prefix + 'auth/register'
+  return Cinema.axiosClient.post(url, data)
+  }
+
+export const senMail = data => {
+  const url = prefix + 'auth/send-mail'
+  return Cinema.axiosClient.post(url, data)
+  
+}
 
 // export const logOut = () => {
 //   const url = prefix + '/logout'
