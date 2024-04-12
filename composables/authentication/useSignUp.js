@@ -1,11 +1,11 @@
 import { useAuth } from '~/composables/authentication/useAuth';
 import * as Yup from 'yup';
+
 export const useSignup = () => {
   // const toast = useToast();
   // const router = useRouter();
 
   const authAsync = useAuth()
-  const confirmCode = ref('')
 
   const userRegister = reactive({
     fullName: '',
@@ -14,6 +14,7 @@ export const useSignup = () => {
     password: '',
     retypePassword: '',
     phoneNumber: '',
+    confirmCode: '',
   });
 
   const emailRegistered = reactive(false)
@@ -58,16 +59,42 @@ export const useSignup = () => {
   });
 
   async function onSubmit(event) {
+    try {
 
+      const data = {
+        userName:userRegister.fullName,
+        name:userRegister.name,
+        email:userRegister.email,
+        password:userRegister.password,
+        retypePassword:userRegister.retypePassword,
+        phoneNumber:userRegister.phoneNumber,
+        confirmCode:userRegister.confirmCode
+      }
+
+      const response = await authAsync.signUp(data)
+      alert(response.data)
+    } catch (error) {
+      alert(error.response.data)
+    }
   }
-  
+
+  async function sendCodeClick(e) {
+    try {
+      e.preventDefault();
+      const res = await authAsync.sendCodeToEmail(userRegister.email);
+      alert(res.data)
+    } catch (error) {
+      alert(error.response.data)
+    }
+  }
+
   return {
-    confirmCode,
     userRegister,
     schema,
     isDisableGetCode,
     isDisableEmailCode,
-    onSubmit
+    onSubmit,
+    sendCodeClick
   }
 
 }

@@ -6,5 +6,5 @@
 
 
 <template>
-    <Signup/>
+    <Login/>
 </template>

@@ -10,11 +10,12 @@ export const signUp = data => {
   return Cinema.axiosClient.post(url, data)
   }
 
-export const senMail = data => {
-  const url = prefix + 'auth/send-mail'
-  return Cinema.axiosClient.post(url, data)
+export const sendCodeToEmail = data => {
+  const url = prefix + 'auth/confirmEmail?email='
+  return Cinema.axiosClient.post(url + data)
   
 }
+
 
 // export const logOut = () => {
 //   const url = prefix + '/logout'

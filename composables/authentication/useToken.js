@@ -1,7 +1,44 @@
-
+import { AUTHENTICATION} from '../../constant'
 
 export const useToken = () => {
   const accessToken = useSyncCookieState({
-    cookieName
+    cookieName: AUTHENTICATION.ACCESS_TOKEN_COOKIE_NAME,
+    option: {
+      default: () => null,
+    },
   })
+
+  const timeExpiredAccess = useSyncCookieState({
+    cookieName: AUTHENTICATION.ACCESS_TOKEN_EXPIRED_COOKIE_NAME,
+  })
+
+  const refreshToken = useSyncCookieState({
+    cookieName: AUTHENTICATION.REFRESH_TOKEN_COOKIE_NAME,
+    option: {
+      default: () => null,
+      // maxAge: config.app.auth.refreshToken.maxAgeInSeconds,
+      // sameSite: config.app.auth.refreshToken.sameSiteAttribute,
+    },
+  })
+
+  const timeExpiredRefresh = useSyncCookieState({
+    cookieName: AUTHENTICATION.REFRESH_TOKEN_EXPIRED_COOKIE_NAME,
+  })
+
+
+  function handleSaveCookieAuth(data = {}) {
+
+    accessToken.value = data.token
+    timeExpiredAccess.value = data.timeExpiredToken
+    refreshToken.value = data.refreshToken
+    timeExpiredRefresh.value = data.timeExpiredRefresh
+  }
+
+  return {
+    accessToken,
+    timeExpiredAccess,
+    refreshToken,
+    timeExpiredRefresh,
+    handleSaveCookieAuth,
+  }
 }

@@ -68,7 +68,7 @@
       </div>
       <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-5 text-center form-signup mt-2">
             <UCard class="w-full mt-7">
-              
+
               <UForm :schema = "schema" :state="userRegister" class="space-y-4" @submit="onSubmit">
                 <div class ="row">
                   <div class="col-md-6 col-12 input-info-register">
@@ -112,7 +112,7 @@
                 <div class = "row">
                   <div class = "col-9 input-info-register">
                     <UFormGroup size="xl" class="" label="Mã xác thực" name="confirmCode">
-                      <UInput v-model="confirmCode"
+                      <UInput v-model="userRegister.confirmCode"
                       type = "number"
                       :maxLength = "6"
                       :disabled="isDisableEmailCode"
@@ -121,7 +121,7 @@
                     </UFormGroup>
                   </div>
                   <div class="col-3 input-info-register flex items-center">
-                    <UButton :disabled="isDisableGetCode" style="background:#fda085;color:#000">Get Code</UButton>
+                    <UButton :disabled="isDisableGetCode" @click ="sendCodeClick" style="background:#fda085;color:#000">Get Code</UButton>
                   </div>
                 </div>
 
@@ -150,13 +150,12 @@ import { useSignup } from '~/composables/authentication/useSignup';
 const signupData = useSignup();
  
 const {
-      confirmCode,
       userRegister,
       schema,
       isDisableGetCode,
       isDisableEmailCode,
-      onSubmit
-
+      onSubmit,
+      sendCodeClick
      } = signupData;
 
 const isShowPrivatePoli = ref(false);
