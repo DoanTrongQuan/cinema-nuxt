@@ -1,23 +1,21 @@
 
 import { defineStore } from "pinia";
 import { getAllCinema } from '~/repositories/cinema/dataCinemasRepo';
-let nameOfCinemaSessionStorage = '';
 
+// let nameOfCinemaSessionStorage = '';
+// // Kiểm tra xem có phải đang chạy trên client hay không
+// if (process.client) {
 
-// Kiểm tra xem có phải đang chạy trên client hay không
-if (process.client) {
-
-  nameOfCinemaSessionStorage = JSON.parse(sessionStorage.getItem('nameOfCinema'));
-} else {
-  // Nếu đang chạy trên server, không sử dụng sessionStorage
-  nameOfCinemaSessionStorage = 'Beta Mỹ Đình';
-}
-
+//   nameOfCinemaSessionStorage = JSON.parse(sessionStorage.getItem('nameOfCinema'));
+// } else {
+//   // Nếu đang chạy trên server, không sử dụng sessionStorage
+//   nameOfCinemaSessionStorage = 'Beta Mỹ Đình';
+// }
 export const useCinemaStore = defineStore({
   id: "cinemaStore",
 
   state: () => ({
-    nameOfCinema: nameOfCinemaSessionStorage,
+    nameOfCinema: (process.client && JSON.parse(sessionStorage.getItem('nameOfCinema'))) || 'Beta Mỹ Đình',
 
     cinemas: [
       { address: 'Hà Nội', children: [] },
@@ -40,7 +38,7 @@ export const useCinemaStore = defineStore({
         try {
             const address = cinema.address;
             const res = await getAllCinema(address);
-            cinema.children = res.data;
+            this.state.cinemas.children = res.data;
         } catch (error) {
             // console.error('Error:', error);
         }

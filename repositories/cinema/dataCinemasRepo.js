@@ -1,9 +1,10 @@
 import Cinema from '.'
-const prefix = 'cinema'
+const prefix = ''
 export const getAllCinema = ( address )=> {
-  const url = prefix + '/get-cinema-by-address?address='
+  const url = prefix + 'cinema/get-cinema-by-address?address='
   return Cinema.axiosClient.get(url + address);
 }
+
 // export const signUp = data => {
 //   const url = prefix + '/register'
 //   return Wealify.axiosClient.post(url, data)

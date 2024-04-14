@@ -21,14 +21,13 @@ export const useLogin = () => {
   });
 
 
-  async function onSubmit(userLogin){
+  async function onSubmit(event){
     try {
-      const response = await authAsync.login(userLogin);
-
-        
+      console.log(12334)
+      const response = await authAsync.login(event.data);
       router.replace('/home')
     } catch (error) {
-      
+      alert(error.response.data)
     }
   }
 

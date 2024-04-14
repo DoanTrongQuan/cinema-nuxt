@@ -58,7 +58,8 @@ export const useSignup = () => {
     isDisableEmailCode.value = !newVal;
   });
 
-  async function onSubmit(event) {
+  async function onSubmit() {
+    console.log(fadsfds)
     try {
 
       const data = {

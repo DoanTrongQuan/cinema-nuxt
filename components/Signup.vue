@@ -69,7 +69,7 @@
       <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-5 text-center form-signup mt-2">
             <UCard class="w-full mt-7">
 
-              <UForm :schema = "schema" :state="userRegister" class="space-y-4" @submit="onSubmit">
+              <UForm :schema = "schema" :state="userRegister" class="space-y-4" @submit="">
                 <div class ="row">
                   <div class="col-md-6 col-12 input-info-register">
                     <UFormGroup size="xl" class="" label="Tên đầy đủ" name="fullName">
@@ -159,5 +159,6 @@ const {
      } = signupData;
 
 const isShowPrivatePoli = ref(false);
+
 
 </script>

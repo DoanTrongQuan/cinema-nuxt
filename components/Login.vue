@@ -56,11 +56,11 @@
               <div class="row" style="margin:5px 5%; margin-top: 15px;">
                 <a href="https://hocmai.vn/loginv2/forgot_password.php" style="text-decoration: none;font-size:12px">Quên mật khẩu?</a>
               </div>
-                  <UButton   type = "submit"  style="color:white; font-size: 14px; font-weight:bold;
-                  background:#03a9f4; width:100%;height:45px; border-radius:20px; margin-left:0.2px;">ĐĂNG NHẬP</UButton>
+                  <button   type = "submit"  style="color:white; font-size: 14px; font-weight:bold;
+                  background:#03a9f4; width:100%;height:45px; border-radius:20px; margin-left:0.2px;">ĐĂNG NHẬP</button>
 
               <div class="row" style="background-image: linear-gradient(to right, #fc3606 0%, #fda085 51%, #fc7704 100%) !important; width:100%;height:45px; border-radius:20px; margin-left:0.2px; margin-top: 10px;">
-                <button type = "submit" style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG NHẬP VỚI FACEBOOK</button>
+                <button  style="color:white; font-size: 14px;line-height: 50px; font-weight:bold">ĐĂNG NHẬP VỚI FACEBOOK</button>
               </div>
               <div class="text-center">
                 Have an acccount?

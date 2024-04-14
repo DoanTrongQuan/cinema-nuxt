@@ -9,6 +9,9 @@
 </template>
 
 <scrip setup>
-    
+import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
+
+
+
 </scrip>
 

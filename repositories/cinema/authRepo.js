@@ -13,7 +13,6 @@ export const signUp = data => {
 export const sendCodeToEmail = data => {
   const url = prefix + 'auth/confirmEmail?email='
   return Cinema.axiosClient.post(url + data)
-  
 }
 
 

@@ -2,10 +2,49 @@
   <div class="header" style="position: sticky; top:0; z-index: 1000;">
     <div  style="background: black;">
         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-8" style="margin-left: auto !important; margin-right: auto !important; text-align: right;padding: 0;">
-            <div> 
-                <NuxtLink to="/login"><a href="" style="color: white;font-size: 15px;">Đăng nhập</a></NuxtLink>
-                <NuxtLink to="/login"><a href="" style="color: white;margin-left: 10px;" >Đăng ký</a></NuxtLink>
-            </div>
+          <div v-if="isLogin"> 
+            <v-menu class="menu-user" offset-y open-on-hover open-delay="1">
+                    <template v-slot:activator="{ props, on }">
+                      <span style="cursor: pointer; " v-bind="props" v-on="on">
+                        <v-chip link pill ripple style="color: white;">
+                          Xin chào: {{ userName }}                      
+                        </v-chip>
+                      </span>
+                    </template>
+                      <v-card
+                      class="mx-auto"
+                      width="250"
+                      >
+                      <v-layout>
+                        <v-navigation-drawer permanent absolute>
+                          <v-list
+                            :lines="false"
+                            density="compact"
+                            nav
+                          >
+                            <v-list-item
+                              v-for="(menu, i) in menusUser" @click="handleMenuUserClick(menu)"
+                              :key="i"
+                              :value="menu"
+                              color="primary"
+                            >
+                              <template v-slot:prepend>
+                                <v-icon :icon="menu.icon"></v-icon>
+                              </template>
+
+                              <v-list-item-title v-text="menu.text"></v-list-item-title>
+                            </v-list-item>
+                          </v-list>
+                        </v-navigation-drawer>
+                        <v-main style="height: 200px;"></v-main>
+                      </v-layout>
+                    </v-card>
+                  </v-menu>
+          </div>
+          <div v-else>
+            <NuxtLink to="/login"><a href="" style="color: white;font-size: 15px;">Đăng nhập</a></NuxtLink>
+            <NuxtLink to="/login"><a href="" style="color: white;margin-left: 10px;" >Đăng ký</a></NuxtLink>
+          </div>
         </div>  
     </div>
 
@@ -92,6 +131,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
+import { useAuth } from '~/composables/authentication/useAuth';
 
 import {
   CalendarOutlined,
@@ -99,11 +139,22 @@ import {
   SettingOutlined,
 } from '@ant-design/icons-vue';
 
-
+const router = useRouter()
 const store = useCinemaStore();
 const  { nameOfCinema , cinemas } = store;
 
+import { useToken } from '~/composables/authentication/useToken';
+const { accessToken } = useToken();
 
+import{ useProfile } from '~/composables/Profile/useProfile';
+const { userName } = useProfile();
+
+const { logout } = useAuth();
+
+
+const isLogin = computed(() => {
+  return Boolean(accessToken.value)
+})
 
 const menusUser = ref([
         { text: 'Thông tin cá nhân', icon: 'mdi-account'},
@@ -113,15 +164,18 @@ const menusUser = ref([
 
 
 
-const handleMenuItemClick = (menu) =>{
+const handleMenuUserClick = (menu) =>{
       if (menu.text === "Thông tin cá nhân") {
 
       }else if (menu.text === "Đổi mật khẩu"){
 
-      } else {
-          store.dispatch("auth/logout");
-          router.push('/');
+      } else {  
+        logout()
       }
+}
+
+const getNameCinema = (data) => {
+    
 }
 
 // const nameOfCinema = ref('')
