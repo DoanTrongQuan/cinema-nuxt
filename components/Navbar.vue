@@ -43,7 +43,7 @@
           </div>
           <div v-else>
             <NuxtLink to="/login"><a href="" style="color: white;font-size: 15px;">Đăng nhập</a></NuxtLink>
-            <NuxtLink to="/login"><a href="" style="color: white;margin-left: 10px;" >Đăng ký</a></NuxtLink>
+            <NuxtLink to="/signup"><a href="" style="color: white;margin-left: 10px;" >Đăng ký</a></NuxtLink>
           </div>
         </div>  
     </div>

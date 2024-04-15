@@ -1,7 +1,9 @@
 <script setup>
 definePageMeta({
+  middleware: 'my-middleware',
 
 })
+
 // const isShowHomePage = ref(true);
 const active = ref(false);
 

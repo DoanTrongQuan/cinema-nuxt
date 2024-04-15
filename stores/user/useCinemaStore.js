@@ -34,11 +34,11 @@ export const useCinemaStore = defineStore({
   getters: {},
   actions: {
     async getAllCinemas  ()  {
-      for (const cinema of this.state.cinemas) {
+      for (const cinema of this.cinemas) {
         try {
             const address = cinema.address;
             const res = await getAllCinema(address);
-            this.state.cinemas.children = res.data;
+            cinema.children = res.data; 
         } catch (error) {
             // console.error('Error:', error);
         }

@@ -7,12 +7,14 @@ export const useLogin = () => {
   const authAsync = useAuth();
 
 
-  const userLogin = reactive({
+
+  
+  const state = reactive({
     email:'',
     password:''
   })
   
-  const validation = Yup.object().shape({
+  const schema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
 
     password: Yup.string()
@@ -32,8 +34,8 @@ export const useLogin = () => {
   }
 
   return {
-    userLogin,
-    validation,
+    state,
+    schema,
     onSubmit,
   }
 }

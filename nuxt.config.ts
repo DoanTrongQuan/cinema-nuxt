@@ -1,11 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from 'nuxt/config'
+
 export default defineNuxtConfig({
   // ssr: true,
   devtools: { enabled: true },
 
   devServer: {
-    port: 8000,
+    port: 3000,
   },
   
   css: [
