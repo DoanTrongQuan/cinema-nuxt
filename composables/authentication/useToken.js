@@ -3,9 +3,7 @@ import { AUTHENTICATION} from '../../constant'
 export const useToken = () => {
   const accessToken = useSyncCookieState({
     cookieName: AUTHENTICATION.ACCESS_TOKEN_COOKIE_NAME,
-    option: {
-      default: () => null,
-    },
+
   })
 
   const timeExpiredAccess = useSyncCookieState({
@@ -14,11 +12,6 @@ export const useToken = () => {
 
   const refreshToken = useSyncCookieState({
     cookieName: AUTHENTICATION.REFRESH_TOKEN_COOKIE_NAME,
-    option: {
-      default: () => null,
-      // maxAge: config.app.auth.refreshToken.maxAgeInSeconds,
-      // sameSite: config.app.auth.refreshToken.sameSiteAttribute,
-    },
   })
 
   const timeExpiredRefresh = useSyncCookieState({

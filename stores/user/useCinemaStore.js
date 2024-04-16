@@ -1,26 +1,13 @@
 
 import { defineStore } from "pinia";
 import { getAllCinema } from '~/repositories/cinema/dataCinemasRepo';
-import { useSyncCookieState } from '~/composables/useSyncCookieState';
-// import {useSyncSessionStorageState} from '~/composables/useSyncSessionStorageState';
-
-// let nameOfCinemaSessionStorage = '';
-// // Kiểm tra xem có phải đang chạy trên client hay không
-// if (process.client) {
-
-//   nameOfCinemaSessionStorage = JSON.parse(sessionStorage.getItem('nameOfCinema'));
-// } else {
-//   // Nếu đang chạy trên server, không sử dụng sessionStorage
-//   nameOfCinemaSessionStorage = 'Beta Mỹ Đình';
-// }
-
+import { useSyncCookieState } from '~/composables/useSyncCookieState';// import {useSyncSessionStorageState} from '~/composables/useSyncSessionStorageState';
 
 export const useCinemaStore = defineStore({
   id: "cinemaStore",
-
   state: () => ({
-    // nameOfCinema: useCookie('nameOfCinema').value || 'Beta Mỹ Đình',
-    nameOfCinema: useSyncCookieState({ cookieName: 'nameOfCinema'}) || 'Beta Mỹ Đình',
+    // lấy giá trị từ cookie nếu không có thì mặc định là 'Beta Mỹ đình'
+    nameOfCinema:  useCookie('nameOfCinema').value || 'Beta Mỹ Đình',
 
     cinemas: [
       { address: 'Hà Nội', children: [] },
@@ -51,13 +38,11 @@ export const useCinemaStore = defineStore({
     },
     
     async setNameOfCinema (name) {
-      const cookie = useCookie('nameOfCinema');
       const expirationDate = new Date();
-      // Set expiration time in days (e.g., 7 days)
+      // hêt 5 phút sẽ xóa cookie dựa vào thuộc tính expires
       expirationDate.setTime(expirationDate.getTime() + (5 * 60 * 1000));
 
-      cookie.value = name;
-      cookie.expires = expirationDate; 
+      useCookie('nameOfCinema').value = name
       this.nameOfCinema = name;
       console.log(this.nameOfCinema);
     },

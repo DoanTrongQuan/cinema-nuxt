@@ -1,10 +1,7 @@
 
 <script setup>
-// import { useLogin } from '~/composables/authentication/useLogin'
-import { useResetCookies } from '~/composables/useResetCookies'
-// const {
-//   isOpenForgotPassword
-// } = useLogin()
+
+// import { useResetCookies } from '~/composables/useResetCookies'
 
 definePageMeta({
   middleware: 'my-middleware',
@@ -13,13 +10,13 @@ definePageMeta({
 const router = useRouter();
 router.replace('/home');
 
-onMounted(() => {
-      window.addEventListener('beforeunload', useResetCookies(nameOfCinema));
-    });
+// onMounted(() => {
+//       window.addEventListener('beforeunload', useResetCookies(nameOfCinema));
+//     });
 
-    onUnmounted(() => {
-      window.removeEventListener('beforeunload', useResetCookies(nameOfCinema));
-    });
+// onUnmounted(() => {
+//       window.removeEventListener('beforeunload', useResetCookies(nameOfCinema));
+//     });
 
 </script>
 
