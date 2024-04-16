@@ -1,7 +1,9 @@
 <template>
   <div class="header" style="position: sticky; top:0; z-index: 1000;">
     <div  style="background: black;">
-        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-8" style="margin-left: auto !important; margin-right: auto !important; text-align: right;padding: 0;">
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-8" 
+        style="margin-left: auto !important; margin-right: auto !important; 
+        text-align: right;padding: 0;">
           <div v-if="isLogin"> 
             <v-menu class="menu-user" offset-y open-on-hover open-delay="1">
                     <template v-slot:activator="{ props, on }">
@@ -81,7 +83,7 @@
                                   {{ cinema.address }}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                  <li v-for="(children, i) in cinema.children" :key="i"><a @click="getNameCinema(children)" class="dropdown-item" href="#">{{ children }}</a></li>
+                                  <li v-for="(children, i) in cinema.children" :key="i"><a @click="changeNameOfCinema(children)" class="dropdown-item" href="#">{{ children }}</a></li>
                                 </ul>
                               </div>
                             </li>
@@ -140,8 +142,18 @@ import {
 } from '@ant-design/icons-vue';
 
 const router = useRouter()
+const route = useRoute()
+
 const store = useCinemaStore();
-const  { nameOfCinema , cinemas } = store;
+
+
+
+const cinemas = computed(() => {
+  return store.cinemas;
+})
+const nameOfCinema = computed(() => {
+  return store.nameOfCinema;
+})
 
 import { useToken } from '~/composables/authentication/useToken';
 const { accessToken } = useToken();
@@ -174,11 +186,13 @@ const handleMenuUserClick = (menu) =>{
       }
 }
 
-const getNameCinema = (data) => {
-    
-}
 
-// const nameOfCinema = ref('')
+const changeNameOfCinema = (data) => {
+  store.setNameOfCinema(data)
+  if(route.fullPath != '/login' || route.fullPath != '/signup' || route.fullPath != '/home'){
+     router.replace('/home')
+  }  
+}
 
   const navigation = ref([
     { name: 'LỊCH CHIẾU THEO RẠP', href: '#' },

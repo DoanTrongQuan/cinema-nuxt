@@ -1,4 +1,5 @@
 <script setup>
+import { useResetCookies } from '~/composables/useResetCookies'
 definePageMeta({
   middleware: 'my-middleware',
 
@@ -76,6 +77,10 @@ const openDialogTrailer = (movieTrailer) => {
     currentMovieTrailer.value = movieTrailer;
 };
 
+
+onBeforeUnmount(()=> {
+    // useResetCookies(nameOfCinema)
+})
 </script>
 
 <template>

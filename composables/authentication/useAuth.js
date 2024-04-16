@@ -12,8 +12,13 @@ export const useAuth = () => {
     //xóa lại tất cả giá trị trong cookie về rỗng
     handleSaveCookieAuth({})
     handleSaveCookieProfile({})
-    alert('logout thành công')
+    // alert('logout thành công')
   }
+
+  onBeforeUnmount(() => {
+    
+  }
+)
 
   return {
     async login(formData) {

@@ -15,6 +15,10 @@ export const sendCodeToEmail = data => {
   return Cinema.axiosClient.post(url + data)
 }
 
+export const resetPassword = data => {
+  const url = prefix + 'auth/forgot-password'
+  return Cinema.axiosClient.put(url, data)
+}
 
 // export const logOut = () => {
 //   const url = prefix + '/logout'

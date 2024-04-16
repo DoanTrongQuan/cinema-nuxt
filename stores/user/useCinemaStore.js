@@ -1,6 +1,8 @@
 
 import { defineStore } from "pinia";
 import { getAllCinema } from '~/repositories/cinema/dataCinemasRepo';
+import { useSyncCookieState } from '~/composables/useSyncCookieState';
+// import {useSyncSessionStorageState} from '~/composables/useSyncSessionStorageState';
 
 // let nameOfCinemaSessionStorage = '';
 // // Kiểm tra xem có phải đang chạy trên client hay không
@@ -11,11 +13,14 @@ import { getAllCinema } from '~/repositories/cinema/dataCinemasRepo';
 //   // Nếu đang chạy trên server, không sử dụng sessionStorage
 //   nameOfCinemaSessionStorage = 'Beta Mỹ Đình';
 // }
+
+
 export const useCinemaStore = defineStore({
   id: "cinemaStore",
 
   state: () => ({
-    nameOfCinema: (process.client && JSON.parse(sessionStorage.getItem('nameOfCinema'))) || 'Beta Mỹ Đình',
+    // nameOfCinema: useCookie('nameOfCinema').value || 'Beta Mỹ Đình',
+    nameOfCinema: useSyncCookieState({ cookieName: 'nameOfCinema'}) || 'Beta Mỹ Đình',
 
     cinemas: [
       { address: 'Hà Nội', children: [] },
@@ -43,7 +48,18 @@ export const useCinemaStore = defineStore({
             // console.error('Error:', error);
         }
     }
-    }
+    },
     
+    async setNameOfCinema (name) {
+      const cookie = useCookie('nameOfCinema');
+      const expirationDate = new Date();
+      // Set expiration time in days (e.g., 7 days)
+      expirationDate.setTime(expirationDate.getTime() + (5 * 60 * 1000));
+
+      cookie.value = name;
+      cookie.expires = expirationDate; 
+      this.nameOfCinema = name;
+      console.log(this.nameOfCinema);
+    },
   }
 });
