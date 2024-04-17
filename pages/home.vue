@@ -1,86 +1,104 @@
 <script setup>
-import { useResetCookies } from '~/composables/useResetCookies'
+import { useMovie } from '~/composables/Movie/useMovie'
+// import { useHomePage } from '~/composables/useHomePage'
 definePageMeta({
   middleware: 'my-middleware',
-
 })
+const router = useRouter()
+const {
+    movies,
+    isShowIconPlay,
+    isShowOverlay,
+    showIconPlayAndOverlay,
+    isShowTrailer,
+    currentMovieTrailer,
+    openDialogTrailer
+} = useMovie()
 
-// const isShowHomePage = ref(true);
+
+// const { showMovieDetail } = useHomePage()
+
+const showMovieDetail = (data) => {
+        console.log(data)
+      router.push('/login');
+    }
+
+
 const active = ref(false);
 
 const tab = ref(null);
 const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/03/1702x621-095427-030424-60.png' }, { linkImage: '/img/movie_galaxy.jpg' }]);
 
-const movies = ref([
-{
-          movieId: 1,
-          movieName: "rfetgfr",
-          movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-          movieDuration: 120,
-          movieTrailer: "fdrfdsrf",
-          movieTypeName: "fdfas",
-          movieDescription: "dsfrsdfds",
-          movieDirector: "dwrwer",
-          movieLanguage: "edasfsdf",
-          moviePremiereDate: "20-10-2020"
-        },
-        {
-          movieId: 2,
-          movieName: "rfetgfr",
-          movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-          movieDuration: 120,
-          movieTrailer: "fdrfdsrf",
-          movieTypeName: "fdfas",
-          movieDescription: "dsfrsdfds",
-          movieDirector: "dwrwer",
-          movieLanguage: "edasfsdf",
-          moviePremiereDate: "20-10-2020"
-        },
-        {
-          movieId: 3,
-          movieName: "rfetgfr",
-          movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-          movieDuration: 120,
-          movieTrailer: "fdrfdsrf",
-          movieTypeName: "fdfas",
-          movieDescription: "dsfrsdfds",
-          movieDirector: "dwrwer",
-          movieLanguage: "edasfsdf",
-          moviePremiereDate: "20-10-2020"
-        },
-        {
-          movieId: 4,
-          movieName: "rfetgfr",
-          movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-          movieDuration: 120,
-          movieTrailer: "fdrfdsrf",
-          movieTypeName: "fdfas",
-          movieDescription: "dsfrsdfds",
-          movieDirector: "dwrwer",
-          movieLanguage: "edasfsdf",
-          moviePremiereDate: "20-10-2020"
-        },
-])
+// const movies = ref([
+// {
+//           movieId: 1,
+//           movieName: "rfetgfr",
+//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
+//           movieDuration: 120,
+//           movieTrailer: "fdrfdsrf",
+//           movieTypeName: "fdfas",
+//           movieDescription: "dsfrsdfds",
+//           movieDirector: "dwrwer",
+//           movieLanguage: "edasfsdf",
+//           moviePremiereDate: "20-10-2020"
+//         },
+//         {
+//           movieId: 2,
+//           movieName: "rfetgfr",
+//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
+//           movieDuration: 120,
+//           movieTrailer: "fdrfdsrf",
+//           movieTypeName: "fdfas",
+//           movieDescription: "dsfrsdfds",
+//           movieDirector: "dwrwer",
+//           movieLanguage: "edasfsdf",
+//           moviePremiereDate: "20-10-2020"
+//         },
+//         {
+//           movieId: 3,
+//           movieName: "rfetgfr",
+//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
+//           movieDuration: 120,
+//           movieTrailer: "fdrfdsrf",
+//           movieTypeName: "fdfas",
+//           movieDescription: "dsfrsdfds",
+//           movieDirector: "dwrwer",
+//           movieLanguage: "edasfsdf",
+//           moviePremiereDate: "20-10-2020"
+//         },
+//         {
+//           movieId: 4,
+//           movieName: "rfetgfr",
+//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
+//           movieDuration: 120,
+//           movieTrailer: "fdrfdsrf",
+//           movieTypeName: "fdfas",
+//           movieDescription: "dsfrsdfds",
+//           movieDirector: "dwrwer",
+//           movieLanguage: "edasfsdf",
+//           moviePremiereDate: "20-10-2020"
+//         },
+// ])
 
-const isShowIconPlay = ref(Array(movies.length).fill(false));
-const isShowOverlay = ref(Array(movies.length).fill(false));
+// const movies = computed(()=> {
+//     return store.movies
+// })
+// const isShowIconPlay = ref(Array(movies.length).fill(false));
+// const isShowOverlay = ref(Array(movies.length).fill(false));
 
-const showIconPlayAndOverlay = (i, value) => {
-    isShowIconPlay.value[i] = value;
-    isShowOverlay.value[i] = value;
-};
-const isShowTrailer = ref(false);
-const currentMovieTrailer = ref('');
+// const showIconPlayAndOverlay = (i, value) => {
+//     isShowIconPlay.value[i] = value;
+//     isShowOverlay.value[i] = value;
+// };
+// const isShowTrailer = ref(false);
+// const currentMovieTrailer = ref('');
 
-const openDialogTrailer = (movieTrailer) => {
-    isShowTrailer.value = true;
-    currentMovieTrailer.value = movieTrailer;
-};
+// const openDialogTrailer = (movieTrailer) => {
+//     isShowTrailer.value = true;
+//     currentMovieTrailer.value = movieTrailer;
+// };
 
 
-onBeforeUnmount(()=> {
-    // useResetCookies(nameOfCinema)
-})
 </script>
 
 <template>
@@ -145,10 +163,10 @@ onBeforeUnmount(()=> {
                                                 </div>
                                                 <div class="col-lg-12 col-6" style="padding-top: 5px; padding-bottom: 0">
                                                     <h5 class="card-title" style="color: #337ab7; font-weight: 700">{{ movie.movieName }}</h5>
-                                                    <p class="card-text"><span style="font-weight: 700">Thể loại: </span>{{ movie.movieTypeName }}</p>
+                                                    <p  class="card-text" style="font-weight: 700">Thể loại:
+                                                        <span v-for = "(movieType, j) in movie.movieTypeName" :key="j" >{{ movieType }}</span></p>
                                                     <p class="card-text"><span style="font-weight: 700">Thời lượng: </span>{{ movie.movieDuration }} phút</p>
-
-                                                        <a href="#" class="btn" @click="showMovieDetail(movie)" style="width: 100%">MUA VÉ</a>
+                                                        <NuxtLink :to="`/movie/${movie.slug}`"><a href="#" class="btn" @click="showMovieDetail(movie)" style="width: 100%">MUA VÉ</a></NuxtLink>
                                                 </div>
                                             </div>
                                         </div>

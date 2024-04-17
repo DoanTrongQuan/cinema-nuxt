@@ -1,8 +1,16 @@
 
 export const useHomePage = () => {
-    const accessToken = useSyncCookieStatement ({
-      cookieName: 
-    })
+    const router = useRouter()
+
+    const showMovieDetail = (event) => {
+      event.preventDefault();
+      const slug = event.data.slug;
+      router.push(`/movie/${slug}`);
+    }
+    return {
+      showMovieDetail,
+    }
+    
+  }
 
 
-}

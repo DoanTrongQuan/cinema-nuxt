@@ -133,6 +133,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
+import { useMovieStore } from "@/stores/user/useMovieStore.js";
 import { useAuth } from '~/composables/authentication/useAuth';
 
 import {
@@ -189,6 +190,9 @@ const handleMenuUserClick = (menu) =>{
 
 const changeNameOfCinema = (data) => {
   store.setNameOfCinema(data)
+  //sau khi tên rạp thay đổi thì lập tức gọi api để lấy list phim của rạp đó
+  useMovieStore().getAllMovieByCinema(nameOfCinema.value)
+
   if(route.fullPath != '/login' || route.fullPath != '/signup' || route.fullPath != '/home'){
      router.replace('/home')
   }  
