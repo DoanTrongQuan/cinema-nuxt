@@ -54,7 +54,7 @@ export default defineNuxtConfig({
 
   modules: [
    '@nuxt/ui',
-   '@ant-design-vue/nuxt', 
+   '@ant-design-vue/nuxt',   
    "@vuesax-alpha/nuxt",
    '@vee-validate/nuxt',
    '@pinia/nuxt',

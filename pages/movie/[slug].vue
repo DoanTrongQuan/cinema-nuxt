@@ -1,18 +1,8 @@
 <template>
   <div>
     <div class="relative bg-black flex justify-center w-full h-full">
-      <!-- <div class="absolute w-full h-full z-[300] bg-[#0003]"></div> -->
+      <div class="absolute w-full h-full z-[300] bg-[#0003]"></div>
       <div class="relative h-full">
-        <!-- <div class="absolute top-0 -left-[0%] z-100 lg:block hidden">
-          <img
-            class="w-full lg:h-[500px] object-cover"
-            decoding="async"
-            loading="lazy"
-            style="color: transparent"  
-            src="https://www.galaxycine.vn/_next/static/media/blur-left.7a4f1851.png"
-            alt=""
-          />
-        </div> -->
         <div class="relative">
           <img
             loading="lazy"
@@ -57,9 +47,9 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-1 screen1200:grid-cols-7 my-0 mx-auto screen1390:max-w-screen-xl xl:max-w-screen-screen1200 lg:max-w-4xl md:max-w-4xl gap-8 py-7 md:px-4 px-4"
+      class="grid grid-cols-1 lg:grid-cols-9 my-0 mx-auto  xl:max-w-7xl lg:max-w-5xl md:max-w-4xl gap-8 py-7 md:px-4 px-4"
     >
-      <div class="book__left lg:col-span-5 w-full">
+      <div class="book__left lg:col-span-6 w-full">
         <div class="book__film flex flex-col">
           <div class="movie__info relative md:grid hidden grid-cols-3 md:gap-5 gap-3 lg:items-end">
             <div
@@ -434,12 +424,90 @@
             </div>
           </div>
           <div class="movie__gallery"></div>
+          <div class = "movie__showtime">
+            <div class = "movie__showtime-header">
+              <span class ="border-l-4 border-solid border-blue-10 mr-2"></span>
+              <h1 class = "mb-4 text-base inline-block capitalize font-bold">Lịch chiếu</h1>
+            </div>
+            <div class = "overflow-auto">
+              <v-card>
+                    <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="center">
+                        <v-tab v-for="(schedule, i) in tabSchedule" :key="i" :value="i">
+                            <h5 class="title">
+                              {{ schedule }}
+                            </h5>
+                        </v-tab>
+
+                    </v-tabs>
+                    <v-window v-model="tab">
+                        <v-window-item  :value ="1">
+                            <v-container>
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-3 col-4">
+                                        <h1>đây là lịch 1 </h1>
+                                    </div>
+                                </div>
+                            </v-container>
+                        </v-window-item>
+                        <v-window-item  :value ="2">
+                            <v-container>
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-3 col-4">
+                                        <h1>đây là lịch 2 </h1>
+                                    </div>
+                                </div>
+                            </v-container>
+                        </v-window-item>
+                    </v-window>
+                </v-card>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="hidden screen1200:block lg:col-span-2 w-full overflow-hidden"></div>
+
+      <div class = "lg:col-span-3 w-full overflow-auto">
+        <div class = "mt-4">
+          <span class = "border-l-4 border-solid border-blue-10 mr-2"></span>
+          <h1 class = "text-xl inline-block uppercase font-semibold">TƯƠNG TỰ</h1>
+        </div>
+        <div class = "movie_content ">
+          <ul class = "flex flex-col  justify-between">
+            <li class = "text-sm text-black py-1 transition-all duration-300">
+              <div class = "inline-block whitespace-nowrap relative max-w-full w-[400px] h-[250px]">
+                <div class = "inline-block cursor-pointer rounded card__movies max-w-full false ">
+                  <div class="object-cover rounded relative card__img max-w-full">
+                    <div class="absolute hidden md:block w-full h-full z-100 cursor-pointer bg-[#00000080] transition-all duration-300 ease-in-out opacity-0 hover:opacity-100">
+                        <div class="card__hover__content flex flex-col justify-center items-center w-full h-full">
+                            <a type="button" class="text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]">
+                                Mua vé
+                            </a>
+                        </div>
+                    </div>
+                    <img class ="z-9" src="/img/image.png" alt="">
+                    
+                  </div>
+
+                </div>
+                <div class ="Card_card__title__kFoFc mt-2">
+                  <a href="" class ="text-sm font-semibold not-italic w-[400px]">Cái giá của hạnh phúc</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script setup>
+import { useMovie } from '~/composables/Movie/useMovie'
+
+const { tabSchedule } = useMovie();
+
+const tab = ref(null)
 </script>
+
+<style>
+</style>
