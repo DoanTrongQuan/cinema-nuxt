@@ -7,7 +7,7 @@
   
 //   try {
 //     await cinemaStore.getAllCinemas(); 
-//     await movieStore.getAllMovieByCinema(cinemaStore.nameOfCinema)
+//     await movieStore.getMovieDetail()
 //   } catch (error) {
 //     console.error('Error fetching cinema data:', error);
 //     router.replace('/error'); 

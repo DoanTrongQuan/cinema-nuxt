@@ -58,11 +58,27 @@ export default defineNuxtConfig({
    "@vuesax-alpha/nuxt",
    '@vee-validate/nuxt',
    '@pinia/nuxt',
+   'nuxt-socket-io'
   ],
+
+  io: {
+    // module options
+    sockets: [{
+      name: 'main',
+      url: 'http://localhost:3000'
+    }]
+  },
 
   vuesaxAlpha: {
     /** Options */
   },
+  app: {
+    head: {
+        script: [
+            {children: 'var global = window;'}
+        ]
+    }
+},
 
   runtimeConfig: {
     app: {

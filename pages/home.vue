@@ -19,8 +19,8 @@ const {
 // const { showMovieDetail } = useHomePage()
 
 const showMovieDetail = (data) => {
-        console.log(data)
-      router.push('/login');
+        // console.log(data)
+    //   router.push('/login');
     }
 
 

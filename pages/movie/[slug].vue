@@ -1,5 +1,46 @@
 <template>
   <div>
+    <div>
+            <vs-dialog 
+            v-model="isShowConfirmSelectSchedule "
+            width="700px"  not-center>
+                <template #header>
+                    <h4 style="margin-top: 20px;">BẠN ĐANG <b>ĐẶT VÉ</b> XEM PHIM</h4>
+                </template>
+
+                <div class="con-content" style="width: 100%;height: 180px">
+                    <h1 class="text-center" 
+                    style="border-bottom: 1px solid #f4f4f4;
+                    color: #03599d;font-size: 33px;font-family: sans-serif;
+                    font-weight: 600 !important;">{{ movieName }}</h1>
+                    <v-table style="height: 100%;">
+                        <thead style="height: 50%;">
+                        <tr>
+                            <th class="text-center"><h4>Rạp chiếu</h4></th>                                                   
+                            <th class="text-center"><h4>Ngày chiếu</h4></th>                                                
+                            <th class="text-center"><h4>Giờ chiếu</h4></th>                                                      
+                        </tr>
+                        </thead>
+                        <tbody style="height: 100%;background-color: #eaeaea;margin-top: 15px;">
+                        <tr>
+                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ nameOfCinema }}</h3></td>
+                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ schedule }}</h3></td>
+                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ startAt }}</h3></td>
+                        </tr>
+                        </tbody>
+                    </v-table>
+                </div>
+                <template #footer>
+                    <div style="display: flex; justify-content: center !important;">
+                    <vs-button 
+                     style="font-size: 20px !important;
+                     font-weight: 500 !important;
+                     font-family: sans-serif;"
+                     type="transparent" @click="showPageSelectSeat"> ĐỒNG Ý </vs-button>
+                    </div>
+                </template>
+            </vs-dialog>
+        </div>
     <div class="relative bg-black flex justify-center w-full h-full">
       <div class="absolute w-full h-full z-[300] bg-[#0003]"></div>
       <div class="relative h-full">
@@ -70,7 +111,7 @@
             <div class="col-span-2 lg:-translate-y-20 flex flex-col justify-end md:-translate-y-16 -translate-y-0">
               <div class="item__title flex items-center">
                 <h1 class="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-black-10 mr-4">
-                  Biệt Đội Săn Ma: Kỷ Nguyên Băng Giá
+                 {{  movieDetail.name }}
                 </h1>
                 <span
                   class="inline-flex items-center justify-center w-[38px] h-7 bg-primary rounded text-sm text-center text-white font-bold not-italic"
@@ -85,7 +126,8 @@
                       fill="#F58020"
                     ></path>
                   </svg>
-                  <span>115 Phút</span>
+                  <span>{{movieDetail.duration}} Phút</span>
+                  <button @click = "check">check</button>
                 </div>
                 <div class="text-sm ml-4 flex items-center font-semibold not-italic">
                   <svg width="12" height="14" viewBox="0 0 12 14" fill="none" class="inline-block align-baseline mr-1">
@@ -94,7 +136,7 @@
                       fill="#F58020"
                     ></path>
                   </svg>
-                  <span>10/04/2024</span>
+                  <span>{{ movieDetail.startDate }}</span>
                 </div>
               </div>
               <div class="mt-2">
@@ -114,11 +156,11 @@
                       d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
                     ></path>
                   </svg>
-                  <span class="inline-block mr-1">0.0</span>
+                  <span class="inline-block mr-1">{{ movieDetail.vote }}</span>
                   <span class="inline-block text-sm text-grey-40 hover:text-primary transition duration-500 ease-in-out"
                     >(
                     <!-- -->
-                    0 votes
+                    {{ movieDetail.totalVote }} votes
                     <!-- -->
                     )</span
                   >
@@ -127,7 +169,7 @@
               <div class="flex flex-col gap-1">
                 <div class="flex flex-nowrap text-sm">
                   <span class="inline-block h-8 py-[6px] text-grey-40"
-                    >Quốc gia
+                    >{{ movieDetail.language}}
                     <!-- -->
                     :</span
                   >
@@ -152,25 +194,11 @@
                     :</span
                   >
                   <ul class="ml-2 flex flex-wrap gap-1 flex-1">
-                    <li class="inline-block">
+                    <li v-for ="(type,i) in movieDetail.movieType" :key="i" class="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
                         href="/dien-anh/hai/"
-                        >Hài</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-anh/gia-tuong/"
-                        >Giả Tưởng</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-anh/phieu-luu/"
-                        >Phiêu lưu</a
+                        >{{ type }}</a
                       >
                     </li>
                   </ul>
@@ -186,7 +214,7 @@
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
                         href="/dao-dien/gil-kenan/"
-                        >Gil Kenan</a
+                        >{{ movieDetail.directors }}</a
                       >
                     </li>
                   </ul>
@@ -198,32 +226,11 @@
                     :</span
                   >
                   <ul class="ml-2 flex flex-wrap gap-1 flex-1">
-                    <li class="inline-block">
+                    <li v-for = "(actor,i) in movieDetail.actors" :key="i" class="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
                         href="/dien-vien/paul-rudd/"
-                        >Paul Rudd</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-vien/mckenna-grace/"
-                        >Mckenna Grace</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-vien/annie-potts/"
-                        >Annie Potts</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-vien/bill-murray/"
-                        >Bill Murray</a
+                        >{{ actor }}</a
                       >
                     </li>
                   </ul>
@@ -247,7 +254,7 @@
               <div class="col-span-2 flex flex-col justify-center">
                 <div class="item__title flex items-center">
                   <h1 class="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-black-10 mr-4">
-                    Biệt Đội Săn Ma: Kỷ Nguyên Băng Giá
+                    {{ movieDetail.name }}
                   </h1>
                   <span
                     class="inline-flex items-center justify-center w-[38px] h-7 bg-primary rounded text-sm text-center text-white font-bold not-italic"
@@ -268,7 +275,7 @@
                         fill="#F58020"
                       ></path>
                     </svg>
-                    <span>115 Phút</span>
+                    <span>{{ movieDetail.duration }} Phút</span>
                   </div>
                   <div class="text-sm ml-4 flex items-center font-semibold not-italic">
                     <svg
@@ -283,7 +290,7 @@
                         fill="#F58020"
                       ></path>
                     </svg>
-                    <span>10/04/2024</span>
+                    <span>{{ movieDetail.startDate }}</span>
                   </div>
                 </div>
                 <div class="mt-2">
@@ -303,11 +310,11 @@
                         d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
                       ></path>
                     </svg>
-                    <span class="inline-block mr-1">0.0</span>
+                    <span class="inline-block mr-1">{{ movieDetail.vote }}</span>
                     <span class="inline-block text-sm text-grey-40"
                       >(
                       <!-- -->
-                      0 votes
+                      {{ movieDetail.totalVote }} votes
                       <!-- -->
                       )</span
                     >
@@ -319,7 +326,7 @@
                     <!-- -->
                     :</span
                   >
-                  <span class="inline-block h-8 ml-4 py-[6px] capitalize not-italic">Mỹ</span>
+                  <span class="inline-block h-8 ml-4 py-[6px] capitalize not-italic">{{ movieDetail.language }}</span>
                 </div>
               </div>
             </div>
@@ -344,27 +351,14 @@
                     :</span
                   >
                   <ul class="ml-2 flex flex-wrap gap-1 flex-1">
-                    <li class="inline-block">
+                    <li v-for ="(type,i) in movieDetail.movieType" :key="i" lass="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
                         href="/dien-anh/hai/"
-                        >Hài</a
+                        >{{ type }}</a
                       >
                     </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-anh/gia-tuong/"
-                        >Giả Tưởng</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-anh/phieu-luu/"
-                        >Phiêu lưu</a
-                      >
-                    </li>
+                  
                   </ul>
                 </div>
                 <div class="flex flex-nowrap items-center text-sm">
@@ -378,7 +372,7 @@
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
                         href="/dao-dien/gil-kenan/"
-                        >Gil Kenan</a
+                        >{{ movieDetail.directors }}</a
                       >
                     </li>
                   </ul>
@@ -390,34 +384,14 @@
                     :</span
                   >
                   <ul class="ml-2 flex flex-wrap gap-1 flex-1">
-                    <li class="inline-block">
+                    <li v-for = "(actor,i) in movieDetail.actors" :key="i" class="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
                         href="/dien-vien/paul-rudd/"
-                        >Paul Rudd</a
+                        >{{ actor }}</a
                       >
                     </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-vien/mckenna-grace/"
-                        >Mckenna Grace</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-vien/annie-potts/"
-                        >Annie Potts</a
-                      >
-                    </li>
-                    <li class="inline-block">
-                      <a
-                        class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
-                        href="/dien-vien/bill-murray/"
-                        >Bill Murray</a
-                      >
-                    </li>
+                  
                   </ul>
                 </div>
               </div>
@@ -432,28 +406,28 @@
             <div class = "overflow-auto">
               <v-card>
                     <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="center">
-                        <v-tab v-for="(schedule, i) in tabSchedule" :key="i" :value="i">
+                        <v-tab v-for="(schedule, i) in schedules" :key="i" :value="i">
                             <h5 class="title">
-                              {{ schedule }}
+                              {{ formatDay(schedule.day) }}
                             </h5>
                         </v-tab>
 
                     </v-tabs>
                     <v-window v-model="tab">
-                        <v-window-item  :value ="1">
+                        <v-window-item v-for = "(schedule,n) in schedules" :key="n" :value ="n">
                             <v-container>
                                 <div class="row">
-                                    <div class="col-md-2 col-sm-3 col-4">
-                                        <h1>đây là lịch 1 </h1>
+                                    <div v-for = "(start,j) in schedule.scheduleByDayDTOSet" :key = "j" class="col-md-2 col-sm-3 col-4">
+                                      <div @click ="showConfirmSelectSchedule(schedule.day,start.startAt )" style="width: 100%;height:30px;
+                                    background-color: #E5E5E5;color: #333333;
+                                    font-size: 14px;padding: 5px 14px;display: flex; 
+                                    align-items: center;justify-content: center;">
+                                        {{ start.startAt }}
                                     </div>
-                                </div>
-                            </v-container>
-                        </v-window-item>
-                        <v-window-item  :value ="2">
-                            <v-container>
-                                <div class="row">
-                                    <div class="col-md-2 col-sm-3 col-4">
-                                        <h1>đây là lịch 2 </h1>
+                                    <p style="font-size: 12px;padding-top: 5px;
+                                    font-family: sans-serif;font-weight: 600;display: flex;
+                                    justify-content: center;">
+                                    {{ start.capacity }} ghế trống</p>
                                     </div>
                                 </div>
                             </v-container>
@@ -502,9 +476,57 @@
 </template>
 
 <script setup>
-import { useMovie } from '~/composables/Movie/useMovie'
+import { useMovieStore } from '~/stores/user/useMovieStore';
+import { useCinemaStore } from '~/stores/user/useCinemaStore';
+import { useRoute } from 'vue-router';
 
-const { tabSchedule } = useMovie();
+
+const movieDetail = computed(() => {
+  return useMovieStore().movieDetail;
+})
+const schedules = computed(() => {
+  return useMovieStore().schedules;
+})
+
+useMovieStore().getScheduleByMovie(useRoute().params.slug)
+
+const { data, error } = await useAsyncData('movieDetail', async() => {
+  const res = await useMovieStore().getMovieDetail(useRoute().params.slug)
+  return await res.data
+})
+
+const check = () => {
+  console.log(data)
+}
+const formatDay = (dateString) =>{
+  const daysOfWeek = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+    const parts = dateString.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = new Date().getFullYear(); // Lấy năm hiện tại
+    const date = new Date(year, parseInt(month) - 1, parseInt(day)); // Tạo đối tượng Date từ ngày tháng
+    const dayOfWeek = date.getDay(); // Lấy thứ của ngày
+    const formattedDate = `${daysOfWeek[dayOfWeek]} ${day}/${month}`; // Kết hợp thứ và ngày tháng
+    return formattedDate;
+    }
+const getDayOfWeek = (day, month) => {
+        const year = new Date().getFullYear(); // Lấy năm hiện tại
+        const date = new Date(year, parseInt(month) - 1, parseInt(day)); // Tạo đối tượng Date từ ngày tháng
+        return date.getDay(); // Trả về index của ngày trong tuần (0: Chủ nhật, 1: Thứ hai, ...)
+    }
+
+const isShowConfirmSelectSchedule = ref(false)
+const nameOfCinema = computed(() => {
+  return useCinemaStore().nameOfCinema;
+})
+const schedule = ref('')
+const startAt = ref('')
+const showConfirmSelectSchedule = (day,time) => {
+  console.log(time)
+  isShowConfirmSelectSchedule.value = true
+  schedule.value = day
+  startAt.value = time
+}
 
 const tab = ref(null)
 </script>
