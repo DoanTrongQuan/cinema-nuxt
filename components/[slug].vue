@@ -418,7 +418,7 @@
                             <v-container>
                                 <div class="row">
                                     <div v-for = "(start,j) in schedule.scheduleByDayDTOSet" :key = "j" class="col-md-2 col-sm-3 col-4">
-                                      <div @click ="showConfirmSelectSchedule(schedule.day,start.startAt )" style="width: 100%;height:30px;
+                                      <div @click ="showConfirmSelectSchedule(schedule.day,start.startAt,start.scheduleId)" style="width: 100%;height:30px;
                                     background-color: #E5E5E5;color: #333333;
                                     font-size: 14px;padding: 5px 14px;display: flex; 
                                     align-items: center;justify-content: center;">
@@ -521,7 +521,10 @@ const nameOfCinema = computed(() => {
 })
 const schedule = ref('')
 const startAt = ref('')
-const showConfirmSelectSchedule = (day,time) => {
+const schedule = ref('')
+
+const showConfirmSelectSchedule = (day,time, scheduleId) => {
+  
   console.log(time)
   isShowConfirmSelectSchedule.value = true
   schedule.value = day
