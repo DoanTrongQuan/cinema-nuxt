@@ -61,13 +61,13 @@ export default defineNuxtConfig({
    'nuxt-socket-io'
   ],
 
-  io: {
-    // module options
-    sockets: [{
-      name: 'main',
-      url: 'http://localhost:3000'
-    }]
-  },
+  // io: {
+  //   // module options
+  //   sockets: [{
+  //     name: 'main',
+  //     url: 'http://localhost:8089'
+  //   }]
+  // },
 
   vuesaxAlpha: {
     /** Options */
