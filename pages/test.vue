@@ -1,69 +1,94 @@
 <template>
+  <div id="main-content">
+    <div>
+        <button @click="connect">Connect</button>
+        <button style="margin-left: 20%;" @click.prevent="disconnect">Disconect</button>
+        <div>
+          <label>What is your name?</label> 
+          <input type="text" v-model="content" placeholder="Your name here...">
+        </div>
+          <button id="send" @click.prevent="sendMessage">Send</button>
+          
+    </div>
+  </div>
   <div>
-    <input v-model="send_message" type="text" />
-    <button @click="send">Send</button>
-    <br/>
-    <button @click="tickleConnection">
-      {{ connected ? 'Disconnect' : 'Connect' }}
-    </button>
-    <ul>
-      <li v-for="(message, index) in received_messages" :key="index">
-        {{ message }}
-      </li>
-    </ul>
+    <label>Message from server: </label><span>{{ message }}</span>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import SockJS from 'sockjs-client';
-import Stomp from 'webstomp-client';
+// import SockJS from 'sockjs-client';
+// import Stomp from 'webstomp-client';
+import  Stomp  from '@stomp/stompjs/bundles/stomp.umd.min.js';
 
-const received_messages = ref([]);
-const send_message = ref(null);
-const connected = ref(false);
 
-let stompClient = null;
-let socket = null;
+// const stompClient = ref(null);
+const message = ref('');
+const content = ref('')
 
-const send = () => {
-  console.log('Send message:' + send_message.value);
-  if (stompClient && stompClient.connected) {
-    const msg = { name: send_message.value };
-    stompClient.send('/app/hello', JSON.stringify(msg), {});
-  }
+
+    // onMounted(() => {
+    //   connect();
+    // });
+
+// const connect = () => {
+//       const socket = new SockJS('http://localhost:8089/chat');
+//         stompClient.value = Stomp.over(socket);
+//         stompClient.value.connect({}, () => {
+//           console.log('Web Socket is connected');
+//           stompClient.value.subscribe('/topic/message', (newMessage) => {
+//             console.log('Received message from server:', newMessage.body);
+//             message.value = JSON.parse(newMessage.body);
+//           });
+//         });
+//     }
+// const disconect = () => {
+//   if(stompClient != null ) {
+//     stompClient.value.disconnect();
+//     console.log("Disconnected");
+//   }
+// }
+// const sendMessage = () =>{
+//   if(stompClient.value != null){
+//           stompClient.value.send("/app/chat", {}, content.value);
+//       console.log(content.value)
+//   } else {
+//     alert('vui long kết nối lại')
+//   }
+
+//     }
+
+const client = new Stomp.Client({
+    brokerURL: 'http://localhost:8089/chat'
+});
+
+  client.onConnect = (frame) => {
+    console.log('Connected: ' + frame);
+    client.subscribe('/topic/message', (newMessage) => {
+      message.value = (JSON.parse(newMessage.body).content);
+    });
+};
+
+
+client.onWebSocketError = (error) => {
+    console.error('Error with websocket', error);
 };
 
 const connect = () => {
-  socket = new SockJS('http://localhost:8089/ws');
-  stompClient = Stomp.over(socket);
-  stompClient.connect(
-    {},
-    frame => {
-      connected.value = true;
-      console.log('Connected');
-      console.log(frame);
-      stompClient.subscribe('/topic/message', tick => {
-        console.log(tick);
-        received_messages.value.push(JSON.parse(tick.body).content);
-      });
-    },
-    error => {
-      console.log(error.message);
-
-      connected.value = false;
-    }
-  );
-};
+	client.activate();
+	console.log('Connected');
+}
 
 const disconnect = () => {
-  if (stompClient) {
-    stompClient.disconnect();
-  }
-  connected.value = false;
-};
+    client.deactivate();
+    console.log("Disconnected");
+}
 
-const tickleConnection = () => {
-  connected.value ? disconnect() : connect();
-};
+const sendMessage = () => {
+    client.publish({
+        destination: '/app/chat',
+        body: JSON.stringify( content.value )
+    });
+}
+
 </script>
