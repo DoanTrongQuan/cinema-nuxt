@@ -25,8 +25,9 @@ export const useLogin = () => {
 
   async function onSubmit(event){
     try {
-      console.log(12334)
+      
       const response = await authAsync.login(event.data);
+      // console.log(response.data)
       router.push('/home')
     } catch (error) {
       alert(error.response.data)

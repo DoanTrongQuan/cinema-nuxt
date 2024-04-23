@@ -1,44 +1,69 @@
 <template>
-    <div id="main-content">
-    <div>
-      <form>
-      <div>
-      <label>What is your name?</label> 
-      <input type="text" v-model="inputText" id="name" placeholder="Your name here...">
-      </div>
-          <button id="send" @click.prevent="sendMessage">Send</button>
-      </form>
-    </div>
-    </div>
-    <div>
-      <label>Message from server: </label><span id="message"></span>
-    </div>
+  <div>
+    <input v-model="send_message" type="text" />
+    <button @click="send">Send</button>
+    <br/>
+    <button @click="tickleConnection">
+      {{ connected ? 'Disconnect' : 'Connect' }}
+    </button>
+    <ul>
+      <li v-for="(message, index) in received_messages" :key="index">
+        {{ message }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup>
-import { io } from "socket.io-client";
+import { ref } from 'vue';
+import SockJS from 'sockjs-client';
+import Stomp from 'webstomp-client';
 
-const socket = io("http://localhost:8080/")
+const received_messages = ref([]);
+const send_message = ref(null);
+const connected = ref(false);
 
+let stompClient = null;
+let socket = null;
 
-onMounted(() => {})
+const send = () => {
+  console.log('Send message:' + send_message.value);
+  if (stompClient && stompClient.connected) {
+    const msg = { name: send_message.value };
+    stompClient.send('/app/hello', JSON.stringify(msg), {});
+  }
+};
 
-const inputText = ref('');
-socket.on("connect", () => {
-  console.log("Connect")
-});
-socket.on("connect_error", (error) => {
-  console.log("Connect",error)
-});
+const connect = () => {
+  socket = new SockJS('http://localhost:8089/ws');
+  stompClient = Stomp.over(socket);
+  stompClient.connect(
+    {},
+    frame => {
+      connected.value = true;
+      console.log('Connected');
+      console.log(frame);
+      stompClient.subscribe('/topic/message', tick => {
+        console.log(tick);
+        received_messages.value.push(JSON.parse(tick.body).content);
+      });
+    },
+    error => {
+      console.log(error.message);
 
-const sendMessage = () => {
-    socket.emit('message', {
-        author: 'client',
-        msg: inputText.value
-    });
-}
+      connected.value = false;
+    }
+  );
+};
+
+const disconnect = () => {
+  if (stompClient) {
+    stompClient.disconnect();
+  }
+  connected.value = false;
+};
+
+const tickleConnection = () => {
+  connected.value ? disconnect() : connect();
+};
 </script>
-
-<style>
-
-</style>
