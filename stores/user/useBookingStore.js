@@ -13,9 +13,9 @@ export const useBookingStore = defineStore({
   getters: {},
   actions: {
     async getAllSeat(){
-      console.log(12345678)
         try {
           const res = await getAllSeat(data)
+          console.log(res.data)
           this.seats = res.data;
         } catch (error) {  
         }

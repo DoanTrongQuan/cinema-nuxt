@@ -53,12 +53,10 @@ export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
 
   modules: [
-   '@nuxt/ui',
-   '@ant-design-vue/nuxt',   
+   '@nuxt/ui', 
    "@vuesax-alpha/nuxt",
    '@vee-validate/nuxt',
    '@pinia/nuxt',
-   'nuxt-socket-io'
   ],
 
   // io: {

@@ -136,11 +136,6 @@ import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
 import { useMovieStore } from "@/stores/user/useMovieStore.js";
 import { useAuth } from '~/composables/authentication/useAuth';
 
-import {
-  CalendarOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from '@ant-design/icons-vue';
 
 const router = useRouter()
 const route = useRoute()

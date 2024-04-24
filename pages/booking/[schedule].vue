@@ -366,18 +366,17 @@ const {
 } = useBooking()
 
 
-onMounted(() => {
-    console.log(route.params.schedule)
-    getData()
-})
 
 const getData =  () => {
-    useBookingStore().getAllSeat(route.params.schedule);
+    
 }
 
 
+
+
 const check = () => {
-    isActive.value = false
+    useBookingStore().getAllSeat(route.params.schedule);
+   
 }
 const currentColorIndex = ref(0);
 const colors = ref(['rgb(254, 185, 82)', 'rgb(243, 230, 192)']);
@@ -394,6 +393,8 @@ const timeFormatted = computed(() => {
 });
 
 onMounted(() => {
+
+    getData()
     setInterval(() => {
         time.value = time.value - 1
     },1000)
@@ -526,7 +527,6 @@ const bookingSeat = (seat) => {
         store.dispatch('seat/saveSeatSelected',{ seatLine, seatNumber,seatStatusCurren } )
     }
 }
-
 
 </script>
 

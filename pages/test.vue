@@ -38,7 +38,7 @@ const connect = () => {
         stompClient.value.connect({}, () => {
           console.log('Web Socket is connected');
           stompClient.value.subscribe('/topic/seatStatus', (newMessage) => {
-            console.log('Received message from server:', newMessage.body);
+            // console.log('Received message from server:', newMessage.body);
             message.value = newMessage.body;
           });
         });
@@ -65,7 +65,7 @@ const sendMessage = () =>{
     }
 
 // const client = new Client({
-//     brokerURL: 'ws://localhost:8089/chat'
+//     brokerURL: 'wss://localhost:8089/booking'
 // });
 
 
@@ -80,7 +80,7 @@ const sendMessage = () =>{
 // 	client.activate();
 //   client.onConnect = (frame) => {
 //     console.log('Connected: ' + frame);
-//     client.subscribe('/topic/message', (newMessage) => {
+//     client.subscribe('/topic/seatStatus', (newMessage) => {
 //       message.value = (JSON.parse(newMessage.body).content);
 //     });
 // };
@@ -94,7 +94,7 @@ const sendMessage = () =>{
 
 // const sendMessage = () => {
 //     client.publish({
-//         destination: '/app/chat',
+//         destination: '/app/booking',
 //         body: JSON.stringify( content.value )
 //     });
 // }
