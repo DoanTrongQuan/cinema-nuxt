@@ -353,6 +353,8 @@
 import { useBooking } from '~/composables/booking/useBooking'
 import { useBookingStore } from '~/stores/user/useBookingStore';
 
+
+const route  = useRoute()
 const isActive = ref(true)
 const {
     nameOfCinema,
@@ -363,11 +365,17 @@ const {
     seats
 } = useBooking()
 
-const schedule = computed(() => {
-    return 
+
+onMounted(() => {
+    console.log(route.params.schedule)
+    getData()
 })
 
-useBookingStore().getAllSeat()
+const getData =  () => {
+    useBookingStore().getAllSeat(route.params.schedule);
+}
+
+
 const check = () => {
     isActive.value = false
 }

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 export const useLogin = () => {
   const router = useRouter()
-  
+  const route = useRoute()
   const authAsync = useAuth();
 
 
@@ -27,8 +27,12 @@ export const useLogin = () => {
     try {
       
       const response = await authAsync.login(event.data);
-      // console.log(response.data)
-      router.push('/home')
+
+
+      let to = route.query.redirect ||'/home';   
+      
+      router.replace(to)
+
     } catch (error) {
       alert(error.response.data)
     }

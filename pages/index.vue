@@ -9,8 +9,6 @@ definePageMeta({
 const router = useRouter();
 router.replace('/home');
 
-
-
 </script>
 
 

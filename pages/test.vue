@@ -3,12 +3,12 @@
     <div>
         <button @click="connect">Connect</button>
         <button style="margin-left: 20%;" @click.prevent="disconnect">Disconect</button>
+        <button @click.prevent="logError">Log erro</button>
         <div>
           <label>What is your name?</label> 
           <input type="text" v-model="content" placeholder="Your name here...">
         </div>
           <button id="send" @click.prevent="sendMessage">Send</button>
-          
     </div>
   </div>
   <div>
@@ -17,13 +17,13 @@
 </template>
 
 <script setup>
-// import SockJS from 'sockjs-client';
-// import Stomp from 'webstomp-client';
-import  Stomp  from '@stomp/stompjs/bundles/stomp.umd.min.js';
+import SockJS from 'sockjs-client';
+import Stomp from 'webstomp-client';
+// import   { Client  }   from '@stomp/stompjs';
 
 
-// const stompClient = ref(null);
-const message = ref('');
+const stompClient = ref(null);
+const message = ref({});
 const content = ref('')
 
 
@@ -31,64 +31,72 @@ const content = ref('')
     //   connect();
     // });
 
-// const connect = () => {
-//       const socket = new SockJS('http://localhost:8089/chat');
-//         stompClient.value = Stomp.over(socket);
-//         stompClient.value.connect({}, () => {
-//           console.log('Web Socket is connected');
-//           stompClient.value.subscribe('/topic/message', (newMessage) => {
-//             console.log('Received message from server:', newMessage.body);
-//             message.value = JSON.parse(newMessage.body);
-//           });
-//         });
-//     }
-// const disconect = () => {
-//   if(stompClient != null ) {
-//     stompClient.value.disconnect();
-//     console.log("Disconnected");
-//   }
-// }
-// const sendMessage = () =>{
-//   if(stompClient.value != null){
-//           stompClient.value.send("/app/chat", {}, content.value);
-//       console.log(content.value)
-//   } else {
-//     alert('vui long kết nối lại')
-//   }
-
-//     }
-
-const client = new Stomp.Client({
-    brokerURL: 'http://localhost:8089/chat'
-});
-
-  client.onConnect = (frame) => {
-    console.log('Connected: ' + frame);
-    client.subscribe('/topic/message', (newMessage) => {
-      message.value = (JSON.parse(newMessage.body).content);
-    });
-};
-
-
-client.onWebSocketError = (error) => {
-    console.error('Error with websocket', error);
-};
-
 const connect = () => {
-	client.activate();
-	console.log('Connected');
-}
-
-const disconnect = () => {
-    client.deactivate();
+      const socket = new SockJS('http://localhost:8089/booking');
+      
+        stompClient.value = Stomp.over(socket);
+        stompClient.value.connect({}, () => {
+          console.log('Web Socket is connected');
+          stompClient.value.subscribe('/topic/seatStatus', (newMessage) => {
+            console.log('Received message from server:', newMessage.body);
+            message.value = newMessage.body;
+          });
+        });
+    }
+const disconnect = () => {  
+  if(stompClient != null ) {
+    stompClient.value.disconnect();
+    stompClient.value = null
     console.log("Disconnected");
+  }
 }
+const sendMessage = () =>{
+  if(stompClient.value != null){
+    const data = {
+      user: 1,
+      seatStatus:3
+    }
+          stompClient.value.send("/app/booking", JSON.stringify(data));
+      // console.log(data)
+  } else {
+    alert('vui long kết nối lại')
+  }
 
-const sendMessage = () => {
-    client.publish({
-        destination: '/app/chat',
-        body: JSON.stringify( content.value )
-    });
-}
+    }
+
+// const client = new Client({
+//     brokerURL: 'ws://localhost:8089/chat'
+// });
+
+
+// const logError = () => {
+//   client.onWebSocketError = (error) => {
+//     console.error('Error with websocket', error);
+// };
+// }
+
+
+// const connect = () => {
+// 	client.activate();
+//   client.onConnect = (frame) => {
+//     console.log('Connected: ' + frame);
+//     client.subscribe('/topic/message', (newMessage) => {
+//       message.value = (JSON.parse(newMessage.body).content);
+//     });
+// };
+// 	console.log('Connected');
+// }
+
+// const disconnect = () => {
+//     client.deactivate();
+//     console.log("Disconnected");
+// }
+
+// const sendMessage = () => {
+//     client.publish({
+//         destination: '/app/chat',
+//         body: JSON.stringify( content.value )
+//     });
+// }
 
 </script>

@@ -19,8 +19,8 @@ const {
 // const { showMovieDetail } = useHomePage()
 
 const showMovieDetail = (data) => {
-        // console.log(data)
-    //   router.push('/login');
+        console.log(data)
+        
     }
 
 
@@ -166,11 +166,11 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
                                                     <p  class="card-text" style="font-weight: 700">Thể loại:
                                                         <span v-for = "(movieType, j) in movie.movieTypeName" :key="j" >{{ movieType }}</span></p>
                                                     <p class="card-text"><span style="font-weight: 700">Thời lượng: </span>{{ movie.movieDuration }} phút</p>
-                                                        <NuxtLink :to="`/movie/${movie.slug}`"><a href="#" class="btn" @click="showMovieDetail(movie)" style="width: 100%">MUA VÉ</a></NuxtLink>
+                                                        <NuxtLink :to="`/movie/${movie.slug}`"><button class="btn" style="width: 100%">MUA VÉ</button></NuxtLink>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>  
                                 </div>
                             </v-container>
                         </v-window-item>

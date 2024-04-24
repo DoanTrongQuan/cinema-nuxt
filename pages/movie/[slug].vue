@@ -24,8 +24,8 @@
                         <tbody style="height: 100%;background-color: #eaeaea;margin-top: 15px;">
                         <tr>
                             <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ nameOfCinema }}</h3></td>
-                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ schedule }}</h3></td>
-                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ startAt }}</h3></td>
+                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ selectedDay }}</h3></td>
+                            <td class="text-center"><h3 style="font-weight: 700;font-size: 23px;">{{ selectedTime }}</h3></td>
                         </tr>
                         </tbody>
                     </v-table>
@@ -36,7 +36,7 @@
                      style="font-size: 20px !important;
                      font-weight: 500 !important;
                      font-family: sans-serif;"
-                     type="transparent" @click="showPageSelectSeat"> ĐỒNG Ý </vs-button>
+                     type="transparent" @click="booking"> ĐỒNG Ý </vs-button>
                     </div>
                 </template>
             </vs-dialog>
@@ -479,8 +479,14 @@
 import { useMovieStore } from '~/stores/user/useMovieStore';
 import { useCinemaStore } from '~/stores/user/useCinemaStore';
 import { useRoute } from 'vue-router';
+// import { useBookingStore } from '~/stores/user/useBookingStore';
+import { useToken } from '~/composables/authentication/useToken';
 
 
+ const { accessToken } = useToken()
+const router = useRouter()
+
+const isSignIn = Boolean(accessToken.value)
 const movieDetail = computed(() => {
   return useMovieStore().movieDetail;
 })
@@ -489,11 +495,8 @@ const schedules = computed(() => {
 })
 
 useMovieStore().getScheduleByMovie(useRoute().params.slug)
+useMovieStore().getMovieDetail(useRoute().params.slug)
 
-const { data, error } = await useAsyncData('movieDetail', async() => {
-  const res = await useMovieStore().getMovieDetail(useRoute().params.slug)
-  return await res.data
-})
 
 const check = () => {
   console.log(data)
@@ -519,18 +522,32 @@ const isShowConfirmSelectSchedule = ref(false)
 const nameOfCinema = computed(() => {
   return useCinemaStore().nameOfCinema;
 })
-const schedule = ref('')
-const startAt = ref('')
+
+const selectedDay = ref('')
+const selectedTime = ref('')
 const schedule = ref('')
 
 const showConfirmSelectSchedule = (day,time, scheduleId) => {
-  
   console.log(time)
   isShowConfirmSelectSchedule.value = true
-  schedule.value = day
-  startAt.value = time
+  selectedDay.value = day
+  selectedTime.value = time
+  schedule.value = scheduleId
 }
 
+const booking = () => {
+    // useBookingStore().getAllSeat(schedule.value)
+    if(!isSignIn) {
+      router.replace({
+            name: "login",
+            query: { redirect: `/booking/${schedule.value}` } 
+        })
+    }else {
+      router.replace(`/booking/${schedule.value}`)
+    }
+
+    isShowConfirmSelectSchedule.value = false
+}
 const tab = ref(null)
 </script>
 
