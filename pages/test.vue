@@ -13,19 +13,24 @@
   </div>
   <div>
     <label>Message from server: </label><span>{{ message }}</span>
+    <br>
+    <button @click = "check">check</button>
   </div>
 </template>
 
 <script setup>
 import SockJS from 'sockjs-client';
-import Stomp from 'webstomp-client';
-// import   { Client  }   from '@stomp/stompjs';
+import Stomp from 'webstomp-client'; 
 
 
 const stompClient = ref(null);
-const message = ref({});
-const content = ref('')
+const message = ref({
 
+});
+const content = ref('')
+const check  = () => {
+  console.log(typeof message.value);
+}
 
     // onMounted(() => {
     //   connect();
@@ -39,7 +44,7 @@ const connect = () => {
           console.log('Web Socket is connected');
           stompClient.value.subscribe('/topic/seatStatus', (newMessage) => {
             // console.log('Received message from server:', newMessage.body);
-            message.value = newMessage.body;
+            message.value = JSON.parse(newMessage.body);
           });
         });
     }
@@ -53,8 +58,10 @@ const disconnect = () => {
 const sendMessage = () =>{
   if(stompClient.value != null){
     const data = {
-      user: 1,
-      seatStatus:3
+      seatId: 3,
+      userId:3,
+      seatStatus:3,
+      schedule:1
     }
           stompClient.value.send("/app/booking", JSON.stringify(data));
       // console.log(data)

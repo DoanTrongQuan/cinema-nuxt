@@ -12,12 +12,13 @@ export const useBookingStore = defineStore({
   }),
   getters: {},
   actions: {
-    async getAllSeat(){
+    async getAllSeat(data){
         try {
           const res = await getAllSeat(data)
-          console.log(res.data)
           this.seats = res.data;
+
         } catch (error) {  
+          console.log(error);
         }
     },
   }

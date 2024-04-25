@@ -352,31 +352,41 @@
 <script setup>
 import { useBooking } from '~/composables/booking/useBooking'
 import { useBookingStore } from '~/stores/user/useBookingStore';
-
+import { useSocket } from '~/composables/useSocket';
 
 const route  = useRoute()
 const isActive = ref(true)
+const bookingStore = useBookingStore()
+
 const {
     nameOfCinema,
     movieDetail,
     totalMoney,
     seatSelected,
     note_seat_status,
-    seats
 } = useBooking()
 
 
+const {
+    stompClient,
+    message,
+    content,
+    connect,
+    disconnect,
+    sendMessage
+}  = useSocket()
 
-const getData =  () => {
-    
-}
+const seats = computed(() => {
+    return bookingStore.seats;
+})
 
 
 
+//mỗi khi khởi tạo sẽ call api lấy dữ liệu mới nhất
+bookingStore.getAllSeat(route.params.schedule);
 
 const check = () => {
-    useBookingStore().getAllSeat(route.params.schedule);
-   
+    console.log(seats)
 }
 const currentColorIndex = ref(0);
 const colors = ref(['rgb(254, 185, 82)', 'rgb(243, 230, 192)']);
@@ -393,8 +403,7 @@ const timeFormatted = computed(() => {
 });
 
 onMounted(() => {
-
-    getData()
+    
     setInterval(() => {
         time.value = time.value - 1
     },1000)
@@ -404,16 +413,29 @@ onMounted(() => {
     currentColor.value = colors.value[currentColorIndex.value];
   }, 1000); 
 
+  connect('http://localhost:8089/booking','/topic/seatStatus')
     
 });
+
+onBeforeUnmount(() => {
+    disconnect()
+})
 
 const bookingSeat = (seat) => {
     if(seat.seatStatus === 3 || seat.seatStatus === 4){
        console.log('block')
     }
-    if(seat.seatStatus === 1 && seat.seatType === 1){
-            
+    else if(seat.seatStatus === 1 && seat.seatType === 1){
+        const data = {
+            seatId: 3,
+            userId:3,
+            seatStatus:3,
+            schedule:1
+        }
+        sendMessage("/app/booking",JSON.stringify(data))
+        console.log(data)
     }
+
     else if(seat.seatStatus === 1 && seat.seatType === 2){
         const seatStatus = 2;
         const seatId = seat.id;
