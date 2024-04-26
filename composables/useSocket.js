@@ -10,15 +10,16 @@ export const useSocket = () => {
   const message = ref({});
   const content = ref('')
 
-  const connect = (url,sub) => {
+  const connect = (url,sub,res) => { 
     const socket = new SockJS(url);
     
       stompClient.value = Stomp.over(socket);
       stompClient.value.connect({}, () => {
         console.log('Web Socket is connected');
         stompClient.value.subscribe(sub, (newMessage) => {
-          console.log('Received message from server:', JSON.parse(newMessage.body));
-          message.value = JSON.parse(newMessage.body);
+          
+          res.value = JSON.parse(newMessage.body);
+          
         });
       });
   }
@@ -33,9 +34,10 @@ export const useSocket = () => {
   }
   }
 
-  const sendMessage = (sub,data) =>{
+  const sendMessage = (destination,data) =>{
+    console.log('use socket');
   if(stompClient.value != null){
-          stompClient.value.send(sub, JSON.stringify(data));
+          stompClient.value.send(destination, JSON.stringify(data));
       // console.log(data)
   } else {
     alert('vui long kết nối lại')

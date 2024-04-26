@@ -1,6 +1,6 @@
 export const useProfile = () => {
-  const userId = useSyncCookieState({
-    cookieName: "userId",
+  const userID = useSyncCookieState({
+    cookieName: "userID",
     option: {
       default: () => null,
     },
@@ -27,14 +27,14 @@ export const useProfile = () => {
   })
 
   function handleSaveCookieProfile(data = {}) {
-    userId.value = data.id,
+    userID.value = data.id,
     userName.value = data.userName,
     phoneNumber.value = data.phoneNumber,
     email.value = data.email
   }
 
   return {
-    userId,
+    userID,
     userName,
     phoneNumber,
     email,

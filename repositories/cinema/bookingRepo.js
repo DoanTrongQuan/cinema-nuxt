@@ -5,4 +5,9 @@ export const getAllSeat= data => {
   return Cinema.axiosClient.get(url + data)
 }
 
+export const updateSeatStatus= data => {
+  const url = prefix + 'seat/update-seatStatus'
+  return Cinema.axiosClient.put(url , data)
+}
+
 

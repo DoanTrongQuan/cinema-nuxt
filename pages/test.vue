@@ -29,7 +29,7 @@ const message = ref({
 });
 const content = ref('')
 const check  = () => {
-  console.log(typeof message.value);
+  console.log(message.value.seatId);
 }
 
     // onMounted(() => {
@@ -44,7 +44,9 @@ const connect = () => {
           console.log('Web Socket is connected');
           stompClient.value.subscribe('/topic/seatStatus', (newMessage) => {
             // console.log('Received message from server:', newMessage.body);
+            console.log(typeof newMessage.body)
             message.value = JSON.parse(newMessage.body);
+
           });
         });
     }
@@ -59,12 +61,12 @@ const sendMessage = () =>{
   if(stompClient.value != null){
     const data = {
       seatId: 3,
-      userId:3,
+      userId:3, 
       seatStatus:3,
       schedule:1
     }
           stompClient.value.send("/app/booking", JSON.stringify(data));
-      // console.log(data)
+          // console.log(typeof data)
   } else {
     alert('vui long kết nối lại')
   }

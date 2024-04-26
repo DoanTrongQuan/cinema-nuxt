@@ -56,16 +56,16 @@
                               <!-- <div v-if ="seat.seatStatus == 3" style="text-align: center; background-image: url('https://www.betacinemas.vn/Assets/global/img/booking/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div> -->
-                              <div v-if ="seat.seatStatus == 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                              <div v-if ="seat.seatStatus === 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
-                              <div v-else-if="seat.seatStatus == 2" style="text-align: center; background-image: url('/img/seat-select-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                              <div v-else-if="seat.seatStatus === 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
-                              <div v-else-if="seat.seatStatus == 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                              <div v-else-if="seat.seatStatus === 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
-                              <div v-else-if="seat.seatStatus == 1 && seat.seatType == 1" class="seat" style="text-align: center;">
+                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
                             </div>
@@ -353,10 +353,13 @@
 import { useBooking } from '~/composables/booking/useBooking'
 import { useBookingStore } from '~/stores/user/useBookingStore';
 import { useSocket } from '~/composables/useSocket';
+import { useProfile } from '~/composables/Profile/useProfile';
+import User from '../management/user.vue';
 
 const route  = useRoute()
 const isActive = ref(true)
 const bookingStore = useBookingStore()
+const { userID } = useProfile()
 
 const {
     nameOfCinema,
@@ -364,8 +367,9 @@ const {
     totalMoney,
     seatSelected,
     note_seat_status,
+    
 } = useBooking()
-
+      
 
 const {
     stompClient,
@@ -382,11 +386,14 @@ const seats = computed(() => {
 
 
 
+
 //mỗi khi khởi tạo sẽ call api lấy dữ liệu mới nhất
 bookingStore.getAllSeat(route.params.schedule);
 
 const check = () => {
-    console.log(seats)
+    // connect('http://localhost:8089/booking','/topic/seatStatus',seatResult) 
+    console.log(seats.value)
+
 }
 const currentColorIndex = ref(0);
 const colors = ref(['rgb(254, 185, 82)', 'rgb(243, 230, 192)']);
@@ -402,6 +409,15 @@ const timeFormatted = computed(() => {
   return `${minutes}:${seconds.toString().padStart(2, '0')}`; // Định dạng thời gian
 });
 
+const checkConnect = () => {  
+}
+
+const seatResult = ref({})
+watch(()=>seatResult.value,(newValue, oldValue) => {
+    console.log('watch result');
+    bookingStore.updateLocalSeat(newValue)
+      
+})
 onMounted(() => {
     
     setInterval(() => {
@@ -413,141 +429,81 @@ onMounted(() => {
     currentColor.value = colors.value[currentColorIndex.value];
   }, 1000); 
 
-  connect('http://localhost:8089/booking','/topic/seatStatus')
-    
+    connect('http://localhost:8089/booking','/topic/seatStatus',seatResult) 
 });
 
 onBeforeUnmount(() => {
     disconnect()
 })
 
-const bookingSeat = (seat) => {
-    if(seat.seatStatus === 3 || seat.seatStatus === 4){
-       console.log('block')
-    }
-    else if(seat.seatStatus === 1 && seat.seatType === 1){
-        const data = {
-            seatId: 3,
-            userId:3,
-            seatStatus:3,
-            schedule:1
-        }
-        sendMessage("/app/booking",JSON.stringify(data))
-        console.log(data)
-    }
+const currentSeat = ref({
+            seatId:0,
+            userId: userID.value,
+            status:0,
+            type:0,
+            schedule: 0
+})
 
-    else if(seat.seatStatus === 1 && seat.seatType === 2){
-        const seatStatus = 2;
-        const seatId = seat.id;
-        const movieId = movieDetail.value.movieId;
-        const dayMonthYear = dayMonthYearSelected.value;
-        const room = roomId.value
-        const start = startTime.value
-        const seatLine = seat.seatLine
-        const seatNumber = seat.seatNumber
-        const seatStatusCurren = seat.seatStatus;
-        priceBySeatVip.value = priceBySeatVip.value + priceBySchedule.value + 10000;
-        sessionStorage.setItem('priceBySeatVip', JSON.stringify(priceBySeatVip.value));
-        isSelectedSeatVip.value = true;
-        isShowTotalMoney.value = true;
-        store.dispatch('seat/changeSeatStatus',{ dayMonthYear,start,movieId,room,seatStatus,seatId})
-        seat.seatStatus = 2
-        seatTypeVip.value = 'GHẾ VIP'
-        sessionStorage.setItem('seatTypeVip', JSON.stringify(seatTypeVip.value ));
-        store.dispatch('seat/saveSeatSelected',{ seatLine, seatNumber,seatStatusCurren } )
-    }    
-    else if(seat.seatStatus === 1 && seat.seatType === 3){
-        const seatStatus = 2;
-        const seatId = seat.id;
-        const movieId = movieDetail.value.movieId;
-        const dayMonthYear = dayMonthYearSelected.value;
-        const room = roomId.value
-        const start = startTime.value
-        const seatLine = seat.seatLine
-        const seatNumber = seat.seatNumber
-        const seatStatusCurren = seat.seatStatus;
-        priceBySeatDouble.value = priceBySeatDouble.value + (priceBySchedule + 10000) * 2
-        sessionStorage.setItem('priceBySeatDouble', JSON.stringify(priceBySeatDouble.value ));
-        isSelectedSeatDouble.value = true;
-        isShowTotalMoney.value =true;
-        store.dispatch('seat/changeSeatStatus',{ dayMonthYear,start,movieId,room,seatStatus,seatId})
-        seat.seatStatus = 2
-        seatTypeDouble.value = 'GHẾ ĐÔI'
-        sessionStorage.setItem('seatTypeDouble', JSON.stringify(seatTypeDouble.value ));
-        store.dispatch('seat/saveSeatSelected',{ seatLine, seatNumber,seatStatusCurren } )
+const bookingSeat = ( seat ) => {
+    // Nếu seat = 4 (đã bán ) hoặc seat = 3 ( đang được giữ ) thì return
+    if (seat.seatStatus === 3 || seat.seatStatus === 4) {
+        return
     }
-    else if (seat.seatStatus === 2 && seat.seatType === 1){
-        const seatStatus = 1;
-        const seatId = seat.id;
-        const movieId = movieDetail.value.movieId;
-        const dayMonthYear = dayMonthYearSelected.value;
-        const room = roomId.value
-        const start = startTime.value
-        const seatLine = seat.seatLine
-        const seatNumber = seat.seatNumber
-        const seatStatusCurren = seat.seatStatus;
-        if(priceBySeatNormal.value > 0 ){
-            priceBySeatNormal.value = priceBySeatNormal.value - priceBySchedule.value;
+    // Xử lí khi seat trống 
+    if (seat.seatStatus === 1){
+        currentSeat.value =  { 
+            seatId: seat.id, 
+            status:3,
+            schedule:seat.scheduleId, 
+            type:seat.seatType,
+            userId: currentSeat.value.userId 
         }
-        sessionStorage.setItem('priceBySeatNormal', JSON.stringify(priceBySeatNormal.value));
-        if(priceBySeatNormal.value === 0){
-            isSelectedSeatNormal.value = false;
-        }
-        if(totalMoney.value <= 0){
-            isShowTotalMoney.value = false;
-        }
-        store.dispatch('seat/changeSeatStatus',{ dayMonthYear,start,movieId,room,seatStatus,seatId})
-        seat.seatStatus = 1
-        store.dispatch('seat/saveSeatSelected',{ seatLine, seatNumber,seatStatusCurren } )
+        bookingStore.updateSeatStatus(currentSeat.value)
+        sendMessage("/app/booking",currentSeat.value)        
     }
-    else if (seat.seatStatus === 2 && seat.seatType === 2){
-        const seatStatus = 1;
-        const seatId = seat.id;
-        const movieId = movieDetail.value.movieId;
-        const dayMonthYear = dayMonthYearSelected.value;
-        const room = roomId.value
-        const start = startTime.value
-        const seatLine = seat.seatLine
-        const seatNumber = seat.seatNumber
-        const seatStatusCurren = seat.seatStatus;
-        if(priceBySeatVip > 0){
-            priceBySeatVip.value = priceBySeatVip.value - (priceBySchedule.value + 10000);
-        } 
-        sessionStorage.setItem('priceBySeatVip', JSON.stringify(priceBySeatVip.value));
-        if(priceBySeatVip.value === 0){
-            isSelectedSeatVip.value = false;
+    // Xử lí khi seat đang chọn
+    else if ( seat.seatStatus === 2 ){
+        currentSeat.value =  { 
+            seatId: seat.id, 
+            status:1,
+            schedule:seat.scheduleId, 
+            type:seat.seatType,
+            userId: currentSeat.value.userId 
         }
-        if(totalMoney.value <= 0){
-            isShowTotalMoney.value = false;
-        }
-        store.dispatch('seat/changeSeatStatus',{ dayMonthYear,start,movieId,room,seatStatus,seatId})
-        seat.seatStatus = 1
-        store.dispatch('seat/saveSeatSelected',{ seatLine, seatNumber,seatStatusCurren } )
+        
+        bookingStore.updateSeatStatus(currentSeat.value)
+        sendMessage("/app/booking",currentSeat.value)
     }
-    else if (seat.seatStatus === 2 && seat.seatType === 3){
-        const seatStatus = 1;
-        const seatId = seat.id;
-        const movieId = movieDetail.value.movieId;
-        const dayMonthYear = dayMonthYearSelected.value;
-        const room = roomId.value
-        const start = startTime.value
-        const seatLine = seat.seatLine
-        const seatNumber = seat.seatNumber
-        const seatStatusCurren = seat.seatStatus;
-        if(priceBySeatDouble > 0){
-            priceBySeatDouble.value = priceBySeatDouble.value - (priceBySchedule.value + 10000) *2;
-        }
-        sessionStorage.setItem('priceBySeatDouble', JSON.stringify(priceBySeatDouble.value));
-        if(priceBySeatDouble.value === 0){
-            isSelectedSeatDouble.value = false;  
-        }
-        if(totalMoney.value <= 0){
-            isShowTotalMoney.value = false;
-        }
-        store.dispatch('seat/changeSeatStatus',{ dayMonthYear,start,movieId,room,seatStatus,seatId})
-        seat.seatStatus = 1
-        store.dispatch('seat/saveSeatSelected',{ seatLine, seatNumber,seatStatusCurren } )
-    }
+   
+
+
+
+    // console.log(seatId);
+    // if(seatStatus === 3 || seatStatus === 4){
+    //    console.log('seat.seatStatus === 3')
+    // }
+    // else if(seatStatus === 1){
+    //     console.log('seatStatus === 1');
+       
+    // }
+
+    // console.log('booking after');
+
+    // else if(seat.seatStatus === 1 && seat.seatType === 2){
+
+    // }    
+    // else if(seat.seatStatus === 1 && seat.seatType === 3){
+
+    // }
+    // else if (seat.seatStatus === 2 && seat.seatType === 1){
+
+    // }
+    // else if (seat.seatStatus === 2 && seat.seatType === 2){
+
+    // }
+    // else if (seat.seatStatus === 2 && seat.seatType === 3){
+
+    // }
 }
 
 </script>
