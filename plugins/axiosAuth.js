@@ -1,8 +1,13 @@
 import axios from 'axios'
 import Cinema from '~/repositories/cinema';
+import { useAuth } from '~/composables/authentication/useAuth'; 
+import { useToken } from '~/composables/authentication/useToken';
+import { PREFIX_TOKEN } from '../constant'
 
 export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
+  const { timeExpiredAccess, accessToken } = useToken()
+  const { getNewToken } = useAuth()
 
   const axiosInstance = axios.create({
     baseURL: config.app.api.baseUrl,

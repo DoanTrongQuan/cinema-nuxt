@@ -10,4 +10,17 @@ export const updateSeatStatus= data => {
   return Cinema.axiosClient.put(url , data)
 }
 
+export const resetSeatStatus= data => {
+  const url = prefix + 'seat/reset-seat-status-by-user?scheduleId='
+  return Cinema.axiosAuth.put(url +  data)
+}
+
+export const createBill= () => {
+  const url = prefix + 'bill/create-bill'
+  return Cinema.axiosAuth.post(url)
+}
+
+
+
+
 

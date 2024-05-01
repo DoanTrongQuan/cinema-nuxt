@@ -65,14 +65,14 @@
                               <div v-else-if="seat.seatStatus === 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
-                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center;">
+                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center; background-image: url('/img/seat-unselect-normal.png');">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
                             </div>
                         </div>
                         <div class="full-width">
-                            <div class="seat-vip" v-for="(seat, i) in seats.slice(18, 36)" :key="i"  @click="changeSeatStatus(seat)" style="cursor: pointer;">
-                                <div v-if ="seat.seatStatus == 2" style="text-align: center; background-image: url('/img/seat-select-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;" >
+                            <div class="seat-vip" v-for="(seat, i) in seats.slice(18, 36)" :key="i"  @click="bookingSeat(seat)" style="cursor: pointer;">                
+                                <div v-if ="seat.seatStatus == 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;" >
                                     <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                                 </div>
                                 <div v-else-if ="seat.seatStatus == 4" style="text-align: center; background-image: url('/img/seat-buy-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
@@ -131,7 +131,8 @@
                             <img  style="width: 40px;height: 40px;" src="/img/seat-unselect-normal-intro.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold;">Ghế thường</span>
-                        <span class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">111</span>
+                        
+                        <span v-if = "seatNormal.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatNormal.seatSelectedCount }} x {{ seatNormal.price }}</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-12" style="padding-top: 0;padding-bottom: 0;">
@@ -140,7 +141,7 @@
                             <img  style="width: 40px;height: 40px" src="/img/seat-unselect-vip.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold">Ghế VIP</span>
-                        <span class="co-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">111</span>
+                        <span v-if ="seatVip.seatSelectedCount != 0" class="co-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatVip.seatSelectedCount }} x {{ seatVip.price }}</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-12" style="border-right: 2px solid #d8d8d8;padding-top: 0;padding-bottom: 8px;">
@@ -149,13 +150,13 @@
                             <img class="image-seat-double" style="width: 40px;height: 20px" src="/img/seat-unselect-double.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold">Ghế đôi</span>
-                        <span  class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;"></span>
+                        <span v-if ="seatDouble.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatDouble.seatSelectedCount }} x {{ seatDouble.price }}</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12 money" style="border-right: 2px solid #d8d8d8;padding-top: 0;padding-bottom: 8px;">
                     <div class="row seat-type" style="margin-top: 10px;">
                         <p class="col-lg-12 col-4 total-money" style="margin-bottom: 8px;font-size: 18px;margin-left: 8px;font-weight: bold;float: left;padding-left:0 ;padding-top: 5px;">Tổng tiền</p>
-                        <p class="col-lg-12 col-4 result-money" style="padding-top:0;padding-bottom: 0;text-align: center;margin-top: 30px;">{{ totalMoney }}</p>
+                        <p v-if ="totalMoney != 0" class="col-lg-12 col-4 result-money" style="padding-top:0;padding-bottom: 0;text-align: center;margin-top: 30px;">{{ totalMoney }}</p>
                         <div class="col-4 d-lg-none"></div>
                     </div>
                 </div>
@@ -168,7 +169,7 @@
           </div>
       </div>
       <div v-else>
-            <h1>hello world</h1>
+            <h1>hello y</h1>
       </div>
       <div class="col-lg-4 d-lg-block d-md-none d-block info-schedule-1">
         <div class="content-schedule" style="background-color: white;border-radius: 10px;height: 100%;">
@@ -357,6 +358,7 @@ import { useProfile } from '~/composables/Profile/useProfile';
 import User from '../management/user.vue';
 
 const route  = useRoute()
+const router  = useRouter()
 const isActive = ref(true)
 const bookingStore = useBookingStore()
 const { userID } = useProfile()
@@ -364,7 +366,6 @@ const { userID } = useProfile()
 const {
     nameOfCinema,
     movieDetail,
-    totalMoney,
     seatSelected,
     note_seat_status,
     
@@ -383,17 +384,27 @@ const {
 const seats = computed(() => {
     return bookingStore.seats;
 })
-
-
-
-
+const seatNormal = computed(() => {
+    return bookingStore.seatNormal;
+})
+const seatVip = computed(()=>{
+    return bookingStore.seatVip;
+})
+const seatDouble = computed(()=> {
+    return bookingStore.seatDouble;
+})
+const totalMoney = computed(() => {
+    return bookingStore.totalMoney;
+})
 //mỗi khi khởi tạo sẽ call api lấy dữ liệu mới nhất
 bookingStore.getAllSeat(route.params.schedule);
 
+//tao bill
+bookingStore.createBill()
+
 const check = () => {
     // connect('http://localhost:8089/booking','/topic/seatStatus',seatResult) 
-    console.log(seats.value)
-
+    // console.log(route.query.user)
 }
 const currentColorIndex = ref(0);
 const colors = ref(['rgb(254, 185, 82)', 'rgb(243, 230, 192)']);
@@ -413,13 +424,24 @@ const checkConnect = () => {
 }
 
 const seatResult = ref({})
+
 watch(()=>seatResult.value,(newValue, oldValue) => {
     console.log('watch result');
     bookingStore.updateLocalSeat(newValue)
       
 })
+
+watch(() => time.value, (newValue, oldValue) => {
+    if(parseInt(newValue) === 115){
+        bookingStore.resetSeatStatus(route.params.schedule)
+    }
+})
 onMounted(() => {
     
+    //nếu user không đúng thì sẽ push về trang home
+    if(route.query.user != userID.value) {
+        router.replace('/home')
+    }
     setInterval(() => {
         time.value = time.value - 1
     },1000)
@@ -429,7 +451,7 @@ onMounted(() => {
     currentColor.value = colors.value[currentColorIndex.value];
   }, 1000); 
 
-    connect('http://localhost:8089/booking','/topic/seatStatus',seatResult) 
+    connect('http://localhost:8089/booking',`/topic/seatStatus/${route.params.schedule}`,seatResult) 
 });
 
 onBeforeUnmount(() => {
@@ -440,70 +462,42 @@ const currentSeat = ref({
             seatId:0,
             userId: userID.value,
             status:0,
-            type:0,
-            schedule: 0
+            schedule: +route.params.schedule,
+            seatType:0
 })
 
 const bookingSeat = ( seat ) => {
-    // Nếu seat = 4 (đã bán ) hoặc seat = 3 ( đang được giữ ) thì return
-    if (seat.seatStatus === 3 || seat.seatStatus === 4) {
-        return
+    if ( seat.seatStatus === 3 && seat.userId === userID.value ){
+        currentSeat.value =  { 
+            seatId: seat.id, 
+            status:1,
+            schedule:currentSeat.value.schedule, 
+            userId: currentSeat.value.userId ,
+            seatType: seat.seatType 
+        }
+        
+        bookingStore.updateSeatStatus(currentSeat.value)
+        sendMessage("/app/booking",currentSeat.value)
     }
     // Xử lí khi seat trống 
     if (seat.seatStatus === 1){
         currentSeat.value =  { 
             seatId: seat.id, 
             status:3,
-            schedule:seat.scheduleId, 
-            type:seat.seatType,
-            userId: currentSeat.value.userId 
+            schedule:currentSeat.value.schedule, 
+            userId: currentSeat.value.userId,
+            seatType: seat.seatType   
         }
         bookingStore.updateSeatStatus(currentSeat.value)
         sendMessage("/app/booking",currentSeat.value)        
     }
-    // Xử lí khi seat đang chọn
-    else if ( seat.seatStatus === 2 ){
-        currentSeat.value =  { 
-            seatId: seat.id, 
-            status:1,
-            schedule:seat.scheduleId, 
-            type:seat.seatType,
-            userId: currentSeat.value.userId 
-        }
-        
-        bookingStore.updateSeatStatus(currentSeat.value)
-        sendMessage("/app/booking",currentSeat.value)
+    // Nếu seat = 4 (đã bán ) hoặc seat = 3 ( đang được giữ ) thì return
+    if (seat.seatStatus === 3 && seat.userId != userID.value) {
+        alert('Ghế đang được giữ')
     }
-   
-
-
-
-    // console.log(seatId);
-    // if(seatStatus === 3 || seatStatus === 4){
-    //    console.log('seat.seatStatus === 3')
-    // }
-    // else if(seatStatus === 1){
-    //     console.log('seatStatus === 1');
-       
-    // }
-
-    // console.log('booking after');
-
-    // else if(seat.seatStatus === 1 && seat.seatType === 2){
-
-    // }    
-    // else if(seat.seatStatus === 1 && seat.seatType === 3){
-
-    // }
-    // else if (seat.seatStatus === 2 && seat.seatType === 1){
-
-    // }
-    // else if (seat.seatStatus === 2 && seat.seatType === 2){
-
-    // }
-    // else if (seat.seatStatus === 2 && seat.seatType === 3){
-
-    // }
+    if(seat.seatStatus === 4){
+        alert("Ghế đã được bán")
+    }
 }
 
 </script>
@@ -636,7 +630,7 @@ const bookingSeat = ( seat ) => {
     align-items: center;
     justify-content: center;
     margin-right: 8px;
-    background-image: url(https://betacinemas.vn/Assets/global/img/booking/seat-unselect-normal.png);
+    /* background-image: url(https://betacinemas.vn/Assets/global/img/booking/seat-unselect-normal.png); */
     background-repeat: no-repeat ;
     background-size: 35px 35px ;
     background-position: center;

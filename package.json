@@ -23,7 +23,6 @@
     "@nuxtjs/proxy": "^2.1.0",
     "@pinia/nuxt": "^0.5.1",
     "@stomp/stompjs": "^7.0.0",
-    "@vee-validate/nuxt": "^4.12.6",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "mitt": "^3.0.1",

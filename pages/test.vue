@@ -21,15 +21,18 @@
 <script setup>
 import SockJS from 'sockjs-client';
 import Stomp from 'webstomp-client'; 
-
-
+import { useAuth } from '~/composables/authentication/useAuth';
+import { useToken } from '~/composables/authentication/useToken';
+const { getNewToken } = useAuth()
+const { refreshToken } = useToken()
 const stompClient = ref(null);
 const message = ref({
 
 });
 const content = ref('')
 const check  = () => {
-  console.log(message.value.seatId);
+  console.log(refreshToken.value)
+  getNewToken()
 }
 
     // onMounted(() => {

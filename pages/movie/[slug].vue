@@ -98,17 +98,10 @@
             >
               <img
                 alt="Biệt Đội Săn Ma: Kỷ Nguyên Băng Giá"
-                loading="lazy"
-                width="220"
-                height="280"
-                decoding="async"
-                data-nimg="1"
-                class="border-2 rounded border-white lg:w-[320px] lg:h-[400px] w-full h-full object-fill object-cover duration-500 ease-in-out group-hover:opacity-100&quot; blur-[3px] grayscale-[90%])"
-                style="color: transparent"
-                src="https://cdn.galaxycine.vn/media/2024/4/10/ghostbusters-frozen-empire-500_1712719794740.jpg"
+                :src="movieDetail.image"
               />
             </div>
-            <div class="col-span-2 lg:-translate-y-20 flex flex-col justify-end md:-translate-y-16 -translate-y-0">
+            <div class="col-span-2 md:-translate-y-12 flex flex-col justify-end">
               <div class="item__title flex items-center">
                 <h1 class="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-black-10 mr-4">
                  {{  movieDetail.name }}
@@ -481,11 +474,11 @@ import { useCinemaStore } from '~/stores/user/useCinemaStore';
 import { useRoute } from 'vue-router';
 // import { useBookingStore } from '~/stores/user/useBookingStore';
 import { useToken } from '~/composables/authentication/useToken';
-
+import { useProfile } from '~/composables/Profile/useProfile';
 
  const { accessToken } = useToken()
 const router = useRouter()
-
+const { userID } = useProfile()
 const isSignIn = Boolean(accessToken.value)
 const movieDetail = computed(() => {
   return useMovieStore().movieDetail;
@@ -540,10 +533,10 @@ const booking = () => {
     if(!isSignIn) {
       router.replace({
             name: "login",
-            query: { redirect: `/booking/${schedule.value}` } 
+            query: { redirect: `/booking/${schedule.value}?user=${userID.value}` } 
         })
     }else {
-      router.replace(`/booking/${schedule.value}`)
+      router.replace(`/booking/${schedule.value}?user=${userID.value}`)
     }
 
     isShowConfirmSelectSchedule.value = false

@@ -38,24 +38,11 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-
-  veeValidate: {
-    // disable or enable auto imports
-    autoImports: true,
-    // Use different names for components
-    // componentNames: {
-    //   Form: 'VeeForm',
-    //   Field: 'VeeField',
-    //   FieldArray: 'VeeFieldArray',
-    //   ErrorMessage: 'VeeErrorMessage',
-    // },
-  },
   extends: ['@nuxt/ui-pro'],
 
   modules: [
    '@nuxt/ui', 
    "@vuesax-alpha/nuxt",
-   '@vee-validate/nuxt',
    '@pinia/nuxt',
   ],
 
