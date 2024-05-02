@@ -10,6 +10,7 @@ export const useMovieStore = defineStore({
     movies: [],
     movieDetail:{},
     schedules:[]
+
   }),
   getters: {},
   actions: {

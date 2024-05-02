@@ -1,6 +1,7 @@
 
 import { defineStore } from "pinia";
-import { getAllSeat, updateSeatStatus, createBill, resetSeatStatus } from '~/repositories/cinema/bookingRepo';
+import { getAllSeat, updateSeatStatus, 
+  createBill, resetSeatStatus,getMovie,getAllFood,getAllPromotionByUser } from '~/repositories/cinema/bookingRepo';
 import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
 
 
@@ -11,7 +12,11 @@ export const useBookingStore = defineStore({
     seatNormal:{},
     seatVip:{},
     seatDouble:{},
-    totalMoney:0
+    totalMoney:0,
+    movie:{},
+    seatSelected:[],
+    foods:[],
+    promotions:[]
 
   }),
   getters: {},
@@ -37,6 +42,7 @@ export const useBookingStore = defineStore({
           this.seatDouble = res.data
         }
         this.totalMoney = res.data.totalMoney;
+        this.seatSelected = res.data.seatSelected;
       } catch (error) {
         alert("error server, please try again");
       }
@@ -72,6 +78,33 @@ export const useBookingStore = defineStore({
         
       } catch (error) {
         
+      }
+    },
+    async getMovie(schedule) {
+      try {
+        const res = await getMovie(schedule);
+        
+        this.movie = res.data;
+      
+      } catch (error) {
+        
+      }
+    },
+    async getAllFood() {
+      try {
+        const res = await getAllFood();
+        this.foods = res
+    
+      } catch (error) {
+        alert(error)
+      }
+    },
+    async getAllPromotionByUser () {
+      try {
+        const res = await getAllPromotionByUser();
+        this.promotions = res;
+      } catch (error) {
+        alert(error)
       }
     },
 
