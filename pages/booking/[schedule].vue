@@ -674,7 +674,12 @@ onMounted(() => {
         router.replace('/home')
     }
     setInterval(() => {
-        time.value = time.value - 1
+        if(time.value > 0){
+            time.value = time.value - 1
+        }else{
+            time.value = 120
+        }
+        
     },1000)
 
     setInterval(() => {
@@ -687,6 +692,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     disconnect()
+    clearInterval(interval)
 })
 
 const currentSeat = ref({

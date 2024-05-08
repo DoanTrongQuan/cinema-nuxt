@@ -19,6 +19,11 @@ export const resetPassword = data => {
   const url = prefix + 'auth/forgot-password'
   return Cinema.axiosClient.put(url, data)
 }
+
+export const changePassword = data => {
+  const url = prefix + 'auth/change-password'
+  return Cinema.axiosClient.put(url, data)
+}
 export const getAccessTokenByRefreshToken = refreshToken => {
   const url = prefix + 'auth/refresh-token?refreshToken='
   return Cinema.axiosClient.get(url + refreshToken)

@@ -1,8 +1,6 @@
 
 <script setup>
 
-
-
 definePageMeta({
   layout:'default', 
 })
@@ -14,6 +12,6 @@ router.replace('/home');
 
 
 <template>
-  <!-- <button @click="check">Check</button> -->
+
 
 </template>
