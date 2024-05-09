@@ -134,6 +134,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
 import { useMovieStore } from "@/stores/user/useMovieStore.js";
+
 import { useAuth } from '~/composables/authentication/useAuth';
 
 

@@ -2,7 +2,7 @@
   <div style="background-color: #f8f8f8;">
     <div class="container" style="width: 81%;padding-top: 10px;">
     <div class="row">
-      <div v-if="isActive" class="col-lg-8 col-md-12" style="">
+      <div v-if="isShowFood" class="col-lg-8 col-md-12" style="">
         <h3 style="font-size: 23px;
             line-height: 1.5em;
             color: black;
@@ -362,11 +362,11 @@ const router  = useRouter()
 const isActive = ref(true)
 const bookingStore = useBookingStore()
 const { userID } = useProfile()
+const isShowFood = ref(false)
 
 const {
     nameOfCinema,
     movieDetail,
-    seatSelected,
     note_seat_status,
     
 } = useBooking()
@@ -395,6 +395,10 @@ const seatDouble = computed(()=> {
 })
 const totalMoney = computed(() => {
     return bookingStore.totalMoney;
+})
+
+const seatSelected = computed(() => {
+    return bookingStore.seatSelected
 })
 //mỗi khi khởi tạo sẽ call api lấy dữ liệu mới nhất
 bookingStore.getAllSeat(route.params.schedule);
@@ -432,16 +436,17 @@ watch(()=>seatResult.value,(newValue, oldValue) => {
 })
 
 watch(() => time.value, (newValue, oldValue) => {
-    if(parseInt(newValue) === 115){
+    if(parseInt(newValue) === 119){
         bookingStore.resetSeatStatus(route.params.schedule)
     }
 })
+
 onMounted(() => {
     
     //nếu user không đúng thì sẽ push về trang home
-    if(route.query.user != userID.value) {
-        router.replace('/home')
-    }
+    // if(route.query.user != userID.value) {
+    //     router.replace('/home')
+    // }
     setInterval(() => {
         time.value = time.value - 1
     },1000)

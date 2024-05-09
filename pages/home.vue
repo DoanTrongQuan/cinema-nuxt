@@ -177,6 +177,10 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
                     </v-window>
                 </v-card>
             </div>
+
+            <div>
+                <Intro/>
+            </div>
         </div>
 </template>
 

@@ -35,7 +35,6 @@ export const useAuth = () => {
       } catch (error) {
         throw error;
       }
-      
     },
   
     async signUp(formData) {

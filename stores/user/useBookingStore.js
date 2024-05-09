@@ -11,7 +11,8 @@ export const useBookingStore = defineStore({
     seatNormal:{},
     seatVip:{},
     seatDouble:{},
-    totalMoney:0
+    totalMoney:0,
+    seatSelected:[]
 
   }),
   getters: {},
@@ -37,6 +38,7 @@ export const useBookingStore = defineStore({
           this.seatDouble = res.data
         }
         this.totalMoney = res.data.totalMoney;
+        this.seatSelected = res.data.seatSelected
       } catch (error) {
         alert("error server, please try again");
       }
