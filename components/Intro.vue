@@ -1,5 +1,5 @@
 <template>
-  <div class="advertise bg-[url('../assets/images/bg-icon-iphone-x.svg')] h-full md:block hidden snipcss0-0-0-1 snipcss-1AM2I">
+  <div class="advertise bg-[url('../assets/images/bg-icon-iphone-x.svg')] h-full md:block hidden snipcss0-0-0-1 snipcss-1AM2I mx-auto">
     <div class="advertise__wrap my-0 mx-auto py-12 screen1390:max-w-screen-xl xl:max-w-screen-screen1200 lg:max-w-6xl snipcss0-1-1-2">
         <div class="advertise__container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-2 gap-6 snipcss0-2-2-3">
             <div class="advertise__left my-o mx-auto relative z-20 md:block hidden snipcss0-3-3-4"><img alt="img-iphone" loading="lazy" width="200" height="409" decoding="async" data-nimg="1" class="img-atr relative z-50 snipcss0-4-4-5 style-8poK3" src="https://www.galaxycine.vn/_next/static/media/Frame-iphone-x.78ef1223.svg" id="style-8poK3">
@@ -48,8 +48,6 @@
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,500,600,700,800,900,200i,300i,400i,500i,600i,700i,800i,900i&display=swap'); 
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap'); 
   body {  
     line-height:1.5;
     font-family:Nunito Sans,sans-serif!important;

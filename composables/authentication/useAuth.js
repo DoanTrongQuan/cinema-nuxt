@@ -1,4 +1,4 @@
-import { login, signUp, sendCodeToEmail, getAccessTokenByRefreshToken } from "~/repositories/cinema/authRepo"
+import { login, signUp, sendCodeToEmail, getAccessTokenByRefreshToken,changePassword } from "~/repositories/cinema/authRepo"
 import { useProfile } from "../Profile/useProfile";
 import { useToken } from "./useToken"
 import { useCinemaStore } from "~/stores/user/useCinemaStore";
@@ -17,6 +17,15 @@ export const useAuth = () => {
     handleSaveCookieAuth({})
     handleSaveCookieProfile({})
     router.replace('/login')
+  }
+
+  async function onSubmit(event) {
+    try {
+      const res = await changePassword(event.data);
+      alert(res)
+    } catch (error) {
+      alert(error)
+    }
   }
 
   onBeforeUnmount(() => {
@@ -65,7 +74,8 @@ export const useAuth = () => {
     // },
 
     sendCodeToEmail,
-    logout
+    logout,
+    onSubmit
 
   }
 }

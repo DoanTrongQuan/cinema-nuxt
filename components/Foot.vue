@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="Footer_footer__pJUho snipcss0-0-0-1 snipcss-9NHfF">
+  <footer id="footer" class="Footer_footer__pJUho snipcss0-0-0-1 snipcss-9NHfF mt-16">
     <div class="Footer_footer__container__dTA60 screen1390:max-w-screen-xl xl:max-w-screen-screen1200 lg:max-w-4xl md:max-w-4xl md:px-4 sm:px-[45px] px-[16px] snipcss0-1-1-2">
         <div class="py-8 snipcss0-2-2-3 snipcss0-0-0-1">
             <div class="grid grid-cols-2 gap-y-4 md:gap-y-0 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4 snipcss0-3-3-4 snipcss0-1-1-2">

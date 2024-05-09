@@ -19,7 +19,19 @@ export const createBill= () => {
   const url = prefix + 'bill/create-bill'
   return Cinema.axiosAuth.post(url)
 }
+export const getMovie = (schedule) => {
+  const url = prefix + 'movie/get-movie-by-schedule?schedule='
+  return Cinema.axiosClient.get(url + schedule)
+}
 
+export const getAllFood = () => {
+  const url = prefix + 'food/get-all-food'
+  return Cinema.axiosAuth.get(url)
+}
+export const getAllPromotionByUser = () => {
+  const url = prefix + 'promotion/get-all-promotion-by-user'
+  return Cinema.axiosAuth.get(url)
+}
 
 
 

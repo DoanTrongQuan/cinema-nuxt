@@ -175,7 +175,7 @@ const menusUser = ref([
 
 const handleMenuUserClick = (menu) =>{
       if (menu.text === "Thông tin cá nhân") {
-
+        router.replace('/tai-khoan')
       }else if (menu.text === "Đổi mật khẩu"){
 
       } else {  

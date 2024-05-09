@@ -1,12 +1,12 @@
 <script setup>
 import { useMovie } from '~/composables/Movie/useMovie'
 // import { useHomePage } from '~/composables/useHomePage'
-definePageMeta({
-  middleware: 'my-middleware',
-})
+import {useMovieStore} from '~/stores/user/useMovieStore'
+
+
+const movieStore = useMovieStore()
 const router = useRouter()
 const {
-    movies,
     isShowIconPlay,
     isShowOverlay,
     showIconPlayAndOverlay,
@@ -16,8 +16,12 @@ const {
 } = useMovie()
 
 
-// const { showMovieDetail } = useHomePage()
+movieStore.getAllMovieByCinema()
 
+// const { showMovieDetail } = useHomePage()
+const movies = computed(()=> {
+    return movieStore.movies;
+})
 const showMovieDetail = (data) => {
         console.log(data)
         
@@ -177,7 +181,6 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
                     </v-window>
                 </v-card>
             </div>
-
             <div>
                 <Intro/>
             </div>
