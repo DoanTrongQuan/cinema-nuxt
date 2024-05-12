@@ -1,10 +1,14 @@
 import { useCinemaStore } from "~/stores/user/useCinemaStore";
 import { useMovieStore } from "@/stores/user/useMovieStore.js";
+import { useToken } from '~/composables/authentication/useToken';
+
+
+
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const router = useRouter();
   const cinemaStore = useCinemaStore();
   const movieStore = useMovieStore();
-
+  const { accessToken } = useToken()
   try {
     await cinemaStore.getAllCinemas(); 
     await movieStore.getAllMovieByCinema(cinemaStore.nameOfCinema)

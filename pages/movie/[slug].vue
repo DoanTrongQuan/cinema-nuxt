@@ -1,13 +1,14 @@
 <template>
   <div>
     <div>
-            <vs-dialog 
+            <UModal
             v-model="isShowConfirmSelectSchedule "
-            width="700px"  not-center>
-                <template #header>
-                    <h4 style="margin-top: 20px;">BẠN ĐANG <b>ĐẶT VÉ</b> XEM PHIM</h4>
-                </template>
-
+            width="700px">
+            <div class="p-3">
+                  <div>
+                    <h4 style="margin-top: 20px; text-align: center;">BẠN ĐANG <b>ĐẶT VÉ</b> XEM PHIM</h4>
+                  </div>
+                      
                 <div class="con-content" style="width: 100%;height: 180px">
                     <h1 class="text-center" 
                     style="border-bottom: 1px solid #f4f4f4;
@@ -30,19 +31,16 @@
                         </tbody>
                     </v-table>
                 </div>
-                <template #footer>
-                    <div style="display: flex; justify-content: center !important;">
-                    <vs-button 
-                     style="font-size: 20px !important;
-                     font-weight: 500 !important;
-                     font-family: sans-serif;"
-                     type="transparent" @click="booking"> ĐỒNG Ý </vs-button>
-                    </div>
-                </template>
-            </vs-dialog>
+                <div class="flex justify-center">
+                  <button @click ="booking" class="hover:bg-[#FF7614] hover:text-white p-2 rounded-lg">ĐỒNG Ý</button>
+                </div>
+            </div>
+
+                
+            </UModal>
         </div>
     <div class="relative bg-black flex justify-center w-full h-full">
-      <div class="absolute w-full h-full z-[300] bg-[#0003]"></div>
+      <div class="absolute w-full h-full z-[49] bg-[#0003]"></div>
       <div class="relative h-full">
         <div class="relative">
           <img
@@ -52,7 +50,7 @@
             src="https://cdn.galaxycine.vn/media/2024/4/10/ghostbusters-frozen-empire-750_1712719795646.jpg"
             alt=""
           />
-          <button class="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-[600]">
+          <button class="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-[40]">
             <img
               width="64"
               height="64"
@@ -94,7 +92,7 @@
         <div class="book__film flex flex-col">
           <div class="movie__info relative md:grid hidden grid-cols-3 md:gap-5 gap-3 lg:items-end">
             <div
-              class="movie__thumbnail lg:-translate-y-20 md:-translate-y-16 -translate-y-0 col-span-1 drop-shadow-2xl z-[500]"
+              class="movie__thumbnail lg:-translate-y-20 md:-translate-y-16 -translate-y-0 col-span-1 drop-shadow-2xl z-[39]"
             >
               <img
                 alt="Biệt Đội Săn Ma: Kỷ Nguyên Băng Giá"
@@ -533,10 +531,10 @@ const booking = () => {
     if(!isSignIn) {
       router.replace({
             name: "login",
-            query: { redirect: `/booking/${schedule.value}?user=${userID.value}` } 
+            query: { redirect: `/booking/${schedule.value}` } 
         })
     }else {
-      router.replace(`/booking/${schedule.value}?user=${userID.value}`)
+      router.replace(`/booking/${schedule.value}`)
     }
 
     isShowConfirmSelectSchedule.value = false

@@ -1,8 +1,62 @@
 <template>
+  <div>
+    <UModal v-model="isOpen" prevent-close>
+      <div class="p-3">
+        <div class="flex justify-end">
+            <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpen = false" />
+        </div>
+        <div class="text-center">
+            <h2>Xác nhận thanh toán</h2>
+        </div>
+        <div class = "flex flex-col">
+            <div v-for="(item, i) in infoBill" :key="i" class="grid sm:grid-cols-3 py-2 items-center justify-center">
+                <div class="col-span-1 font-bold text-sm">
+                    {{ item }}
+                </div>
+                <div class="col-span-2">
+                    <div v-if="item === 'Phim'">
+                        <span>{{ movie.movieName }}</span>  
+                    </div>
+                    <div v-else-if="item === 'Rạp'">
+                        <span>{{ nameOfCinema }}</span>
+                    </div>
+                    <div v-else-if = "item === 'Phòng chiếu'">
+                        <span>{{ movie.romName }}</span>
+                    </div>
+                    <div v-else-if = "item === 'Thời gian'">
+                        <span>{{ movie.day }} {{ movie.startAt}}</span>
+                    </div>
+                    <div v-else-if = "item === 'Ghế'">
+                        <span v-for="(seat, k) in seatSelected" :key="k" class ="mr-2">
+                            {{ seat }}
+                        </span>
+                    </div>
+                    <div v-else-if = "item === 'Đồ ăn'">
+                        <div v-for="(food, i) in foodSelected" :key="i">
+                            <div v-if="food.count > 0"> 
+                               {{ food.count }} x {{ food.name }} 
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else-if = "item === 'Tổng tiền'">
+                        <span>{{ finalAmount === 0 ? totalMoney : finalAmount }} vnđ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center w-full">
+            <button @click = "confirmPayment" class = "rounded-md bg-orange-500 p-1 text-white">
+                XÁC NHẬN
+            </button>
+        </div>
+      </div>
+
+    </UModal>
+  </div>
   <div style="background-color: #f8f8f8;">
     <div class="container" style="width: 81%;padding-top: 10px;">
     <div class="row">
-      <div v-if="isShowFood" class="col-lg-8 col-md-12" style="">
+      <div v-if="!isShowFood" class="col-lg-8 col-md-12" style="">
         <h3 style="font-size: 23px;
             line-height: 1.5em;
             color: black;
@@ -196,12 +250,13 @@
                                     <span><b>Email:</b></span>
                                     <br>
                                     <span>trongquan202@gmail.com</span>
-                                </div>
+                                </div>  
                             </div>
                             <div >
-                                <div class="row" v-if="seatVip">
-                                    <div class="col-3" style="font-size: 18px;"><b>{{ seatVip.seatSelectedCount }}</b></div>
-                                    <div style="text-align: right;
+                                <div v-if="isSeatSelectedVip" class="grid grid-cols-4 mt-2">
+                                    <span >Ghế víp: </span>
+                                    <span class="col-span-3" style="font-size: 18px;"><b>{{ seatVip.seatSelectedCount }}</b></span>
+                                    <span  style="text-align: right;
                                     font-family: SourceSansPro;
                                     font-size: 18px;
                                     font-weight: normal;
@@ -211,11 +266,10 @@
                                     letter-spacing: normal;
                                     text-align: right;
                                     color: #494c62;
-                                    padding-right: 10%;" class="col-9">{{ seatVip.price }} vnđ</div>
+                                    padding-right: 10%;" class="col-span-1">{{ seatVip.price }} vnđ</span>
                                 </div>
-                                <div class="row" v-if="seatNormal">
-                                    123454567
-                                    <div class="col-3" style="font-size: 18px;"><b>{{ seatNormal.seatSelectedCount }}</b></div>
+                                <div v-if="seatVip  != null" class="grid grid-cols-4 mt-2" >
+                                    <div class="col-span-3" style="font-size: 18px;"><b>{{ seatNormal.seatSelectedCount }}</b></div>
                                     <div style="text-align: right;
                                     font-family: SourceSansPro;
                                     font-size: 18px;
@@ -226,11 +280,11 @@
                                     letter-spacing: normal;
                                     text-align: right;
                                     color: #494c62;
-                                    padding-right: 10%;" class="col-9">{{ seatNormal.price }} vnđ</div>
+                                    padding-right: 10%;" class="col-span-1">{{ seatNormal.price }} vnđ</div>
                                 </div>
 
-                                <div class="row" v-if="seatDouble">
-                                    <div class="col-3" style="font-size: 18px;"><b>{{ seatDouble.seatSelectedCount }}</b></div>
+                                <div v-if="isSeatSelectedDouble" class="grid grid-cols-4 mt-2">
+                                    <div class="col-span-3" style="font-size: 18px;"><b>{{ seatDouble.seatSelectedCount }}</b></div>
                                     <div style="text-align: right;
                                     font-family: SourceSansPro;
                                     font-size: 18px;
@@ -241,7 +295,7 @@
                                     letter-spacing: normal;
                                     text-align: right;
                                     color: #494c62;
-                                    padding-right: 10%;" class="col-9">{{ seatDouble.price }} vnđ</div>
+                                    padding-right: 10%;" class="col-span-1">{{ seatDouble.price }} vnđ</div>
                                 </div>
                             </div>
 
@@ -276,10 +330,10 @@
                                         <template v-slot:item.action = "{ item }">
                                             <div style="height: 150px; display: flex;align-items: center;">
                                                 <span>{{ getQuantity(item.id) }}</span>
-                                                <v-icon size="large" color="#03599d" class="me-2" @click="addFoodtoCart(item,item.id)">
+                                                <v-icon size="large" color="#03599d" class="me-2" @click = "foodPlus(item)">
                                                 mdi-plus-box
                                                 </v-icon>
-                                                <v-icon size="large" color="#03599d" @click="removeFood(item,item.id)">
+                                                <v-icon size="large" color="#03599d" @click = "foodMinus(item)">
                                                 mdi-minus-box
                                                 </v-icon>
                                             </div>
@@ -368,15 +422,15 @@
                                 </div>
                             </div>
                             <div style="text-align: right;margin-top: 20px;font-size: 18px;">
-                                <span style="margin-bottom: 10px"><b>Tổng tiền: </b>000 vnđ</span>
+                                <span style="margin-bottom: 10px"><b>Tổng tiền: </b>{{ totalMoney }} vnđ</span>
                                 <br>
                                 <br>
-                                <span style="margin-bottom: 10px"><b>Số tiền được giảm: </b>000 vnđ</span>
+                                <span style="margin-bottom: 10px"><b>Số tiền được giảm: </b>{{discountAmount}} vnđ</span>
                                 <br>
                                 <br>         
-                                <span style="margin-bottom: 10px"><b>Số tiền cần thanh toán: </b>000 vnđ</span>
+                                <span style="margin-bottom: 10px"><b>Số tiền cần thanh toán: </b>{{ finalAmount }} vnđ</span>
                             </div>
-                        </div>
+      </div>
       <div class="col-lg-4 d-lg-block d-md-none d-block info-schedule-1">
         <div class="content-schedule" style="background-color: white;border-radius: 10px;height: 100%;">
             <div class="row">
@@ -457,11 +511,19 @@
                 </div>
                 <div style="display: flex;justify-content: center;margin-bottom: 20px;">
                         <button 
+                        v-if ="!isShowFood"
                         @click="nextBookTicket"
                         style="width: 126px;height:41px;
                         background-image: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%) !important;
                         color: #fff;border-radius: 5px;">
                         TIẾP TỤC</button> 
+                        <button 
+                        v-else
+                        @click="payment"
+                        style="width: 126px;height:41px;
+                        background:  #FF7614 ;
+                        color: #fff;border-radius: 5px;">
+                        THANH TOÁN</button> 
                 </div>
 
         </div>
@@ -556,7 +618,7 @@
     </div>
   </div>
 </div>
-
+<button @click = "check">check</button>
 </template>
 
 <script setup>
@@ -566,12 +628,18 @@ import { useSocket } from '~/composables/useSocket';
 import { useProfile } from '~/composables/Profile/useProfile';
 import User from '../management/user.vue';
 
+
+// definePageMeta({
+//   middleware:'booking-middleware', 
+// })
 const route  = useRoute()
 const router  = useRouter()
 const isActive = ref(true)
 const bookingStore = useBookingStore()
 const { userID } = useProfile()
 const isShowFood = ref(false)
+const isOpen = ref(false)
+
 
 const {
     nameOfCinema,
@@ -624,6 +692,16 @@ const promotions = computed(() => {
     return bookingStore.promotions;
 });
 
+const finalAmount = computed(() => {
+    return bookingStore.finalAmount;
+})
+const discountAmount = computed(() => {
+    return bookingStore.discountAmount;
+})
+
+const isSeatSelectedVip = Boolean(seatVip.value)
+const isSeatSelectedNormal = Boolean(seatNormal.value)
+const isSeatSelectedDouble = Boolean(seatDouble.value)
 //mỗi khi khởi tạo sẽ call api lấy dữ liệu mới nhất
 bookingStore.getAllSeat(route.params.schedule);
 
@@ -633,16 +711,18 @@ bookingStore.createBill()
 // lây thông tin movie
 bookingStore.getMovie(route.params.schedule)
 
-const check = () => {
-    // connect('http://localhost:8089/booking','/topic/seatStatus',seatResult) 
-    // console.log(route.query.user)
-    console.log(seatVip.value)
-    console.log(seatNormal.value);
-}
+
 const currentColorIndex = ref(0);
 const colors = ref(['rgb(254, 185, 82)', 'rgb(243, 230, 192)']);
 const currentColor = ref(colors.value[currentColorIndex.value]);
 
+const headersFood = ref([
+          { title: 'Combo', key: 'image', align: 'center', },
+          { title: 'Tên Combo', align: 'center',key: 'foodName',sortable: false,class: 'bold-title',},  
+          { title: 'Mô tả', key: 'description',align: 'center', },
+          { title: 'Giá (VNĐ)', key: 'price',align: 'center', },
+          { title: 'Số lượng', key: 'action',align: 'center', }  
+      ])
 
 
 const time = ref(120)
@@ -745,10 +825,79 @@ const nextBookTicket = async() => {
     }else{
         bookingStore.getAllFood()
         bookingStore.getAllPromotionByUser()
-        isActive.value = false;
+        isShowFood.value = true;
     }
+}
+const foodSelected = ref({
+})
+
+const quantityOfFood = ref({});
+const foodPlus = (item) => {
+    if (!quantityOfFood.value[item.id]) {
+    quantityOfFood.value[item.id] = 1;
+    foodSelected.value[item.id] = { count: 1, name: item.foodName };
+  } else {
+    quantityOfFood.value[item.id]++;
+    foodSelected.value[item.id].count++;
+  }
+    const data = {
+        foodId:item.id,
+        chooseFood:1
+    }
+    bookingStore.chooseFood(data)
+}
+
+const foodMinus = (item) => {
+    if (quantityOfFood.value[item.id] && quantityOfFood.value[item.id] > 0) {
+    quantityOfFood.value[item.id]--;
+    foodSelected.value[item.id].count--;
+
+    if (foodSelected.value[item.id].count === 0) {
+      delete foodSelected.value[item.id];
+    }
+        const data = {
+        foodId:item.id,
+        chooseFood:2
+    }
+    bookingStore.chooseFood(data)
+  }
 
 }
+
+const getQuantity = (item) => {
+  return quantityOfFood.value[item] || '';
+};
+
+const voucherInput = ref('')
+
+const getDiscountAmount = () => {
+        const data = {
+            code:voucherInput.value,
+            totalMoney:totalMoney.value
+        }
+        console.log(data)
+        bookingStore.getDiscountAmount(data)
+}
+
+const infoBill = [
+    "Phim","Rạp","Phòng chiếu","Thời gian","Ghế","Đồ ăn","Tổng tiền"
+]
+
+const check = () => {
+    console.log(movie.value)
+    console.log(infoBill.value)
+}
+const payment = () => {
+    isOpen.value = true;
+}
+
+const  confirmPayment = () => {
+    let amount = finalAmount.value === 0 ? totalMoney.value : finalAmount.value;
+    let user = userID.value
+    bookingStore.submitOrder(amount, user)
+}
+
+
 </script>
 
 <style scoped>

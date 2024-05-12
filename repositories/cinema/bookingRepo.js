@@ -1,4 +1,6 @@
 import Cinema from '.'
+import axios from 'axios'
+
 const prefix = ''
 export const getAllSeat= data => {
   const url = prefix + 'seat/get-all-seat?scheduleId='
@@ -32,6 +34,23 @@ export const getAllPromotionByUser = () => {
   const url = prefix + 'promotion/get-all-promotion-by-user'
   return Cinema.axiosAuth.get(url)
 }
+
+export const chooseFood = (data) => {
+  const url = prefix + 'billFood/update-billFood'
+  return Cinema.axiosAuth.put(url, data)
+}
+
+export const getDiscountAmount = data => {
+  const url = prefix + 'promotion/get-discount-amount'
+  return Cinema.axiosAuth.put(url, data)
+}
+
+export const submitOrder = (amount,user) => {
+  const url = `http://localhost:8089/submitOrder?amount=${amount}&user=${user}`;
+  return Cinema.axiosAuth.post(url)
+}
+
+
 
 
 

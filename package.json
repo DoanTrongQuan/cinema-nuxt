@@ -20,29 +20,17 @@
     "@mdi/font": "^7.4.47",
     "@nuxt/ui": "^2.15.2",
     "@nuxt/ui-pro": "^1.1.0",
-    "@nuxtjs/proxy": "^2.1.0",
     "@pinia/nuxt": "^0.5.1",
-    "@stomp/stompjs": "^7.0.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "mitt": "^3.0.1",
     "nuxt": "^3.11.2",
-    "pinia": "^2.1.7",
     "sockjs-client": "^1.6.1",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
-    "vuetify": "^3.4.0-beta.1",
+    "vuetify-nuxt-module": "^0.13.5",
     "webstomp-client": "^1.2.6",
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.2.10",
-    "@vuesax-alpha/nuxt": "^0.0.5",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "sass": "^1.74.1",
-    "sass-loader": "^14.1.1",
-    "tailwindcss": "^3.4.3",
-    "vuesax-alpha": "^0.2.0-beta.74"
+    "@types/bootstrap": "^5.2.10"
   }
 }

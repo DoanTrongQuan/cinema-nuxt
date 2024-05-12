@@ -108,7 +108,7 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
 <template>
         <div  class="main" >
             <div>
-                <vs-dialog v-model="isShowTrailer" width="685px" not-center>
+                <UModal v-model="isShowTrailer" width="685px" not-center>
                     <template #header>
                         <h4 class="not-margin">Welcome to <b>Vuesax</b></h4>
                     </template>
@@ -127,10 +127,10 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
 
                     <template #footer>
                         <div class="con-footer">
-                            <vs-button type="transparent" @click="active = false"> Ok </vs-button>
+                            <button type="transparent" @click="active = false"> Ok </button>
                         </div>
                     </template>
-                </vs-dialog>
+                </UModal>
             </div>
             <div class="wrap-header">
                 <v-carousel cycle style="height: auto" hide-delimiter-background show-arrows="hover" :interval="6000000">

@@ -52,7 +52,7 @@
           </div>
           <div class="text-center">
             Have an acccount?
-            <span class="cursor-pointer">Sign in</span>
+            <NuxtLink to="/signup" class="no-underline text-black"><span class="cursor-pointer">Sign in</span></NuxtLink>
           </div>
         </UForm>
       </UCard>

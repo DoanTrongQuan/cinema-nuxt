@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-         <vs-dialog scroll v-model="isShowPrivatePoli" lock-scroll not-close auto-width>
+         <UModal scroll v-model="isShowPrivatePoli" >
             <template #header>
               <h3>Chính sách bảo mật</h3>
             </template>
@@ -64,7 +64,7 @@
                 - and much more.
               </p>
             </div>
-          </vs-dialog> 
+         </UModal> 
       </div>
       <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-5 text-center form-signup mt-2">
             <UCard class="w-full mt-7">

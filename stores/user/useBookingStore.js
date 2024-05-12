@@ -1,7 +1,8 @@
 
 import { defineStore } from "pinia";
 import { getAllSeat, updateSeatStatus, 
-  createBill, resetSeatStatus,getMovie,getAllFood,getAllPromotionByUser } from '~/repositories/cinema/bookingRepo';
+  createBill, resetSeatStatus,getMovie,
+  getAllFood,getAllPromotionByUser,chooseFood,getDiscountAmount,submitOrder } from '~/repositories/cinema/bookingRepo';
 import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
 
 
@@ -16,7 +17,10 @@ export const useBookingStore = defineStore({
     movie:{},
     seatSelected:[],
     foods:[],
-    promotions:[]
+    promotions:[],
+    finalAmount:0,
+    discountAmount:0,
+    paymentLink:''
 
   }),
   getters: {},
@@ -58,9 +62,9 @@ export const useBookingStore = defineStore({
     },
     async resetSeatStatus(scheduleId){
       try {
-        const data = await resetSeatStatus(scheduleId)
+        const res = await resetSeatStatus(scheduleId)
         // console.log(data)
-        for (let seat of data) {
+        for (let seat of res.data) {
           for(let s of this.seats){
             if (s.id === seat.id ) {
             s.seatStatus = seat.seatStatus;
@@ -69,7 +73,7 @@ export const useBookingStore = defineStore({
           }
         }
       } catch (error) {
-        
+        alert(error.response.data)
       }
     },
     async createBill () {
@@ -77,7 +81,7 @@ export const useBookingStore = defineStore({
         const res = await createBill();
         
       } catch (error) {
-        
+        alert(error.response.data)
       }
     },
     async getMovie(schedule) {
@@ -93,18 +97,46 @@ export const useBookingStore = defineStore({
     async getAllFood() {
       try {
         const res = await getAllFood();
-        this.foods = res
+        this.foods = res.data
     
       } catch (error) {
-        alert(error)
+        alert(error.response.data)
       }
     },
     async getAllPromotionByUser () {
       try {
         const res = await getAllPromotionByUser();
-        this.promotions = res;
+        this.promotions = res.data;
       } catch (error) {
-        alert(error)
+        alert(error.response.data)
+      }
+    },
+
+    async chooseFood (data) {
+      try {
+        const res = await chooseFood(data);
+        this.totalMoney = res.data;
+      } catch (error) {
+        alert(error.response.data)
+      }
+    },
+    async getDiscountAmount (data) {
+      try {
+        const res = await getDiscountAmount(data);
+        this.finalAmount = res.data.finalAmount;
+        this.discountAmount = res.data.discountAmount;
+      } catch (error) {
+        alert(error.response.data)
+      }
+    },
+
+    async submitOrder (amount,user) {
+      try {
+        const res = await submitOrder(amount,user);
+        this.paymentLink = res.data
+        window.location.href = res.data;
+      } catch (error) {
+        alert(error.response.data)
       }
     },
 
@@ -113,3 +145,6 @@ export const useBookingStore = defineStore({
     }
   }
 });
+
+
+  

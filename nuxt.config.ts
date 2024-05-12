@@ -5,20 +5,23 @@ export default defineNuxtConfig({
   // ssr: true,
   devtools: { enabled: true },
 
-  devServer: {
-    port: 3001,
-  },
   
   css: [
-    'vuetify/lib/styles/main.sass', 
-    '@mdi/font/css/materialdesignicons.min.css', 
-    '~/assets/css/main.css',
     "bootstrap/scss/bootstrap.scss",
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
+  
+  app: {
+    head: {
+        script: [
+            {children: 'var global = window;'}
+        ]
+    }
+},
 
   build: {
-    transpile: ['vuetify','@heroicons/vue',
+    transpile: [
+    '@heroicons/vue',
     '@fortawesome/fontawesome-svg-core',
     '@fortawesome/free-brands-svg-icons',
     '@fortawesome/free-regular-svg-icons',
@@ -42,28 +45,9 @@ export default defineNuxtConfig({
 
   modules: [
    '@nuxt/ui', 
-   "@vuesax-alpha/nuxt",
    '@pinia/nuxt',
+   "vuetify-nuxt-module",
   ],
-
-  // io: {
-  //   // module options
-  //   sockets: [{
-  //     name: 'main',
-  //     url: 'http://localhost:8089'
-  //   }]
-  // },
-
-  vuesaxAlpha: {
-    /** Options */
-  },
-  app: {
-    head: {
-        script: [
-            {children: 'var global = window;'}
-        ]
-    }
-},
 
   runtimeConfig: {
     app: {
