@@ -186,7 +186,7 @@
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold;">Ghế thường</span>
                         
-                        <span v-if = "seatNormal.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatNormal.seatSelectedCount }} x {{ seatNormal.price }}</span>
+                        <span v-if = "seatNormal.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatNormal.seatSelectedCount }}  {{ seatNormal.price }}</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-12" style="padding-top: 0;padding-bottom: 0;">
@@ -195,7 +195,7 @@
                             <img  style="width: 40px;height: 40px" src="/img/seat-unselect-vip.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold">Ghế VIP</span>
-                        <span v-if ="seatVip.seatSelectedCount != 0" class="co-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatVip.seatSelectedCount }} x {{ seatVip.price }}</span>
+                        <span v-if ="seatVip.seatSelectedCount != 0" class="co-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatVip.seatSelectedCount }}  {{ seatVip.price }}</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-12" style="border-right: 2px solid #d8d8d8;padding-top: 0;padding-bottom: 8px;">
@@ -204,7 +204,7 @@
                             <img class="image-seat-double" style="width: 40px;height: 20px" src="/img/seat-unselect-double.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold">Ghế đôi</span>
-                        <span v-if ="seatDouble.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatDouble.seatSelectedCount }} x {{ seatDouble.price }}</span>
+                        <span v-if ="seatDouble.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatDouble.seatSelectedCount }}  {{ seatDouble.price }}</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12 money" style="border-right: 2px solid #d8d8d8;padding-top: 0;padding-bottom: 8px;">
@@ -705,8 +705,6 @@ const isSeatSelectedDouble = Boolean(seatDouble.value)
 //mỗi khi khởi tạo sẽ call api lấy dữ liệu mới nhất
 bookingStore.getAllSeat(route.params.schedule);
 
-//tao bill
-bookingStore.createBill()
 
 // lây thông tin movie
 bookingStore.getMovie(route.params.schedule)
@@ -750,32 +748,37 @@ watch(() => time.value, (newValue, oldValue) => {
     }
 })
 
+const intervalTime = ref(null)
+const intervalColor = ref(null)
+
 onMounted(() => {
-    
-    //nếu user không đúng thì sẽ push về trang home
-    // if(route.query.user != userID.value) {
-    //     router.replace('/home')
-    // }
-    setInterval(() => {
+
+    //tao bill
+    bookingStore.createBill()
+
+    intervalTime.value  =  setInterval(() => {
         if(time.value > 0){
             time.value = time.value - 1
         }else{
-            time.value = 120
+            bookingStore.resetSeatStatus(route.params.schedule)
+            router.replace('/home')
         }
         
     },1000)
 
-    setInterval(() => {
-    currentColorIndex.value = (currentColorIndex.value + 1) % colors.value.length;
-    currentColor.value = colors.value[currentColorIndex.value];
-  }, 1000); 
+    intervalColor.value =  setInterval(() => {
+        currentColorIndex.value = (currentColorIndex.value + 1) % colors.value.length;
+        currentColor.value = colors.value[currentColorIndex.value];
+    }, 1000); 
 
     connect('http://localhost:8089/booking',`/topic/seatStatus/${route.params.schedule}`,seatResult) 
 });
 
 onBeforeUnmount(() => {
+    //ngat ket noi socket
     disconnect()
-    clearInterval(interval)
+    if (intervalTime.value) clearInterval(intervalTime.value)
+    if (intervalColor.value) clearInterval(intervalColor.value)
 })
 
 const currentSeat = ref({

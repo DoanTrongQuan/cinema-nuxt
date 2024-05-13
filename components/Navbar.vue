@@ -1,6 +1,6 @@
 <template>
-  <div class="z-1001">
-    <USlideover v-model="isOpen" prevent-close :ui="{ width: 'max-w-xs' }">
+  <div class="">
+    <USlideover v-model="isOpen" class ="z-[51]" prevent-close :ui="{ width: 'max-w-xs' }">
       <div class="p-3">
         <div class="flex justify-end">
           <UButton
@@ -48,7 +48,7 @@
       </div>
     </USlideover>
   </div>
-  <div class="header" style="position: sticky; top: 0; z-index: 40; cursor: pointer">
+  <div class="header !bg-white" style="position: sticky; top: 0; z-index: 51; cursor: pointer">
     <div class="my-0 mx-auto lg:w-[86%] py-7">
       <div class="grid grid-cols-12">
           <a href="/home" class="lg:col-span-2 col-span-4 flex items-center justify-center lg:justify-start">
@@ -239,7 +239,7 @@ const showAccout = () => {
 }
 
 .header {
-  background: rgba(255, 255, 255, 0.944);
+
 }
 .dropdown-item {
   padding: 0 !important;

@@ -5,7 +5,9 @@ export default defineNuxtConfig({
   // ssr: true,
   devtools: { enabled: true },
 
-  
+  devServer: {
+    port: 3002,
+  },
   css: [
     "bootstrap/scss/bootstrap.scss",
     '@fortawesome/fontawesome-svg-core/styles.css'

@@ -3,8 +3,13 @@ import { useMovie } from '~/composables/Movie/useMovie'
 // import { useHomePage } from '~/composables/useHomePage'
 import {useMovieStore} from '~/stores/user/useMovieStore'
 
+// definePageMeta({
+//     layout:true
+// })
 
 const movieStore = useMovieStore()
+
+
 const router = useRouter()
 const {
     isShowIconPlay,
@@ -16,7 +21,10 @@ const {
 } = useMovie()
 
 
+
 movieStore.getAllMovieByCinema()
+
+
 
 // const { showMovieDetail } = useHomePage()
 const movies = computed(()=> {
@@ -33,79 +41,10 @@ const active = ref(false);
 const tab = ref(null);
 const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/03/1702x621-095427-030424-60.png' }, { linkImage: '/img/movie_galaxy.jpg' }]);
 
-// const movies = ref([
-// {
-//           movieId: 1,
-//           movieName: "rfetgfr",
-//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-//           movieDuration: 120,
-//           movieTrailer: "fdrfdsrf",
-//           movieTypeName: "fdfas",
-//           movieDescription: "dsfrsdfds",
-//           movieDirector: "dwrwer",
-//           movieLanguage: "edasfsdf",
-//           moviePremiereDate: "20-10-2020"
-//         },
-//         {
-//           movieId: 2,
-//           movieName: "rfetgfr",
-//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-//           movieDuration: 120,
-//           movieTrailer: "fdrfdsrf",
-//           movieTypeName: "fdfas",
-//           movieDescription: "dsfrsdfds",
-//           movieDirector: "dwrwer",
-//           movieLanguage: "edasfsdf",
-//           moviePremiereDate: "20-10-2020"
-//         },
-//         {
-//           movieId: 3,
-//           movieName: "rfetgfr",
-//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-//           movieDuration: 120,
-//           movieTrailer: "fdrfdsrf",
-//           movieTypeName: "fdfas",
-//           movieDescription: "dsfrsdfds",
-//           movieDirector: "dwrwer",
-//           movieLanguage: "edasfsdf",
-//           moviePremiereDate: "20-10-2020"
-//         },
-//         {
-//           movieId: 4,
-//           movieName: "rfetgfr",
-//           movieImage: "https://files.betacorp.vn/media%2fimages%2f2024%2f03%2f31%2f400x633%2D163702%2D310324%2D66.jpg",
-//           movieDuration: 120,
-//           movieTrailer: "fdrfdsrf",
-//           movieTypeName: "fdfas",
-//           movieDescription: "dsfrsdfds",
-//           movieDirector: "dwrwer",
-//           movieLanguage: "edasfsdf",
-//           moviePremiereDate: "20-10-2020"
-//         },
-// ])
-
-// const movies = computed(()=> {
-//     return store.movies
-// })
-// const isShowIconPlay = ref(Array(movies.length).fill(false));
-// const isShowOverlay = ref(Array(movies.length).fill(false));
-
-// const showIconPlayAndOverlay = (i, value) => {
-//     isShowIconPlay.value[i] = value;
-//     isShowOverlay.value[i] = value;
-// };
-// const isShowTrailer = ref(false);
-// const currentMovieTrailer = ref('');
-
-// const openDialogTrailer = (movieTrailer) => {
-//     isShowTrailer.value = true;
-//     currentMovieTrailer.value = movieTrailer;
-// };
-
-
 </script>
 
 <template>
+<Global>
         <div  class="main" >
             <div>
                 <UModal v-model="isShowTrailer" width="685px" not-center>
@@ -181,10 +120,11 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
                     </v-window>
                 </v-card>
             </div>
-            <div>
+            <!-- <div>
                 <Intro/>
-            </div>
+            </div> -->
         </div>
+    </Global>
 </template>
 
 <style  scoped>

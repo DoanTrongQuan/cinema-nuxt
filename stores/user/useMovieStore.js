@@ -9,16 +9,21 @@ export const useMovieStore = defineStore({
   state: () => ({
     movies: [],
     movieDetail:{},
-    schedules:[]
+    schedules:[],
+    isShowLoading: false
 
   }),
   getters: {},
   actions: {
     async getAllMovieByCinema(){
         try {
+          this.isShowLoading = true;
           const res = await getAllMovieByCinema(useCinemaStore().nameOfCinema)
           this.movies = res.data;
         } catch (error) {  
+          alert(error.response.data)
+        }finally {
+          this.isShowLoading = false;
         }
     },
 

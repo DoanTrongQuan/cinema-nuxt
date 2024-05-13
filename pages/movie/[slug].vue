@@ -86,20 +86,20 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-1 lg:grid-cols-9 my-0 mx-auto  xl:max-w-7xl lg:max-w-5xl md:max-w-4xl gap-8 py-7 md:px-4 px-4"
+      class="grid grid-cols-1 xl:grid-cols-9 my-0 mx-auto  xl:max-w-7xl lg:max-w-5xl md:max-w-4xl gap-8 py-7 md:px-4 px-4"
     >
       <div class="book__left lg:col-span-6 w-full">
         <div class="book__film flex flex-col">
-          <div class="movie__info relative md:grid hidden grid-cols-3 md:gap-5 gap-3 lg:items-end">
+          <div class="movie__info   md:grid hidden grid-cols-3 md:gap-5 gap-3">
             <div
               class="movie__thumbnail lg:-translate-y-20 md:-translate-y-16 -translate-y-0 col-span-1 drop-shadow-2xl z-[39]"
             >
               <img
-                alt="Biệt Đội Săn Ma: Kỷ Nguyên Băng Giá"
+                alt="movieDetail.name"
                 :src="movieDetail.image"
               />
             </div>
-            <div class="col-span-2 md:-translate-y-12 flex flex-col justify-end">
+            <div class="col-span-2  flex flex-col ">
               <div class="item__title flex items-center">
                 <h1 class="text-[20px] md:text-[24px] lg:text-[28px] font-bold text-black-10 mr-4">
                  {{  movieDetail.name }}
@@ -157,7 +157,7 @@
                   >
                 </a>
               </div>
-              <div class="flex flex-col gap-1">
+              <div class="flex flex-col gap-2">
                 <div class="flex flex-nowrap text-sm">
                   <span class="inline-block h-8 py-[6px] text-grey-40"
                     >{{ movieDetail.language}}
@@ -172,7 +172,7 @@
                     <!-- -->
                     :</span
                   >
-                  <ul class="ml-2 flex flex-wrap gap-1 flex-1">
+                  <ul class="ml-2 flex flex-wrap gap-1 flex-1 mb-0">
                     <li class="text-sm cursor-pointer hover:text-primary transition duration-500 ease-in-out">
                       <span class="mr-[1px]">Columbia Pictures</span>
                     </li>
@@ -184,7 +184,7 @@
                     <!-- -->
                     :</span
                   >
-                  <ul class="ml-2 flex flex-wrap gap-1 flex-1">
+                  <ul class="ml-2 flex flex-wrap gap-1 flex-1 mb-0">
                     <li v-for ="(type,i) in movieDetail.movieType" :key="i" class="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
@@ -200,7 +200,7 @@
                     <!-- -->
                     :</span
                   >
-                  <ul class="ml-2 flex flex-wrap gap-1 flex-1">
+                  <ul class="ml-2 flex flex-wrap gap-1 flex-1 mb-0">
                     <li class="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
@@ -216,7 +216,7 @@
                     <!-- -->
                     :</span
                   >
-                  <ul class="ml-2 flex flex-wrap gap-1 flex-1">
+                  <ul class="ml-2 flex flex-wrap gap-1 flex-1 mb-0">
                     <li v-for = "(actor,i) in movieDetail.actors" :key="i" class="inline-block">
                       <a
                         class="text-black text-sm inline-flex h-8 border border-grey-20 hover:border-primary rounded-lg px-4 py-2 capitalize not-italic items-center"
@@ -229,18 +229,15 @@
               </div>
             </div>
           </div>
-          <div class="movie__info relative md:hidden grid grid-cols-1 grid-flow-row lg:items-end">
+          <div class="movie__info  relative md:hidden grid grid-cols-1 grid-flow-row lg:items-end">
             <div class="movie__thumbnail grid grid-cols-3 gap-3 grid-flow-col">
               <img
-                alt="Biệt Đội Săn Ma: Kỷ Nguyên Băng Giá"
-                loading="lazy"
+                alt="movieDetail.name"
                 width="220"
                 height="280"
-                decoding="async"
-                data-nimg="1"
-                class="border-2 rounded border-white lg:w-[320px] lg:h-[400px] md:w-full md:h-full w-[120px] h-[160px] object-fill col-span-1 object-cover duration-500 ease-in-out group-hover:opacity-100&quot; blur-[3px] grayscale-[90%])"
+               
                 style="color: transparent"
-                src="https://cdn.galaxycine.vn/media/2024/4/10/ghostbusters-frozen-empire-500_1712719794740.jpg"
+                :src="movieDetail.image"
               />
               <div class="col-span-2 flex flex-col justify-center">
                 <div class="item__title flex items-center">
@@ -430,7 +427,7 @@
         </div>
       </div>
 
-      <div class = "lg:col-span-3 w-full overflow-auto">
+      <div class = "xl:col-span-3 w-full overflow-auto">
         <div class = "mt-4">
           <span class = "border-l-4 border-solid border-blue-10 mr-2"></span>
           <h1 class = "text-xl inline-block uppercase font-semibold">TƯƠNG TỰ</h1>
