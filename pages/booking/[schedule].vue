@@ -739,14 +739,13 @@ const seatResult = ref({})
 watch(()=>seatResult.value,(newValue, oldValue) => {
     console.log('watch result');
     bookingStore.updateLocalSeat(newValue)
-      
 })
 
-watch(() => time.value, (newValue, oldValue) => {
-    if(parseInt(newValue) === 119){
-        bookingStore.resetSeatStatus(route.params.schedule)
-    }
-})
+// watch(() => time.value, (newValue, oldValue) => {
+//     if(parseInt(newValue) === 119){
+//         bookingStore.resetSeatStatus(route.params.schedule)
+//     }
+// })
 
 const intervalTime = ref(null)
 const intervalColor = ref(null)
@@ -760,8 +759,9 @@ onMounted(() => {
         if(time.value > 0){
             time.value = time.value - 1
         }else{
-            bookingStore.resetSeatStatus(route.params.schedule)
-            router.replace('/home')
+            // bookingStore.resetSeatStatus(route.params.schedule)
+            time.value = 120;
+            // router.replace('/home')
         }
         
     },1000)
@@ -887,8 +887,7 @@ const infoBill = [
 ]
 
 const check = () => {
-    console.log(movie.value)
-    console.log(infoBill.value)
+    console.log( route.params.schedule)
 }
 const payment = () => {
     isOpen.value = true;
@@ -897,7 +896,8 @@ const payment = () => {
 const  confirmPayment = () => {
     let amount = finalAmount.value === 0 ? totalMoney.value : finalAmount.value;
     let user = userID.value
-    bookingStore.submitOrder(amount, user)
+    let schedule = route.params.schedule;
+    bookingStore.submitOrder(amount, user,schedule)
 }
 
 

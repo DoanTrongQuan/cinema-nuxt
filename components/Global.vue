@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShowLoading" class="loading fixed inset-0 z-50 bg-white">
+  <div v-if="isShowLoading" class="loading fixed inset-0 z-[53] bg-white">
     <div
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white"
     >

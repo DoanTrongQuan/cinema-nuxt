@@ -45,8 +45,8 @@ export const getDiscountAmount = data => {
   return Cinema.axiosAuth.put(url, data)
 }
 
-export const submitOrder = (amount,user) => {
-  const url = `http://localhost:8089/submitOrder?amount=${amount}&user=${user}`;
+export const submitOrder = (amount,user,schedule) => {
+  const url = `http://localhost:8089/submitOrder?amount=${amount}&user=${user}&schedule=${schedule}`;
   return Cinema.axiosAuth.post(url)
 }
 

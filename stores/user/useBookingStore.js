@@ -130,9 +130,9 @@ export const useBookingStore = defineStore({
       }
     },
 
-    async submitOrder (amount,user) {
+    async submitOrder (amount,user,schedule) {
       try {
-        const res = await submitOrder(amount,user);
+        const res = await submitOrder(amount,user,schedule);
         this.paymentLink = res.data
         window.location.href = res.data;
       } catch (error) {
