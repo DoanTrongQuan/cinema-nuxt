@@ -723,7 +723,7 @@ const headersFood = ref([
       ])
 
 
-const time = ref(120)
+const time = ref(1000)
 
 const timeFormatted = computed(() => {
   const minutes = Math.floor(time.value / 60); // Lấy số phút
@@ -741,11 +741,11 @@ watch(()=>seatResult.value,(newValue, oldValue) => {
     bookingStore.updateLocalSeat(newValue)
 })
 
-// watch(() => time.value, (newValue, oldValue) => {
-//     if(parseInt(newValue) === 119){
-//         bookingStore.resetSeatStatus(route.params.schedule)
-//     }
-// })
+watch(() => time.value, (newValue, oldValue) => {
+    if(parseInt(newValue) === 999){
+        bookingStore.resetSeatStatus(route.params.schedule)
+    }
+})
 
 const intervalTime = ref(null)
 const intervalColor = ref(null)
@@ -760,7 +760,6 @@ onMounted(() => {
             time.value = time.value - 1
         }else{
             // bookingStore.resetSeatStatus(route.params.schedule)
-            time.value = 120;
             // router.replace('/home')
         }
         

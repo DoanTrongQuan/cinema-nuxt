@@ -48,7 +48,7 @@ export const useBookingStore = defineStore({
         this.totalMoney = res.data.totalMoney;
         this.seatSelected = res.data.seatSelected;
       } catch (error) {
-        alert("error server, please try again");
+        alert(error.response.data);
       }
     },
     updateLocalSeat(newValue){
@@ -120,11 +120,13 @@ export const useBookingStore = defineStore({
         alert(error.response.data)
       }
     },
+    
     async getDiscountAmount (data) {
       try {
         const res = await getDiscountAmount(data);
         this.finalAmount = res.data.finalAmount;
         this.discountAmount = res.data.discountAmount;
+        this.totalMoney = res.data.totalMoney;
       } catch (error) {
         alert(error.response.data)
       }
@@ -136,7 +138,8 @@ export const useBookingStore = defineStore({
         this.paymentLink = res.data
         window.location.href = res.data;
       } catch (error) {
-        alert(error.response.data)
+        console.log(error);
+        alert(error.response.data.message);
       }
     },
 
