@@ -34,7 +34,7 @@
                 </div>
                 <div id="register" class="grid grid-cols-1 md:grid-cols-[300px_minmax(900px,1fr)_100px] xl:block snipcss0-4-4-42 snipcss0-2-2-40">
                     <div id="connect" class="footer__connect snipcss0-5-42-43 snipcss0-3-40-41">
-                        <div class="footer__logo mb-5 snipcss0-6-43-44 snipcss0-4-41-42"><img alt="Galaxy - Cinema" loading="lazy" width="94" height="42" decoding="async" data-nimg="1" style="color:transparent" src="https://www.galaxycine.vn/_next/static/media/galaxy-logo-footer.7a918263.svg" class="snipcss0-7-44-45 snipcss0-5-42-43"></div>
+                        <div class="footer__logo mb-5 snipcss0-6-43-44 snipcss0-4-41-42"><img alt="Galaxy - Cinema" loading="lazy" width="94" height="42" decoding="async" data-nimg="1" style="color:transparent" src="/img/logo_cinema.png" class="snipcss0-7-44-45 snipcss0-5-42-43"></div>
                         <ul class="Footer_connect__icon__9_xjQ snipcss0-6-43-46 snipcss0-4-41-44">
                             <li class="snipcss0-7-46-47 snipcss0-5-44-45"><a href="https://www.facebook.com/galaxycinevn" target="_blank" class="snipcss0-8-47-48 snipcss0-6-45-46"><svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="square-facebook" class="svg-inline--fa fa-square-facebook fa-2x snipcss0-9-48-49 snipcss0-7-46-47" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                         <path fill="currentColor" d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path>
@@ -53,9 +53,9 @@
         </div>
         <div class="Footer_footer__bottom__Ro_Ls snipcss0-2-2-59">
             <div class="flex justify-items-start justify-start items-center gap-5 snipcss0-3-59-60">
-                <div class="footer__logo snipcss0-4-60-61"><img alt="Galaxy - Cinema" loading="lazy" width="94" height="42" decoding="async" data-nimg="1" style="color:transparent" src="https://www.galaxycine.vn/_next/static/media/galaxy-logo-footer.7a918263.svg" class="snipcss0-5-61-62"></div>
+                <div class="footer__logo snipcss0-4-60-61 "><img alt="Galaxy - Cinema" loading="lazy" width="110" height="70" decoding="async" data-nimg="1" style="color:transparent" src="/img/logo_cinema.png" class="snipcss0-5-61-62"></div>
                 <div class="Footer_footer__bottom__content__154Qe snipcss0-4-60-63">
-                    <h3 class="snipcss0-5-63-64">CÔNG TY CỔ PHẦN PHIM THIÊN NGÂN</h3>
+                    <h3 class="snipcss0-5-63-64">CÔNG TY CỔ PHẦN SPACE</h3>
                     <p class="snipcss0-5-63-65">Toà nhà Bitexco Nam Long, 63A Võ Văn Tần, Phường 6, Quận 3, Tp. Hồ Chí Minh, Việt Nam</p>
                     <p class="snipcss0-5-63-66"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="mobile" class="svg-inline--fa fa-mobile snipcss0-6-66-67" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                             <path fill="currentColor" d="M80 0C44.7 0 16 28.7 16 64V448c0 35.3 28.7 64 64 64H304c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H80zm80 432h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H160c-8.8 0-16-7.2-16-16s7.2-16 16-16z"></path>
@@ -63,7 +63,7 @@
                             <path fill="currentColor" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path>
                         </svg>: <a class="hover:text-[#FD841F] transition-all duration-300 snipcss0-6-66-70" href="tel:19002224">19002224 (9:00 - 22:00)</a> - <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" class="svg-inline--fa fa-paper-plane snipcss0-6-66-71" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                             <path fill="currentColor" d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"></path>
-                        </svg>: <a class="hover:text-[#FD841F] transition-all duration-300 snipcss0-6-66-72" href="mailto:hotro@galaxystudio.vn" target="_blank">hotro@galaxystudio.vn</a></p>
+                        </svg>: <a class="hover:text-[#FD841F] transition-all duration-300 snipcss0-6-66-72" href="mailto:hotro@galaxystudio.vn" target="_blank">hotro@space.com</a></p>
                 </div>
             </div>
         </div>

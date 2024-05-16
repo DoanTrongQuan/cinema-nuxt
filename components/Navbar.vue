@@ -50,7 +50,7 @@
   </div>
   <div class="header !bg-white" style="position: sticky; top: 0; z-index: 51; cursor: pointer">
     <div class="my-0 mx-auto lg:w-[86%] py-7">
-      <div class="grid grid-cols-12">
+      <div class="grid grid-cols-12 items-center">
           <a href="/home" class="lg:col-span-2 col-span-4 flex items-center justify-center lg:justify-start">
           <img  
             src="/img/logo_cinema.png"
