@@ -1,4 +1,21 @@
 <template>
+  <Global>
+    <UModal v-model="isOpenTrailler"  prevent-close class="z-[54]"
+      :ui = "{ width: 'w-full'}"
+      >
+      <UCard
+      >
+          <div class="flex items-center justify-between">
+            <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpenTrailler = false" />
+          </div>
+        <div >
+          <iframe width="900" height="500" :src="movieDetail.trailer" 
+          title="YouTube video player" frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </UCard>
+    </UModal>
   <div>
     <div>
             <UModal
@@ -47,10 +64,10 @@
             loading="lazy"
             class="w-[860px] h-full md:h-full lg:h-[500px] object-fill object-cover duration-500 ease-in-out group-hover:opacity-100&quot; scale-100 blur-0 grayscale-0)"
             style="color: transparent"
-            src="https://cdn.galaxycine.vn/media/2024/4/10/ghostbusters-frozen-empire-750_1712719795646.jpg"
+            :src="movieDetail.heroImage"
             alt=""
           />
-          <button class="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-[40]">
+          <button @click = "showTrailler" class="absolute top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 z-[53]">
             <img
               width="64"
               height="64"
@@ -90,7 +107,7 @@
     >
       <div class="book__left lg:col-span-6 w-full">
         <div class="book__film flex flex-col">
-          <div class="movie__info   md:grid hidden grid-cols-3 md:gap-5 gap-3">
+          <div class="movie__info   md:grid hidden grid-cols-3 md:gap-5 gap-4">
             <div
               class="movie__thumbnail lg:-translate-y-20 md:-translate-y-16 -translate-y-0 col-span-1 drop-shadow-2xl z-[39]"
             >
@@ -427,7 +444,7 @@
         </div>
       </div>
 
-      <div class = "xl:col-span-3 w-full overflow-auto">
+      <!-- <div class = "xl:col-span-3 w-full overflow-auto">
         <div class = "mt-4">
           <span class = "border-l-4 border-solid border-blue-10 mr-2"></span>
           <h1 class = "text-xl inline-block uppercase font-semibold">TƯƠNG TỰ</h1>
@@ -457,10 +474,11 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
 
   </div>
+</Global>
 </template>
 
 <script setup>
@@ -475,6 +493,8 @@ import { useProfile } from '~/composables/Profile/useProfile';
 const router = useRouter()
 const { userID } = useProfile()
 const isSignIn = Boolean(accessToken.value)
+const isOpenTrailler = ref(false)
+
 const movieDetail = computed(() => {
   return useMovieStore().movieDetail;
 })
@@ -485,7 +505,10 @@ const schedules = computed(() => {
 useMovieStore().getScheduleByMovie(useRoute().params.slug)
 useMovieStore().getMovieDetail(useRoute().params.slug)
 
-
+const showTrailler = () => {
+  console.log(123)
+  isOpenTrailler.value = true
+}
 const check = () => {
   console.log(data)
 }
@@ -515,13 +538,35 @@ const selectedDay = ref('')
 const selectedTime = ref('')
 const schedule = ref('')
 
-const showConfirmSelectSchedule = (day,time, scheduleId) => {
-  console.log(time)
-  isShowConfirmSelectSchedule.value = true
-  selectedDay.value = day
-  selectedTime.value = time
-  schedule.value = scheduleId
-}
+
+const showConfirmSelectSchedule = (day, time, scheduleId) => {
+  // Tạo đối tượng Date từ ngày và giờ đầu vào
+  const scheduleDateTime = parseDateAndTime(day, time);
+
+  // Lấy thời gian hiện tại
+  const now = new Date();
+
+  // So sánh thời gian hiện tại với thời gian của lịch chiếu
+  if (now > scheduleDateTime) {
+    alert("Lịch chiếu đã kết thúc! Vui lòng chọn lịch chiếu khác");
+  } else {
+    // Nếu thời gian hiện tại đứng trước thời gian lịch chiếu, tiếp tục thực hiện
+    isShowConfirmSelectSchedule.value = true;
+    selectedDay.value = day;
+    selectedTime.value = time;
+    schedule.value = scheduleId;
+  }
+};
+
+// Hàm để phân tích ngày và giờ từ đầu vào
+const parseDateAndTime = (day, time) => {
+  // Chuyển đổi ngày từ dạng "dd/MM/yyyy" sang "MM/dd/yyyy" để JavaScript có thể phân tích chính xác
+  const dayParts = day.split('/');
+  const formattedDate = `${dayParts[1]}/${dayParts[0]}/${dayParts[2]}`;
+
+  // Tạo đối tượng Date kết hợp ngày và giờ
+  return new Date(`${formattedDate} ${time}`);
+};
 
 const booking = () => {
     // useBookingStore().getAllSeat(schedule.value)

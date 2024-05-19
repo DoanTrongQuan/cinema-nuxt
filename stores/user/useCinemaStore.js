@@ -7,7 +7,7 @@ export const useCinemaStore = defineStore({
   id: "cinemaStore",
   state: () => ({
     // lấy giá trị từ cookie nếu không có thì mặc định là 'Beta Mỹ đình'
-    nameOfCinema:  useCookie('nameOfCinema').value || 'Cine Mỹ đình',
+    nameOfCinema:  useCookie('nameOfCinema').value || 'Space Mỹ Đình',
 
     cinemas: [
       { address: 'Hà Nội', children: [] },

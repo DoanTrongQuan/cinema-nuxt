@@ -1,6 +1,5 @@
 <script setup>
 import { useMovie } from '~/composables/Movie/useMovie'
-// import { useHomePage } from '~/composables/useHomePage'
 import {useMovieStore} from '~/stores/user/useMovieStore'
 
 // definePageMeta({
@@ -106,8 +105,8 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
                                                 </div>
                                                 <div class="col-lg-12 col-6" style="padding-top: 5px; padding-bottom: 0">
                                                     <h5 class="card-title" style="color: #337ab7; font-weight: 700">{{ movie.movieName }}</h5>
-                                                    <p  class="card-text" style="font-weight: 700">Thể loại:
-                                                        <span v-for = "(movieType, j) in movie.movieTypeName" :key="j" >{{ movieType }}</span></p>
+                                                    <!-- <p  class="card-text" style="font-weight: 700">Thể loại:
+                                                        <span v-for = "(movieType, j) in movie.movieTypeName" :key="j">{{ movieType }} </span></p> -->
                                                     <p class="card-text"><span style="font-weight: 700">Thời lượng: </span>{{ movie.movieDuration }} phút</p>
                                                         <NuxtLink :to="`/movie/${movie.slug}`"><button class="btn" style="width: 100%">MUA VÉ</button></NuxtLink>
                                                 </div>

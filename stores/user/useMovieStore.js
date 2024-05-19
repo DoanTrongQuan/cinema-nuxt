@@ -29,10 +29,13 @@ export const useMovieStore = defineStore({
 
     async getMovieDetail(slug) {
       try {
+        this.isShowLoading = true;
         const res = await getMovieDetail(slug)
         this.movieDetail = res.data
       } catch (error) {
-        
+        alert(error.response.data)
+      }finally {
+        this.isShowLoading = false;
       }
     },
     async getScheduleByMovie(slug) {

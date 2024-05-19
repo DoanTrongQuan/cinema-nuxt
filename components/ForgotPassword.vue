@@ -53,7 +53,7 @@ eventBus.on('show_forgot_password',(value) => {
               v-if = "isLoading"
               color="red"                 
             ></v-progress-circular>
-            <p v-else class="text-white" style="font-size: .875rem">CẤP LẠI MẬT KHẨU</p>
+            <p v-else class="text-white mb-0" style="font-size: .875rem">CẤP LẠI MẬT KHẨU</p>
           </button>
           </UForm>
           <div v-else class = "w-full">

@@ -18,7 +18,7 @@
          </UModal> 
       </div>
       <div class="container-fluid col-12 col-md-9 col-lg-7 col-xl-5 text-center form-signup mt-2">
-            <UCard class="w-full mt-4 py-2">
+            <UCard class="w-full mt-4">
               <h3>Đăng ký tài khoản</h3>
               <UForm :schema = "schema" :state="userRegister" class="space-y-4" @submit="onSubmit">
                 <div class ="row">

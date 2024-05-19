@@ -180,7 +180,7 @@ const cinemas = computed(() => {
 const nameOfCinema = computed(() => {
   return store.nameOfCinema
 })
-
+store.getAllCinemas()
 import { useToken } from '~/composables/authentication/useToken'
 const { accessToken } = useToken()
 

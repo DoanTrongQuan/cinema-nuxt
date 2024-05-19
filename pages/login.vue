@@ -5,6 +5,7 @@
     </div>
     <div class="container-fluid col-12 col-md-8 col-lg-6 col-xl-5 text-center form-signup">
       <UCard class="w-full mt-7">
+        <h2>Đăng nhập</h2>
         <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
           <UFormGroup size="xl" class="" label="Email" name="email">
             <UInput v-model="state.email" />

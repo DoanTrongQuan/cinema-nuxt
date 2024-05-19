@@ -1,4 +1,5 @@
 <template>
+    <Global>
   <div>
     <UModal v-model="isOpen" prevent-close>
       <div class="p-3">
@@ -65,8 +66,8 @@
             margin-top: 20px;
             margin-bottom: 20px;
             ">Trang chủ >
-            <span>Đặt vé > </span> 
-            <span>{{ movieDetail.name }}</span> <button @click="check">check</button></h3>
+            <span>Đặt vé </span> 
+            <span>{{ movieDetail.name }}</span></h3>
           <div class="text-center" :style="{ backgroundColor: currentColor }" 
             style="color: red;padding: 10px;
             font-weight: 600;
@@ -107,9 +108,70 @@
                         </div> -->
                         <div class="full-width" style="">
                             <div class="seat-normal" v-for="(seat, i) in seats.slice(0, 18)" :key="i" @click="bookingSeat(seat)" style="cursor: pointer;">
-                              <!-- <div v-if ="seat.seatStatus == 3" style="text-align: center; background-image: url('https://www.betacinemas.vn/Assets/global/img/booking/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                              <div v-if ="seat.seatStatus === 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
-                              </div> -->
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center; background-image: url('/img/seat-unselect-normal.png');">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="full-width" style="">
+                            <div class="seat-normal" v-for="(seat, i) in seats.slice(18, 36)" :key="i" @click="bookingSeat(seat)" style="cursor: pointer;">
+                              <div v-if ="seat.seatStatus === 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center; background-image: url('/img/seat-unselect-normal.png');">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="full-width" style="">
+                            <div class="seat-normal" v-for="(seat, i) in seats.slice(36, 54)" :key="i" @click="bookingSeat(seat)" style="cursor: pointer;">
+                              <div v-if ="seat.seatStatus === 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center; background-image: url('/img/seat-unselect-normal.png');">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="full-width" style="">
+                            <div class="seat-normal" v-for="(seat, i) in seats.slice(54, 72)" :key="i" @click="bookingSeat(seat)" style="cursor: pointer;">
+                              <div v-if ="seat.seatStatus === 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 3" style="text-align: center; background-image: url('/img/seat-process-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                              <div v-else-if="seat.seatStatus === 1 && seat.seatType == 1" class="seat" style="text-align: center; background-image: url('/img/seat-unselect-normal.png');">
+                                <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="full-width" style="">
+                            <div class="seat-normal" v-for="(seat, i) in seats.slice(72, 90)" :key="i" @click="bookingSeat(seat)" style="cursor: pointer;">
                               <div v-if ="seat.seatStatus === 4" style="text-align: center; background-image: url('/img/seat-buy-normal.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                 <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                               </div>
@@ -125,11 +187,46 @@
                             </div>
                         </div>
                         <div class="full-width">
-                            <div class="seat-vip" v-for="(seat, i) in seats.slice(18, 36)" :key="i"  @click="bookingSeat(seat)" style="cursor: pointer;">                
+                            <div class="seat-vip" v-for="(seat, i) in seats.slice(90, 106)" :key="i"  @click="bookingSeat(seat)" style="cursor: pointer;">                
                                 <div v-if ="seat.seatStatus == 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;" >
                                     <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                                 </div>
                                 <div v-else-if ="seat.seatStatus == 4" style="text-align: center; background-image: url('/img/seat-buy-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div v-else-if="seat.seatStatus === 3" style = "text-align: center; background-image: url('/img/seat-process-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div  v-else-if="seat.seatType === 2 && seat.seatStatus == 1" style="text-align: center; background-image: url('/img/seat-unselect-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-width">
+                            <div class="seat-vip" v-for="(seat, i) in seats.slice(106, 120)" :key="i"  @click="bookingSeat(seat)" style="cursor: pointer;">                
+                                <div v-if ="seat.seatStatus == 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;" >
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div v-else-if ="seat.seatStatus == 4" style="text-align: center; background-image: url('/img/seat-buy-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div v-else-if="seat.seatStatus === 3" style = "text-align: center; background-image: url('/img/seat-process-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div  v-else-if="seat.seatType === 2 && seat.seatStatus == 1" style="text-align: center; background-image: url('/img/seat-unselect-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-width">
+                            <div class="seat-vip" v-for="(seat, i) in seats.slice(120, 134)" :key="i"  @click="bookingSeat(seat)" style="cursor: pointer;">                
+                                <div v-if ="seat.seatStatus == 3 && seat.userId === userID" style="text-align: center; background-image: url('/img/seat-select-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;" >
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div v-else-if ="seat.seatStatus == 4" style="text-align: center; background-image: url('/img/seat-buy-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
+                                    <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
+                                </div>
+                                <div v-else-if="seat.seatStatus === 3" style = "text-align: center; background-image: url('/img/seat-process-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;color: white;">
                                     <span style="margin: auto !important; line-height: 3;">{{ seat.seatLine }}{{ seat.seatNumber }}</span>
                                 </div>
                                 <div  v-else-if="seat.seatType === 2 && seat.seatStatus == 1" style="text-align: center; background-image: url('/img/seat-unselect-vip.png'); background-repeat: no-repeat; background-size: 35px 35px; background-position: center; width: 40px; height: 40px; display: inline-block; font-size: 11px; align-items: center; justify-content: center; margin-right: 8px;">
@@ -177,7 +274,7 @@
                 </div>
             </div>              
           </div>
-          <div class="seat-type-panel" style="padding-top: 15px;width: 99%;border-radius: 10px;">
+          <div class="seat-type-panel py-4" style="padding-top: 15px;width: 99%;border-radius: 10px;">
             <div class="row" style="padding-left: 40px;">
                 <div class="col-lg-3 col-12" style="padding-top: 0;padding-bottom: 8px;">
                     <div class="row seat-type">
@@ -186,7 +283,7 @@
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold;">Ghế thường</span>
                         
-                        <span v-if = "seatNormal.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatNormal.seatSelectedCount }}  {{ seatNormal.price }}</span>
+                        <span v-if = "seatNormal.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatNormal.seatSelectedCount }} x {{ seatNormal.price }} vnđ</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-12" style="padding-top: 0;padding-bottom: 0;">
@@ -195,7 +292,7 @@
                             <img  style="width: 40px;height: 40px" src="/img/seat-unselect-vip.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold">Ghế VIP</span>
-                        <span v-if ="seatVip.seatSelectedCount != 0" class="co-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatVip.seatSelectedCount }}  {{ seatVip.price }}</span>
+                        <span v-show ="seatVip.seatSelectedCount != 0" class="co-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatVip.seatSelectedCount }} x {{ seatVip.price }} vnđ</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-12" style="border-right: 2px solid #d8d8d8;padding-top: 0;padding-bottom: 8px;">
@@ -204,14 +301,15 @@
                             <img class="image-seat-double" style="width: 40px;height: 20px" src="/img/seat-unselect-double.png" alt="">
                         </div>
                         <span class="col-lg-8 col-4" style="font-size: 18px;margin-left: 8px;font-weight: bold">Ghế đôi</span>
-                        <span v-if ="seatDouble.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatDouble.seatSelectedCount }}  {{ seatDouble.price }}</span>
+                        <span v-show ="seatDouble.seatSelectedCount != 0" class="col-12 value-money" style="padding-top:10px ;padding-bottom: 0;text-align: center;">{{ seatDouble.seatSelectedCount }} x {{ seatDouble.price }} vnđ</span>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12 money" style="border-right: 2px solid #d8d8d8;padding-top: 0;padding-bottom: 8px;">
-                    <div class="row seat-type" style="margin-top: 10px;">
-                        <p class="col-lg-12 col-4 total-money" style="margin-bottom: 8px;font-size: 18px;margin-left: 8px;font-weight: bold;float: left;padding-left:0 ;padding-top: 5px;">Tổng tiền</p>
-                        <p v-if ="totalMoney != 0" class="col-lg-12 col-4 result-money" style="padding-top:0;padding-bottom: 0;text-align: center;margin-top: 30px;">{{ totalMoney }}</p>
-                        <div class="col-4 d-lg-none"></div>
+                    <div class="flex flex-col" style="margin-top: 10px;">
+                        <p class="" style="margin-bottom: 8px;font-size: 18px;margin-left: 8px;font-weight: bold;float: left;padding-left:0 ;padding-top: 5px;">Tổng tiền</p>
+                        <p></p>
+                        <p v-show ="totalMoney != 0" class="col-lg-12 col-4 result-money text-[#03599d] mb-0" style="padding-top:0;padding-bottom: 0;text-align: center;">{{ totalMoney }} vnđ</p>
+
                     </div>
                 </div>
                 <div id="time" class="col-lg-2 col-12" style="padding-top: 0;">
@@ -223,7 +321,7 @@
           </div>
       </div>
       <div v-else class="payment-form col-lg-8 col-md-12" style="margin-top: 30px;">
-        <button @click = "check">check</button>
+        <!-- <button @click = "check">check</button> -->
                             <div style="height: 35px;display: flex;">
                                 <img src="https://www.betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png" style="height: 100%;" alt="">
                                 <div style="font-family: sans-serif;
@@ -252,53 +350,6 @@
                                     <span>trongquan202@gmail.com</span>
                                 </div>  
                             </div>
-                            <div >
-                                <div v-if="isSeatSelectedVip" class="grid grid-cols-4 mt-2">
-                                    <span >Ghế víp: </span>
-                                    <span class="col-span-3" style="font-size: 18px;"><b>{{ seatVip.seatSelectedCount }}</b></span>
-                                    <span  style="text-align: right;
-                                    font-family: SourceSansPro;
-                                    font-size: 18px;
-                                    font-weight: normal;
-                                    font-style: normal;
-                                    font-stretch: normal;
-                                    line-height: normal;
-                                    letter-spacing: normal;
-                                    text-align: right;
-                                    color: #494c62;
-                                    padding-right: 10%;" class="col-span-1">{{ seatVip.price }} vnđ</span>
-                                </div>
-                                <div v-if="seatVip  != null" class="grid grid-cols-4 mt-2" >
-                                    <div class="col-span-3" style="font-size: 18px;"><b>{{ seatNormal.seatSelectedCount }}</b></div>
-                                    <div style="text-align: right;
-                                    font-family: SourceSansPro;
-                                    font-size: 18px;
-                                    font-weight: normal;
-                                    font-style: normal;
-                                    font-stretch: normal;
-                                    line-height: normal;
-                                    letter-spacing: normal;
-                                    text-align: right;
-                                    color: #494c62;
-                                    padding-right: 10%;" class="col-span-1">{{ seatNormal.price }} vnđ</div>
-                                </div>
-
-                                <div v-if="isSeatSelectedDouble" class="grid grid-cols-4 mt-2">
-                                    <div class="col-span-3" style="font-size: 18px;"><b>{{ seatDouble.seatSelectedCount }}</b></div>
-                                    <div style="text-align: right;
-                                    font-family: SourceSansPro;
-                                    font-size: 18px;
-                                    font-weight: normal;
-                                    font-style: normal;
-                                    font-stretch: normal;
-                                    line-height: normal;
-                                    letter-spacing: normal;
-                                    text-align: right;
-                                    color: #494c62;
-                                    padding-right: 10%;" class="col-span-1">{{ seatDouble.price }} vnđ</div>
-                                </div>
-                            </div>
-
                             <div  style="height: 35px;display: flex;margin-top: 20px;">
                                 <img style="height: 100%;float: left;" src="https://www.betacinemas.vn/Assets/global/img/booking/ic-combo.png" alt="">
                                 <div style="font-size: 20px;
@@ -442,74 +493,74 @@
                     <h5 style="font-weight: 300;">Phụ đề</h5>
                 </div>
             </div> 
-                <div class="row" style="padding-left: 35px;">
+                <div class="row mt-4" style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;padding-top: 0 !important;">
                         <font-awesome-icon :icon="['fas', 'tags']" style="font-size: 14px;color: black;" />
-                        <p style="margin-left: 10px;">Thể loại</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Thể loại</p>
                     </div>
                     <div class="col-7" style="float: left;padding-top: 0;display: flex;">
-                        <p v-for = "(type,i) in movie.movieType" :key="i" 
-                        style="border: 1px solid black;margin-right: 5px;padding: 0.25rem;"><b >{{ type }}</b></p>
+                        <p class = "mb-0" v-for = "(type,i) in movie.movieType" :key="i" 
+                        style="margin-right: 5px;padding: 0.25rem;"><b >{{ type }}</b></p>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 35px;">
+                <div class="row mt-4" style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;">
                         <font-awesome-icon :icon="['fas', 'clock']" style="font-size: 14px;color: black;" />
-                        <p style="margin-left: 10px;">Thời lượng</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Thời lượng</p>
                     </div>
                     <div class="col-7" style="float: left;">
-                        <p><b>{{ movie.duration}} phút</b></p>
+                        <p class = "mb-0"><b>{{ movie.duration}} phút</b></p>
                     </div>
                 </div>
                 <hr style="border-top: 2px dashed black ;">
-                <div class="row"  style="padding-left: 35px;">
+                <div class="row mt-4"  style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;">
                         <font-awesome-icon :icon="['fas', 'building-columns']" style="font-size: 14px;color: black;" />
-                        <p style="margin-left: 10px;">Rạp chiếu</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Rạp chiếu</p>
                     </div>
                     <div class="col-7" style="float: left;">
-                        <p><b>{{ nameOfCinema }}</b></p>
+                        <p class = "mb-0"><b>{{ nameOfCinema }}</b></p>
                     </div>
                 </div>
-                <div class="row"  style="padding-left: 35px;">
+                <div class="row mt-4"  style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;">
                         <font-awesome-icon :icon="['fas', 'calendar-days']"  style="font-size: 14px;color: black;" />
-                        <p style="margin-left: 10px;">Ngày chiếu</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Ngày chiếu</p>
                     </div>
                     <div class="col-7" style="float: left;">
-                        <p><b>{{ movie.day }}</b></p>
+                        <p class = "mb-0"><b>{{ movie.day }}</b></p>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 35px;">
+                <div class="row mt-4" style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;">
                         <font-awesome-icon :icon="['fas', 'clock']" style="font-size: 14px;color: black;"/>
-                        <p style="margin-left: 10px;">Giờ chiếu</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Giờ chiếu</p>
                     </div>
                     <div class="col-7" style="float: left;">
-                        <p><b>{{ movie.startAt }}</b></p>
+                        <p class = "mb-0"><b>{{ movie.startAt }}</b></p>
                     </div>
                 </div>
-                <div class="row"  style="padding-left: 35px;">
+                <div class="row mt-3"  style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;">
                         <font-awesome-icon :icon="['fas', 'desktop']" style="font-size: 14px;color: black;" />
-                        <p style="margin-left: 10px;">Phòng chiếu</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Phòng chiếu</p>
                     </div>
                     <div class="col-7" style="float: left;">
-                        <p><b>{{ movie.romName }}</b></p>
+                        <p class = "mb-0"><b>{{ movie.romName }}</b></p>
                     </div>
                 </div>
-                <div class="row"  style="padding-left: 35px;">
+                <div class="row mt-4"  style="padding-left: 35px;">
                     <div class="col-5" style="display: flex;align-items: center;">
                         <font-awesome-icon :icon="['fas', 'cubes']" style="font-size: 14px;color: black;" />
-                        <p style="margin-left: 10px;">Ghế ngồi</p>
+                        <p class = "mb-0" style="margin-left: 10px;">Ghế ngồi</p>
                     </div>
                     <div class="col-7" style="float: left;">
-                        <p><span v-for = "(seat,i) in seatSelected" :key ="i"
+                        <p class = "mb-0"><span v-for = "(seat,i) in seatSelected" :key ="i"
                             style="margin-right: 5px;"
                             >{{ seat }}</span></p>
                     </div>
                 </div>
-                <div style="display: flex;justify-content: center;margin-bottom: 20px;">
+                <div class ="mt-4" style="display: flex;justify-content: center;margin-bottom: 20px;">
                         <button 
                         v-if ="!isShowFood"
                         @click="nextBookTicket"
@@ -618,7 +669,7 @@
     </div>
   </div>
 </div>
-<button @click = "check">check</button>
+</Global>
 </template>
 
 <script setup>
@@ -739,11 +790,13 @@ const seatResult = ref({})
 watch(()=>seatResult.value,(newValue, oldValue) => {
     console.log('watch result');
     bookingStore.updateLocalSeat(newValue)
+    // bookingStore.getTotalMoney(userID.value)
 })
 
 watch(() => time.value, (newValue, oldValue) => {
     if(parseInt(newValue) === 999){
         bookingStore.resetSeatStatus(route.params.schedule)
+
     }
 })
 
@@ -842,6 +895,7 @@ const foodPlus = (item) => {
     quantityOfFood.value[item.id]++;
     foodSelected.value[item.id].count++;
   }
+  
     const data = {
         foodId:item.id,
         chooseFood:1

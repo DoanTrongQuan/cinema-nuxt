@@ -34,11 +34,14 @@
 
 <script setup>
 import {useMovieStore} from '~/stores/user/useMovieStore'
+
 const movieStore = useMovieStore()
+
 
 const isShowLoading = computed(() => {
   return movieStore.isShowLoading
 })
+
 </script>
 
 <style lang="scss" scoped></style>

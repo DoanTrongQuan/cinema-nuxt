@@ -2,9 +2,10 @@
 import { defineStore } from "pinia";
 import { getAllSeat, updateSeatStatus, 
   createBill, resetSeatStatus,getMovie,
-  getAllFood,getAllPromotionByUser,chooseFood,getDiscountAmount,submitOrder } from '~/repositories/cinema/bookingRepo';
+  getAllFood,getAllPromotionByUser,chooseFood,getDiscountAmount,submitOrder, 
+  getTotalMoney } from '~/repositories/cinema/bookingRepo';
 import { useCinemaStore } from "@/stores/user/useCinemaStore.js";
-
+import { useMovieStore } from "./useMovieStore";
 
 export const useBookingStore = defineStore({
   id: "bookingStore",
@@ -20,18 +21,22 @@ export const useBookingStore = defineStore({
     promotions:[],
     finalAmount:0,
     discountAmount:0,
-    paymentLink:''
+    paymentLink:'',
+    
 
   }),
   getters: {},
   actions: {
     async getAllSeat(data){
         try {
+
           const res = await getAllSeat(data)
           this.seats = res.data;
 
         } catch (error) {  
           console.log(error);
+        }finally{
+
         }
     },
 
@@ -60,6 +65,20 @@ export const useBookingStore = defineStore({
           }
         }
     },
+    resetTotalMoney(){
+        this.seatDouble = {},
+        this.seatNormal = {},
+        this.seatVip = {},
+        this.totalMoney = 0
+    },
+    async getTotalMoney(user){
+      try {
+        const res = await getTotalMoney(user);
+        this.totalMoney = res.data;
+      } catch (error) {
+        alert(error.response.data)
+      }
+    },
     async resetSeatStatus(scheduleId){
       try {
         const res = await resetSeatStatus(scheduleId)
@@ -72,6 +91,10 @@ export const useBookingStore = defineStore({
           }
           }
         }
+        this.totalMoney = 0,
+        this.seatDouble = {},
+        this.seatNormal = {},
+        this.seatVip = {}
       } catch (error) {
         alert(error.response.data)
       }
@@ -86,12 +109,15 @@ export const useBookingStore = defineStore({
     },
     async getMovie(schedule) {
       try {
+        useMovieStore().isShowLoading = true;
         const res = await getMovie(schedule);
         
         this.movie = res.data;
       
       } catch (error) {
-        
+        alert(error.response.data)
+      }finally{
+        useMovieStore().isShowLoading = false;
       }
     },
     async getAllFood() {
@@ -115,7 +141,9 @@ export const useBookingStore = defineStore({
     async chooseFood (data) {
       try {
         const res = await chooseFood(data);
-        this.totalMoney = res.data;
+        this.totalMoney = res.data.totalMoney;
+        this.discountAmount = res.data.discountAmount;
+        this.finalAmount = res.data.finalAmount;
       } catch (error) {
         alert(error.response.data)
       }
