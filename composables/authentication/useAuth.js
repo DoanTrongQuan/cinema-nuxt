@@ -23,9 +23,9 @@ export const useAuth = () => {
   async function onSubmit(event) {
     try {
       const res = await changePassword(event.data);
-      alert(res)
+      alert(res.data)
     } catch (error) {
-      alert(error)
+      alert(error.response.data)
     }
   }
 

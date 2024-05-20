@@ -1,20 +1,15 @@
 <template>
   <Global>
-    <UModal v-model="isOpenTrailler"  prevent-close class="z-[54]"
-      :ui = "{ width: 'w-full'}"
+    <UModal v-model="isOpenTrailler"   class="z-[54]"
+      :ui = "{ width: 'lg:max-w-2xl'}"
       >
-      <UCard
-      >
-          <div class="flex items-center justify-between">
-            <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpenTrailler = false" />
-          </div>
         <div >
-          <iframe width="900" height="500" :src="movieDetail.trailer" 
+          <iframe class = "w-full h-[500px]" :src="movieDetail.trailer" 
           title="YouTube video player" frameborder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-      </UCard>
+
     </UModal>
   <div>
     <div>

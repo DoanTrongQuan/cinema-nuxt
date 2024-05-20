@@ -24,36 +24,21 @@ export const changePassword = data => {
   const url = prefix + 'auth/change-password'
   return Cinema.axiosAuth.put(url, data)
 }
+
 export const getAccessTokenByRefreshToken = refreshToken => {
   const url = prefix + 'auth/refresh-token?refreshToken='
   return Cinema.axiosClient.get(url + refreshToken)
 }
-// export const logOut = () => {
-//   const url = prefix + '/logout'
-//   return Wealify.axiosAuth.delete(url)
-// }
-// export const checkEmailRegistered = email => {
-//   const url = prefix + '/is-mail-registered'
-//   return Wealify.axiosClient.post(url, { email })
-// }
-// export const getAccessTokenByRefreshToken = refreshToken => {
-//   const url = prefix + '/refresh-token'
-//   return Wealify.axiosClient.get(url, {
-//     headers: { Authorization: refreshToken },
-//   })
-// }
-// export const forgotPassword = email => {
-//   const url = prefix + '/forgot'
-//   return Wealify.axiosClient.post(url, { email })
-// }
-// export const verifyOTPForgot = (code, email) => {
-//   const url = prefix + '/forgot/verify'
-//   return Wealify.axiosClient.post(url, { email, code })
-// }
-// export const resetPassword = (token, password) => {
-//   const url = prefix + 'forgot/new-password'
-//   return Wealify.axiosClient.post(url, {
-//     forgot_token: token,
-//     password,
-//   })
-// }
+
+export const getHistoryBillUser = () => {
+  const url = prefix + 'bill/get-history-bill-by-user'
+  return Cinema.axiosAuth.get(url)
+}
+
+export const getProfileUser = () => {
+  const url = prefix + 'user/get-profile-user'
+  return Cinema.axiosAuth.get(url)
+}
+
+
+

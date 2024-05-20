@@ -44,19 +44,13 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
 
 <template>
 <Global>
-        <div  class="main" >
-            <div>
-                <UModal v-model="isShowTrailer" width="685px" not-center>
-                    <template #header>
-                        <h4 class="not-margin">Welcome to <b>Vuesax</b></h4>
-                    </template>
-
-                    <div class="con-content" style="width: 645px; height: 377px; padding-left: 10px">
+    <div>
+                <UModal v-model="isShowTrailer" width="800px" height ="500px" not-center :ui = "{width: 'lg:max-w-2xl'}">
+                    <div class="con-content" >
                         <iframe
-                            width="100%"
-                            height="100%"
+                            class = "w-full h-[500px]"
                             :src="currentMovieTrailer"
-                            title="LỄ TRỪ TÀ | MAIN Trailer | Khởi Chiếu 23.02.2024"
+                            title=""
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen
@@ -70,6 +64,7 @@ const banner = ref([{ linkImage: 'https://files.betacorp.vn/cms/images/2024/04/0
                     </template>
                 </UModal>
             </div>
+        <div  class="main" >
             <div class="wrap-header">
                 <v-carousel cycle style="height: auto" hide-delimiter-background show-arrows="hover" :interval="6000000">
                     <v-carousel-item v-for="(ban, i) in banner" :key="i">

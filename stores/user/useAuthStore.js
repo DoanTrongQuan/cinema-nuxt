@@ -1,14 +1,13 @@
 
 import { defineStore } from "pinia";
-import { changePassword } from "~/repositories/cinema/authRepo"
-
+import { changePassword, getHistoryBillUser, getProfileUser } from "~/repositories/cinema/authRepo"
 
 
 export const useAuthStore = defineStore({
   id: "authStore",
   state: () => ({
-
-
+    historyBill:[],
+    user:{}
   }),
   getters: {},
   actions: {
@@ -18,6 +17,22 @@ export const useAuthStore = defineStore({
         } catch (error) {  
         }
     },
+    async getHistoryBillUser(){
+      try {
+        const res = await getHistoryBillUser()
+        this.historyBill = res.data;
+      } catch (error) {  
+        alert(error.response.data)
+      }
+  },
+  async getProfileUser(){
+    try {
+      const res = await getProfileUser()
+      this.user = res.data;
+    } catch (error) {  
+      alert(error.response.data)
+    }
+},
 
   }
 });
