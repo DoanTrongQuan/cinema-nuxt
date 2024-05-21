@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "bootstrap/scss/bootstrap.scss",
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
+  plugins: [{ src: "~/plugins/crispchat.client.js", mode: "client" }],
   
   app: {
     head: {
@@ -50,7 +51,6 @@ export default defineNuxtConfig({
    '@pinia/nuxt',
    "vuetify-nuxt-module",
   ],
-
   runtimeConfig: {
     app: {
       api: {
