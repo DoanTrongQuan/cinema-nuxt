@@ -438,38 +438,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class = "xl:col-span-3 w-full overflow-auto">
-        <div class = "mt-4">
-          <span class = "border-l-4 border-solid border-blue-10 mr-2"></span>
-          <h1 class = "text-xl inline-block uppercase font-semibold">TƯƠNG TỰ</h1>
-        </div>
-        <div class = "movie_content ">
-          <ul class = "flex flex-col  justify-between">
-            <li class = "text-sm text-black py-1 transition-all duration-300">
-              <div class = "inline-block whitespace-nowrap relative max-w-full w-[400px] h-[250px]">
-                <div class = "inline-block cursor-pointer rounded card__movies max-w-full false ">
-                  <div class="object-cover rounded relative card__img max-w-full">
-                    <div class="absolute hidden md:block w-full h-full z-100 cursor-pointer bg-[#00000080] transition-all duration-300 ease-in-out opacity-0 hover:opacity-100">
-                        <div class="card__hover__content flex flex-col justify-center items-center w-full h-full">
-                            <a type="button" class="text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]">
-                                Mua vé
-                            </a>
-                        </div>
-                    </div>
-                    <img class ="z-9" src="/img/image.png" alt="">
-                    
-                  </div>
-
-                </div>
-                <div class ="Card_card__title__kFoFc mt-2">
-                  <a href="" class ="text-sm font-semibold not-italic w-[400px]">Cái giá của hạnh phúc</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div> -->
     </div>
 
   </div>

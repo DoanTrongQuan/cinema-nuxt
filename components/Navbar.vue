@@ -39,7 +39,7 @@
           </div>
           <div class="flex flex-col cursor-pointer">
             <div @click="showAccout" class="my-2 font-normal hover:text-[#FF7614]">Thông tin cá nhân</div>
-            <div class="my-2 font-normal hover:text-[#FF7614]">Góc điện ảnh</div>
+            <NuxtLink to = "/blog"><div class="my-2 font-normal hover:text-[#FF7614]">Góc điện ảnh</div></NuxtLink>
             <div class="my-2 font-normal hover:text-[#FF7614]">Sự kiện/Khuyến mãi</div>
             <div class="my-2 font-normal hover:text-[#FF7614]">Rạp</div>
             <div class="my-2 font-normal hover:text-[#FF7614]">Đăng xuất</div>
@@ -111,30 +111,32 @@
         </div>
 
         <div class="hidden lg:grid grid-cols-4 col-span-6 items-center mx-4">
+          <NuxtLink to = "/blog" class = "no-underline text-black">
           <div
-            class="col-span-1 pr-2 md:justify-center font-normal font-sans flex lg:justify-start text-lg hover:text-[#FF7614] transition duration-100 ease-in-out transform hover:scale-105"
+            class="col-span-1 pr-2 md:justify-center font-bold font-sans flex lg:justify-start text-lg hover:text-[#FF7614] transition duration-100 ease-in-out transform hover:scale-105"
           >
             Góc điện ảnh
           </div>
+        </NuxtLink>
           <div
-            class="col-span-2 pr-2 md:justify-center flex lg:justify-center text-lg hover:text-[#FF7614] transition duration-100 ease-in-out transform hover:scale-105"
+            class="col-span-2 pr-2 md:justify-center font-bold  flex lg:justify-center text-lg hover:text-[#FF7614] transition duration-100 ease-in-out transform hover:scale-105"
           >
             Sự kiện/Khuyến mãi
           </div>
           <div
-            class="col-span-1 pr-2 md:justify-center flex lg:justify-start text-lg hover:text-[#FF7614] transition duration-100 ease-in-out transform hover:scale-105"
+            class="col-span-1 pr-2 md:justify-center font-bold  flex lg:justify-start text-lg hover:text-[#FF7614] transition duration-100 ease-in-out transform hover:scale-105"
           >
             Rạp
           </div>
         </div>
         <div class="flex lg:col-span-2 col-span-4 items-center justify-center">
-          <div v-if="isLogin" class="flex items-center hidden md:block justify-end">
+          <div v-if="isLogin" class="flex items-center md:block justify-end">
             <UDropdown
               :items="items"
               mode="hover"
               :popper="{ placement: 'bottom-start' }"
             >
-              <p class="mr-3 mb-1">{{ userName }}</p>
+              <p class="mr-3 mb-1 font-bold ">{{ userName }}</p>
             </UDropdown>
           </div>
           <div v-else class="flex justify-end items-center">
