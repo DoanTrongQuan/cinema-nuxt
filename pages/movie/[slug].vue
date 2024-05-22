@@ -14,7 +14,7 @@
   <div>
     <div>
             <UModal
-            v-model="isShowConfirmSelectSchedule "
+            v-model="isShowConfirmSelectSchedule"
             width="700px">
             <div class="p-3">
                   <div>

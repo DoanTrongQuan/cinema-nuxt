@@ -166,7 +166,6 @@ export const useBookingStore = defineStore({
         this.paymentLink = res.data
         window.location.href = res.data;
       } catch (error) {
-        console.log(error);
         alert(error.response.data.message);
       }
     },

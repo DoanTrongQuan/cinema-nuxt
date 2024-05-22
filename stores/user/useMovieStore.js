@@ -22,16 +22,18 @@ export const useMovieStore = defineStore({
           this.isShowLoading = true;
           const res = await getAllMovieByCinema(useCinemaStore().nameOfCinema)
           this.movies = res.data;
+          this.movieShowings = [];
+          this.movieUpcoming = [];
           for(let movie of res.data) {
             if(movie.upcoming) {
               this.movieUpcoming.push(movie)
             }
             //nếu movie.upcoming === false thì push vào mảng movieShowings
             if(!movie.upcoming) {
-              console.log(movie.upcoming)
               this.movieShowings.push(movie)
             }
           }
+          
         } catch (error) {  
           alert(error.response.data)
         }finally {

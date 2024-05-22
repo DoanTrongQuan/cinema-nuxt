@@ -100,7 +100,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li v-for="(children, i) in cinema.children" :key="i">
-                        <a @click="changeNameOfCinema(children)" class="dropdown-item" href="#">{{ children }}</a>
+                        <a @click.prevent="changeNameOfCinema(children)" class="dropdown-item" href="#">{{ children }}</a>
                       </li>
                     </ul>
                   </div>

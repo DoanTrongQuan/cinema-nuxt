@@ -44,7 +44,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  extends: ['@nuxt/ui-pro'],
+
 
   modules: [
    '@nuxt/ui', 
